@@ -1,3 +1,3 @@
-module github.com/Purdoobahs/purdoobahs.com
+module github.com/purdoobahs/purdoobahs.com
 
-go 1.14
+go 1.16

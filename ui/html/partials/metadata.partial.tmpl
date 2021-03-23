@@ -1,0 +1,59 @@
+{{define "metadata"}}
+{{template "metadata-standard" .}}
+{{template "metadata-opengraph" .}}
+{{template "metadata-twitter" .}}
+{{template "metadata-android" .}}
+{{template "metadata-microformats" .}}
+{{end}}
+
+{{define "metadata-standard"}}
+<meta charset="{{.Charset}}" />
+<title>{{.Author}} | {{title .Name}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="{{.Description}}" />
+<meta name="summary" content="{{.Description}}" />
+<meta name="keywords" content="{{keywords .Keywords}}" />
+<meta name="author" content="{{.Author}}" />
+<meta name="application-name" content="{{.Author}}" />
+<meta name="copyright" content="{{.Author}}" />
+<meta name="subject" content="{{.Author}}" />
+<meta name="topic" content="{{.Author}}" />
+<meta name="designer" content="{{.Author}}" />
+<meta name="owner" content="{{.Author}}" />
+{{end}}
+
+{{/* https://ogp.me/ */}}
+{{define "metadata-opengraph"}}
+<meta property="og:title" content="{{.Author}}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{template "canonical-url" .}}" />
+<!-- <meta property="og:image" content="http://ia.media-imdb.com/images/rock.jpg" /> -->
+<meta property='og:description' content='{{.Description}}' />
+<meta property='og:locale' content='{{.LanguageCode}}_{{.CountryCode}}' />
+<meta property='og:site_name' content='{{.Author}}' />
+{{end}}
+
+{{/* https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards */}}
+{{define "metadata-twitter"}}
+<meta name='twitter:card' content='summary' />
+<meta name='twitter:creator' content='{{.Twitter.Username}}' />
+<meta name='twitter:site' content='{{.Twitter.Username}}' />
+<meta name='twitter:title' content='{{.Author}}' />
+<meta name='twitter:description' content='{{.Description}}' />
+<meta name='twitter:url' content='{{template "canonical-url" .}}' />
+<!-- <meta name='twitter:image' content=''> must be less than 5MB; must be JPG, PNG, WEBP, GIF -->
+<!-- <meta name='twitter:image:alt' content='' /> -->
+{{end}}
+
+{{define "metadata-android"}}
+<meta name='theme-color' content='{{.ThemeColor}}' />
+{{end}}
+
+{{define "metadata-microformats"}}
+<link href='{{- template "canonical-url" . -}}' rel='canonical' />
+<link href='{{.HomeURL}}' rel='home' />
+<meta name="robots" content="index,follow" />
+<link type='text/plain' rel='author' href='/humans.txt' />
+<!-- <link href='/help' rel='help' > -->
+{{end}}
+

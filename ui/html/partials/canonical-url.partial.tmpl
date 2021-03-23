@@ -1,0 +1,3 @@
+{{define "canonical-url"}}
+{{- if eq .Name "home"}}{{.HomeURL}}{{else}}{{.HomeURL}}/{{.Name}}{{end -}}
+{{end}}

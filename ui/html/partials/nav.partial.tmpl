@@ -1,0 +1,11 @@
+{{define "nav"}}
+<ul class="banner list--horizontal">
+  {{range .NavLinks}}
+    <li class="list--item">
+      <a href="/{{if ne . "home"}}{{.}}{{end}}">
+        {{if eq $.Name .}}<b>{{end}}{{- capitalize . -}}{{if eq $.Name .}}</b>{{end}}
+      </a>
+    </li>
+  {{end}}
+</ul>
+{{end}}

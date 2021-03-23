@@ -1,0 +1,35 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="{{.LanguageCode}}-{{.CountryCode}}">
+	<head>
+		{{template "metadata" .}}
+        {{template "favicon" .}}
+
+		{{range .StyleSheets}}
+		<link rel="stylesheet" type="text/css" href="/static/css/{{.}}" />
+		{{end}}
+	</head>
+
+	<body>
+		<header>
+  	    {{template "header" .}}
+		</header>
+
+		<nav>
+		{{template "nav" .}}
+		</nav>
+
+		<main>
+		{{template "main" .}}
+		</main>
+
+		<footer>
+  	    {{template "footer" .}}
+		</footer>
+
+		{{range .Scripts}}
+		<script type='text/javascript' src='/static/js/{{.}}' defer></script>
+		{{end}}
+	</body>
+</html>
+{{end}}

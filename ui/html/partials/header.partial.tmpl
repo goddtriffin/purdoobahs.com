@@ -1,0 +1,26 @@
+{{define "header"}}
+{{template "header-masthead" .}}
+{{template "header-taglines" .}}
+{{end}}
+
+{{define "header-masthead"}}
+<h1>
+  <a href="/">{{.Author}}</a>
+</h1>
+{{end}}
+
+{{define "header-taglines"}}
+<aside>
+  <ul>
+    {{range .Taglines}}
+      {{template "header-taglines-item" .}}
+    {{end}}
+  </ul>
+</aside>
+{{end}}
+
+{{define "header-taglines-item"}}
+<li>
+  {{- . -}}
+</li>
+{{end}}

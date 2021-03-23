@@ -1,0 +1,19 @@
+
+     __         .' '.
+   _/__)        .   .       .
+  (8|)_}}- .      .        .
+   `\__)    '. . ' ' .  . '
+
+
+/* TEAM */
+
+Name: Todd Everett Griffin
+Site: www.toddgriffin.me
+Twitter: @goddtriffin
+From: Chicago, USA
+
+/* SITE */
+
+Last Update: 4/19/2020
+Languages: English, Go(lang), HTML5, CSS3, Font Awesome
+Technology: 2017 MacBook Pro, Google Chrome, GoLand
