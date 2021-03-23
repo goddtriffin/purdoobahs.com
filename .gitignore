@@ -1,6 +1,7 @@
 # directories
 .idea/
 bin/
+tls/
 
 # files
 .DS_Store

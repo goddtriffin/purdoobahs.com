@@ -1,9 +1,9 @@
 {{define "nav"}}
-<ul class="banner list--horizontal">
-  {{range .NavLinks}}
-    <li class="list--item">
-      <a href="/{{if ne . "home"}}{{.}}{{end}}">
-        {{if eq $.Name .}}<b>{{end}}{{- capitalize . -}}{{if eq $.Name .}}</b>{{end}}
+<ul>
+  {{range .Header.NavLinks}}
+    <li>
+      <a href="{{.URL}}">
+        {{if eq $.Page.DisplayName .DisplayName}}<b>{{end}}{{- .DisplayName -}}{{if eq $.Page.DisplayName .DisplayName}}</b>{{end}}
       </a>
     </li>
   {{end}}

@@ -29,13 +29,13 @@ buildstatic:  ## builds static resources
 	# copy over html, files, images
 	cp -Rn ui/html bin/html
 	cp -Rn ui/static/file bin/static/file
-	cp -Rn ui/static/img bin/static/img
+	cp -Rn ui/static/image bin/static/image
 
 .PHONY: buildlocal
 buildlocal: buildstatic  ## builds the binary locally
 	# TLS files only necessary for local development
 	cp -Rn tls bin/tls
-	go build -o bin/web ./...
+	go build -o bin/website ./...
 
 .PHONY: runlocal
 runlocal: buildlocal ## runs the binary locally
