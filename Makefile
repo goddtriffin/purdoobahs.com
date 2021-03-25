@@ -38,7 +38,7 @@ buildstatic:  ## builds static resources
 buildlocal: buildstatic  ## builds the binary locally
 	# TLS files only necessary for local development
 	cp -Rn tls bin/tls
-	go build -o bin/website ./...
+	go build -o bin/website ./cmd/website
 
 .PHONY: runlocal
 runlocal: buildlocal ## runs the binary locally

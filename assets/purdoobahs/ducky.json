@@ -1,6 +1,6 @@
 {
   "name": "Ducky",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Zach",
     "last": "Greenberg"
   },
@@ -17,7 +17,7 @@
     "city": "Naperville",
     "state": "Illinois"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "playing videogames",
       "surfing the world wide web"

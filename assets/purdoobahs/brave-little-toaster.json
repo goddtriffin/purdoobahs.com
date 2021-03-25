@@ -1,6 +1,6 @@
 {
   "name": "Brave Little Toaster",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Tyler",
     "last": "Hand"
   },
@@ -17,7 +17,7 @@
     "city": "San Marino",
     "state": "California"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "Purdue Rail Road Club",
       "Playing Valorant",

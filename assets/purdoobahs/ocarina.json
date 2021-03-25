@@ -1,6 +1,6 @@
 {
   "name": "Ocarina",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Andy",
     "last": "Sayles"
   },
@@ -18,7 +18,7 @@
     "city": "Oneida",
     "state": "New York"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "singing",
       "acting",

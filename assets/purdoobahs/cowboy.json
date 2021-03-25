@@ -1,6 +1,6 @@
 {
   "name": "Cowboy",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Ethan",
     "last": "Roberts"
   },
@@ -18,7 +18,7 @@
     "city": "Speedway",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "making music",
       "working",

@@ -1,6 +1,6 @@
 {
   "name": "Sandman",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Jaden",
     "last": "Weiss"
   },
@@ -17,7 +17,7 @@
     "city": "Robbinsville",
     "state": "New Jersey"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "watch movies",
       "play with legos",

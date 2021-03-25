@@ -1,6 +1,6 @@
 {
   "name": "Cash Money",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Cameron",
     "last": "Morningstar"
   },
@@ -18,7 +18,7 @@
     "city": "Shelbyville",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "playing video games",
       "watching football",

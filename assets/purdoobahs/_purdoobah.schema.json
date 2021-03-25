@@ -5,17 +5,17 @@
   "additionalProperties": false,
   "title": "Purdoobah",
   "description": "A Purdoobah",
-  "required": ["name", "slave_name", "marching", "education", "hometown", "metadata"],
+  "required": ["name", "birth_certificate_name", "marching", "education", "hometown", "metadata"],
   "properties": {
     "name": {
       "type": "string",
       "title": "Name",
       "description": "This Purdoobah's nickname"
     },
-    "slave_name": {
+    "birth_certificate_name": {
       "type": "object",
       "additionalProperties": false,
-      "title": "Slave Name",
+      "title": "Birth Certificate Name",
       "description": "This Purdoobah's real name",
       "required": ["first", "last"],
       "properties": {
@@ -124,7 +124,7 @@
         }
       }
     },
-    "personality": {
+    "personal": {
       "type": "object",
       "additionalProperties": false,
       "title": "Personality",
@@ -138,6 +138,7 @@
           "items": {
             "type": "string"
           },
+          "minItems": 1,
           "uniqueItems": true
         },
         "socials": {

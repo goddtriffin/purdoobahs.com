@@ -1,6 +1,6 @@
 {
   "name": "Holdoor",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Logan",
     "last": "Juran"
   },
@@ -17,7 +17,7 @@
     "city": "Highland",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "playing guitar",
       "swimming",

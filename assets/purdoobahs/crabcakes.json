@@ -1,6 +1,6 @@
 {
   "name": "Crabcakes",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "John",
     "last": "Muhl"
   },
@@ -17,7 +17,7 @@
     "city": "Dayton",
     "state": "Ohio"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "hanging out with friends",
       "watching movies",

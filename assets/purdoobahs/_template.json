@@ -1,7 +1,8 @@
 {
   "name": "",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "",
+    "middle": "",
     "last": ""
   },
   "emoji": "",
@@ -11,6 +12,7 @@
   },
   "education": {
     "major": "",
+    "minor": "",
     "year": ""
   },
   "hometown": {
@@ -20,13 +22,20 @@
   "alumni": {
     "job": ""
   },
-  "personality": {
+  "personal": {
     "hobbies": [],
     "socials": {
       "facebook": "",
       "instagram": "",
       "linkedin": ""
     }
+  },
+  "achievements": {
+    "student_leader": [],
+    "bottom_feeder_committee": false,
+    "spoonsassins_victories": [],
+    "kappa_kappa_psi": false,
+    "tau_beta_sigma": false
   },
   "metadata": {
     "image": ""

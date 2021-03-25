@@ -1,6 +1,6 @@
 {
   "name": "TruMoo",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Rob",
     "last": "Strange"
   },
@@ -17,7 +17,7 @@
     "city": "Ashburn",
     "state": "Virginia"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "designing fictional roller coasters",
       "playing with his dog"

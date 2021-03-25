@@ -1,6 +1,6 @@
 {
   "name": "Peeps",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Clark",
     "last": "Townsend"
   },

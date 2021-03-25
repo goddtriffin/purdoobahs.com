@@ -1,6 +1,6 @@
 {
   "name": "Bucket",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Mitchell",
     "last": "Smith"
   },
@@ -17,7 +17,7 @@
     "city": "Shelbyville",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "playing games",
       "hanging with friends",

@@ -1,6 +1,6 @@
 {
   "name": "Flounder",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Sean",
     "last": "Knickerbocker"
   },
@@ -18,7 +18,7 @@
     "city": "Peru",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "hanging out with friends"
     ]

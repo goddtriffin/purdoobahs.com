@@ -1,6 +1,6 @@
 {
   "name": "Remington",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Phoebe",
     "last": "Soldi"
   },
@@ -18,7 +18,7 @@
     "city": "Peru",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "hiking",
       "bird watching",

@@ -1,6 +1,6 @@
 {
   "name": "Guido",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Michael",
     "middle": "Mario",
     "last": "Esposito"
@@ -21,7 +21,7 @@
   "alumni": {
     "job": "Major in the US Army"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "ordering Mad Mush Cheese Stix to a friend's house without warning"
     ],

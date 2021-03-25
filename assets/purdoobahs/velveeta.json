@@ -1,6 +1,6 @@
 {
   "name": "Velveeta",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Reagan",
     "last": "Duffy"
   },
@@ -18,7 +18,7 @@
     "city": "Vero Beach",
     "state": "Florida"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "watching stand-up comedy",
       "painting"

@@ -1,6 +1,6 @@
 {
   "name": "Timber",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Tyler",
     "last": "Goldsmith"
   },
@@ -21,7 +21,7 @@
   "alumni": {
     "job": "Integration Engineer"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "write/listen to music",
       "play videogames"

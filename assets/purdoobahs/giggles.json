@@ -1,6 +1,6 @@
 {
   "name": "Giggles",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Beau",
     "last": "Burbrink"
   },
@@ -17,7 +17,7 @@
     "city": "Columbus",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "working on cars",
       "playing sports"

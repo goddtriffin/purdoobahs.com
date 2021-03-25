@@ -1,6 +1,6 @@
 {
   "name": "ManBearPig",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Ben",
     "last": "Milbrath"
   },
@@ -20,7 +20,7 @@
   "alumni": {
     "job": "Strategic Account Manager"
   },
-  "personality": {
+  "personal": {
     "socials": {
       "instagram": "https://www.instagram.com/purduetoobah/"
     }

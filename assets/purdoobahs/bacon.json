@@ -1,6 +1,6 @@
 {
   "name": "Bacon",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Brian",
     "last": "Arzola"
   },
@@ -17,7 +17,7 @@
     "city": "Manalapan",
     "state": "New Jersey"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "playing strategy games",
       "making overly complicated Excel spreadsheets",

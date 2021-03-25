@@ -1,6 +1,6 @@
 {
   "name": "Torch",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Colin",
     "last": "Mulron"
   },
@@ -17,7 +17,7 @@
     "city": "Nashville",
     "state": "Tennessee"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "watching history documentaries",
       "hanging out with his brothers in Phi Sigma Kappa",

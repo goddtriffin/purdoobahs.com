@@ -1,6 +1,6 @@
 {
   "name": "Juggs",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Ben",
     "last": "Guzek"
   },
@@ -17,7 +17,7 @@
     "city": "Schererville",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "supporting the cubs",
       "reading/writing",

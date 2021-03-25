@@ -1,6 +1,6 @@
 {
   "name": "Poppin' Fresh",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Liam",
     "last": "Alford"
   },
@@ -18,7 +18,7 @@
     "city": "Los Angeles",
     "state": "California"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "trying to brew the perfect cup of coffee",
       "spending time with family"

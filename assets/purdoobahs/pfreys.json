@@ -1,6 +1,6 @@
 {
   "name": "Pfreys",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Sofia",
     "last": "Babcock"
   },
@@ -18,7 +18,7 @@
     "city": "Peru",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "watching Criminal Minds",
       "hanging out with friends",

@@ -1,6 +1,6 @@
 {
   "name": "Clamps",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Lwendo",
     "last": "Mizinga"
   },
@@ -20,7 +20,7 @@
   "alumni": {
     "job": "designing bridges and roads"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "cooking",
       "working out",

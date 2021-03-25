@@ -1,6 +1,6 @@
 {
   "name": "Dr. Bees",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Todd",
     "last": "Griffin"
   },
@@ -20,7 +20,7 @@
   "alumni": {
     "job": "Software Engineer"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "developing indie software/games",
       "playing bass guitar",

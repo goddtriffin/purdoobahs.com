@@ -1,6 +1,6 @@
 {
   "name": "Shirt",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Shawn",
     "last": "Belongia"
   },
@@ -17,7 +17,7 @@
     "city": "North Andover",
     "state": "Massachusetts"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "hiking and running outside",
       "listening to music (especially the oldies)"

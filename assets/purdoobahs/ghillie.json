@@ -1,6 +1,6 @@
 {
   "name": "Ghillie",
-  "slave_name": {
+  "birth_certificate_name": {
     "first": "Tyler",
     "last": "Eggert"
   },
@@ -17,7 +17,7 @@
     "city": "Laporte",
     "state": "Indiana"
   },
-  "personality": {
+  "personal": {
     "hobbies": [
       "working on his truck",
       "working on his farm",
