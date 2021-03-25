@@ -1,15 +1,17 @@
-package main
+package jsonschema
 
 import (
 	"fmt"
-	"github.com/xeipuuv/gojsonschema"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/xeipuuv/gojsonschema"
 )
 
-func (app *application) validateJsonSchema() (bool, error) {
+func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error) {
 	invalidFiles := false
 
 	// read in the Purdoobah JSON Schema
@@ -31,7 +33,7 @@ func (app *application) validateJsonSchema() (bool, error) {
 		if strings.Contains(path, "_") {
 			continue
 		}
-		app.infoLog.Println(fmt.Sprintf("Validating %s ...", path))
+		infoLog.Println(fmt.Sprintf("Validating %s ...", path))
 
 		// read in the Purdoobah JSON document
 		b, err := ioutil.ReadFile(path)
@@ -50,7 +52,7 @@ func (app *application) validateJsonSchema() (bool, error) {
 		if !result.Valid() {
 			invalidFiles = true
 			for _, desc := range result.Errors() {
-				app.errorLog.Println(fmt.Sprintf("ERROR - %s", desc))
+				errorLog.Println(fmt.Sprintf("ERROR - %s", desc))
 			}
 		}
 	}

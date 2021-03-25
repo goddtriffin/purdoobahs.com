@@ -1,4 +1,9 @@
-package models
+package purdoobahs
+
+type IPurdoobahService interface {
+	All() ([]*Purdoobah, error)
+	ByName(string) (*Purdoobah, error)
+}
 
 type Purdoobah struct {
 	Name                 string `json:"name"`
