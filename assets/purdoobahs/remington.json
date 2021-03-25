@@ -1,0 +1,31 @@
+{
+  "name": "Remington",
+  "slave_name": {
+    "first": "Phoebe",
+    "last": "Soldi"
+  },
+  "emoji": "🔫",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CHgCz9DFSSD/"
+  },
+  "education": {
+    "major": "Wildlife and Aquatic Sciences",
+    "minor": "Biology",
+    "year": "sophomore"
+  },
+  "hometown": {
+    "city": "Peru",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "hiking",
+      "bird watching",
+      "generally being outside in nature"
+    ]
+  },
+  "metadata": {
+    "image": "remington.jpg"
+  }
+}

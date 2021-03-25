@@ -1,0 +1,31 @@
+{
+  "name": "Pfreys",
+  "slave_name": {
+    "first": "Sofia",
+    "last": "Babcock"
+  },
+  "emoji": "🦗",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CHN3zxcFbBo/"
+  },
+  "education": {
+    "major": "Cell, Molecular, and Developmental Biology",
+    "minor": "Spanish and Forensics",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Peru",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "watching Criminal Minds",
+      "hanging out with friends",
+      "canoeing and kayaking (and generally being) outside"
+    ]
+  },
+  "metadata": {
+    "image": "pfreys.jpg"
+  }
+}

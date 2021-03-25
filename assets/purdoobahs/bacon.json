@@ -1,0 +1,33 @@
+{
+  "name": "Bacon",
+  "slave_name": {
+    "first": "Brian",
+    "last": "Arzola"
+  },
+  "emoji": "🥓",
+  "marching": {
+    "years_marched": [2018, 2019],
+    "shoutout": "https://www.instagram.com/p/B4BSdkJl890/"
+  },
+  "education": {
+    "major": "Economics and English Literature",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Manalapan",
+    "state": "New Jersey"
+  },
+  "personality": {
+    "hobbies": [
+      "playing strategy games",
+      "making overly complicated Excel spreadsheets",
+      "defending the honor of the College of Liberal Arts"
+    ]
+  },
+  "achievements": {
+    "student_leader": [2019]
+  },
+  "metadata": {
+    "image": "bacon.jpg"
+  }
+}

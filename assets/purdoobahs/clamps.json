@@ -1,0 +1,36 @@
+{
+  "name": "Clamps",
+  "slave_name": {
+    "first": "Lwendo",
+    "last": "Mizinga"
+  },
+  "emoji": "🗜️",
+  "marching": {
+    "years_marched": [2015, 2016, 2017, 2018],
+    "shoutout": "https://www.instagram.com/p/BocLScHBrR0/"
+  },
+  "education": {
+    "major": "Civil Engineering",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Fishers",
+    "state": "Indiana"
+  },
+  "alumni": {
+    "job": "designing bridges and roads"
+  },
+  "personality": {
+    "hobbies": [
+      "cooking",
+      "working out",
+      "spending time with friends"
+    ]
+  },
+  "achievements": {
+    "bottom_feeder_committee": true
+  },
+  "metadata": {
+    "image": "clamps.jpg"
+  }
+}

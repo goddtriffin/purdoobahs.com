@@ -1,0 +1,35 @@
+{
+  "name": "Guido",
+  "slave_name": {
+    "first": "Michael",
+    "middle": "Mario",
+    "last": "Esposito"
+  },
+  "emoji": "🇮🇹",
+  "marching": {
+    "years_marched": [2001, 2002, 2003, 2004, 2005],
+    "shoutout": "https://www.instagram.com/p/CKCFtrlFoR9/"
+  },
+  "education": {
+    "major": "Organizational Leadership and Supervision",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Chicago",
+    "state": "Illinois"
+  },
+  "alumni": {
+    "job": "Major in the US Army"
+  },
+  "personality": {
+    "hobbies": [
+      "ordering Mad Mush Cheese Stix to a friend's house without warning"
+    ],
+    "socials": {
+      "instagram": "https://www.instagram.com/captain_chicago/"
+    }
+  },
+  "metadata": {
+    "image": "guido.jpg"
+  }
+}

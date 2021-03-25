@@ -1,0 +1,30 @@
+{
+  "name": "Sandman",
+  "slave_name": {
+    "first": "Jaden",
+    "last": "Weiss"
+  },
+  "emoji": "😴",
+  "marching": {
+    "years_marched": [2019, 2020],
+    "shoutout": "https://www.instagram.com/p/B5VYyhaFtK1/"
+  },
+  "education": {
+    "major": "Film Production",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Robbinsville",
+    "state": "New Jersey"
+  },
+  "personality": {
+    "hobbies": [
+      "watch movies",
+      "play with legos",
+      "hang out with his friends"
+    ]
+  },
+  "metadata": {
+    "image": "sandman.jpg"
+  }
+}

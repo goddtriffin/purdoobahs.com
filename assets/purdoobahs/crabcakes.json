@@ -1,0 +1,31 @@
+{
+  "name": "Crabcakes",
+  "slave_name": {
+    "first": "John",
+    "last": "Muhl"
+  },
+  "emoji": "🦀",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CIBbgvMFjWo/"
+  },
+  "education": {
+    "major": "Engineering",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Dayton",
+    "state": "Ohio"
+  },
+  "personality": {
+    "hobbies": [
+      "hanging out with friends",
+      "watching movies",
+      "playing video games",
+      "reading"
+    ]
+  },
+  "metadata": {
+    "image": "crabcakes.jpg"
+  }
+}

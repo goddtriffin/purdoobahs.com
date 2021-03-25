@@ -1,0 +1,29 @@
+{
+  "name": "Giggles",
+  "slave_name": {
+    "first": "Beau",
+    "last": "Burbrink"
+  },
+  "emoji": "🤣",
+  "marching": {
+    "years_marched": [2015, 2016, 2017, 2018],
+    "shoutout": "https://www.instagram.com/p/BokFJMKBKcQ/"
+  },
+  "education": {
+    "major": "Aeronautical Engineering",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Columbus",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "working on cars",
+      "playing sports"
+    ]
+  },
+  "metadata": {
+    "image": "giggles.jpg"
+  }
+}

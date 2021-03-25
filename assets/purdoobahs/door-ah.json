@@ -1,0 +1,26 @@
+{
+  "name": "Door-ah",
+  "slave_name": {
+    "first": "Mariah",
+    "last": "Lemkuhl"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2017]
+  },
+  "education": {
+    "major": "",
+    "minor": "",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "",
+    "state": ""
+  },
+  "achievements": {
+    "bottom_feeder_committee": true
+  },
+  "metadata": {
+    "image": "door-ah.jpg"
+  }
+}

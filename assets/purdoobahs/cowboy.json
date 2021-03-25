@@ -1,0 +1,31 @@
+{
+  "name": "Cowboy",
+  "slave_name": {
+    "first": "Ethan",
+    "last": "Roberts"
+  },
+  "emoji": "🤠",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CIyKerQlXxo/"
+  },
+  "education": {
+    "major": "Mechanical Engineering",
+    "minor": "Electrical Engineering",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Speedway",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "making music",
+      "working",
+      "driving"
+    ]
+  },
+  "metadata": {
+    "image": "cowboy.jpg"
+  }
+}

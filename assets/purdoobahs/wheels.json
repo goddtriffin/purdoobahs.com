@@ -1,0 +1,22 @@
+{
+  "name": "Wheels",
+  "slave_name": {
+    "first": "Eric",
+    "last": "Selle"
+  },
+  "emoji": "☸️",
+  "marching": {
+    "years_marched": [2015, 2016, 2017, 2018, 2019]
+  },
+  "education": {
+    "major": "",
+    "year": "super-senior"
+  },
+  "hometown": {
+    "city": "",
+    "state": ""
+  },
+  "metadata": {
+    "image": "wheels.jpg"
+  }
+}

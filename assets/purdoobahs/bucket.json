@@ -1,0 +1,30 @@
+{
+  "name": "Bucket",
+  "slave_name": {
+    "first": "Mitchell",
+    "last": "Smith"
+  },
+  "emoji": "🗑",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CI565bBFW4u/"
+  },
+  "education": {
+    "major": "Computer Science",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Shelbyville",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "playing games",
+      "hanging with friends",
+      "playing the piano"
+    ]
+  },
+  "metadata": {
+    "image": "bucket.jpg"
+  }
+}

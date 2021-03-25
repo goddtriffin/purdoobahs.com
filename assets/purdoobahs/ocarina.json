@@ -1,0 +1,31 @@
+{
+  "name": "Ocarina",
+  "slave_name": {
+    "first": "Andy",
+    "last": "Sayles"
+  },
+  "emoji": "🌱",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CHavwwmFIFT/"
+  },
+  "education": {
+    "major": "Physics",
+    "minor": "Being Awesome",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Oneida",
+    "state": "New York"
+  },
+  "personality": {
+    "hobbies": [
+      "singing",
+      "acting",
+      "gaming"
+    ]
+  },
+  "metadata": {
+    "image": "ocarina.jpg"
+  }
+}

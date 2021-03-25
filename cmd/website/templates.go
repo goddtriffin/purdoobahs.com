@@ -103,7 +103,7 @@ func keywords(keywords []string) string {
 }
 
 func newTemplateCache(dir string) (map[string]*template.Template, error) {
-	fa, err := fontawesome.New(filepath.Join(dir, "static/file/icons.json"))
+	fa, err := fontawesome.New("./assets/icons.json")
 	if err != nil {
 		return nil, err
 	}

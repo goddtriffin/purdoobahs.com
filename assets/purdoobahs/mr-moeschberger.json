@@ -1,0 +1,26 @@
+{
+  "name": "Mr. Moeschberger",
+  "slave_name": {
+    "first": "Mr.",
+    "last": "Moeschberger"
+  },
+  "emoji": "🏁",
+  "marching": {
+    "years_marched": [1998, 1999, 2000, 2001, 2002],
+    "shoutout": "https://www.instagram.com/p/CMutZ6ZFWb9/"
+  },
+  "education": {
+    "major": "Social Studies Education",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Kokomo",
+    "state": "Indiana"
+  },
+  "alumni": {
+    "job": "Camp director and Chief Fun Officer"
+  },
+  "metadata": {
+    "image": "mr-moeschberger.jpg"
+  }
+}

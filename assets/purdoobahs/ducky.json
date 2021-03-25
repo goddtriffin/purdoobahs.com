@@ -1,0 +1,37 @@
+{
+  "name": "Ducky",
+  "slave_name": {
+    "first": "Zach",
+    "last": "Greenberg"
+  },
+  "emoji": "🏺",
+  "marching": {
+    "years_marched": [2015, 2016, 2017, 2018],
+    "shoutout": "https://www.instagram.com/p/Bn4JO9Mn1OL/"
+  },
+  "education": {
+    "major": "Electrical Engineering",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Naperville",
+    "state": "Illinois"
+  },
+  "personality": {
+    "hobbies": [
+      "playing videogames",
+      "surfing the world wide web"
+    ],
+    "socials": {
+      "facebook": "",
+      "instagram": "",
+      "linkedin": ""
+    }
+  },
+  "achievements": {
+    "student_leader": [2017, 2018]
+  },
+  "metadata": {
+    "image": "ducky.jpg"
+  }
+}

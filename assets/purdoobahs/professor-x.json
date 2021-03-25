@@ -1,0 +1,22 @@
+{
+  "name": "Professor X",
+  "slave_name": {
+    "first": "Gavin",
+    "last": "Gill"
+  },
+  "emoji": "🦠",
+  "marching": {
+    "years_marched": [2020]
+  },
+  "education": {
+    "major": "Engineering",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Evansville",
+    "state": "Indiana"
+  },
+  "metadata": {
+    "image": "professor-x.jpg"
+  }
+}

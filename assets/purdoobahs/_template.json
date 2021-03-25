@@ -1,0 +1,34 @@
+{
+  "name": "",
+  "slave_name": {
+    "first": "",
+    "last": ""
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [],
+    "shoutout": ""
+  },
+  "education": {
+    "major": "",
+    "year": ""
+  },
+  "hometown": {
+    "city": "",
+    "state": ""
+  },
+  "alumni": {
+    "job": ""
+  },
+  "personality": {
+    "hobbies": [],
+    "socials": {
+      "facebook": "",
+      "instagram": "",
+      "linkedin": ""
+    }
+  },
+  "metadata": {
+    "image": ""
+  }
+}

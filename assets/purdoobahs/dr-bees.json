@@ -1,0 +1,42 @@
+{
+  "name": "Dr. Bees",
+  "slave_name": {
+    "first": "Todd",
+    "last": "Griffin"
+  },
+  "emoji": "🐝",
+  "marching": {
+    "years_marched": [2017, 2018, 2019],
+    "shoutout": "https://www.instagram.com/p/BnrBUvqHOMq/"
+  },
+  "education": {
+    "major": "Computer Science",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Westmont",
+    "state": "Illinois"
+  },
+  "alumni": {
+    "job": "Software Engineer"
+  },
+  "personality": {
+    "hobbies": [
+      "developing indie software/games",
+      "playing bass guitar",
+      "experiencing the world with his friends"
+    ],
+    "socials": {
+      "facebook": "https://www.facebook.com/goddtriffin/",
+      "instagram": "https://www.instagram.com/goddtriffin/",
+      "linkedin": "https://www.linkedin.com/in/todd-griffin/"
+    }
+  },
+  "achievements": {
+    "student_leader": [2019],
+    "bottom_feeder_committee": true
+  },
+  "metadata": {
+    "image": "dr-bees.jpg"
+  }
+}

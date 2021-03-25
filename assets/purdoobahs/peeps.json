@@ -1,0 +1,28 @@
+{
+  "name": "Peeps",
+  "slave_name": {
+    "first": "Clark",
+    "last": "Townsend"
+  },
+  "emoji": "👀",
+  "marching": {
+    "years_marched": [2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/B9rbunWFcK8/"
+  },
+  "education": {
+    "major": "Psychological Sciences",
+    "minor": "Human Resources Management",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Pleasanton",
+    "state": "California"
+  },
+  "achievements": {
+    "student_leader": [2019, 2020],
+    "bottom_feeder_committee": true
+  },
+  "metadata": {
+    "image": "peeps.jpg"
+  }
+}

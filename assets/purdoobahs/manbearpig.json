@@ -1,0 +1,35 @@
+{
+  "name": "ManBearPig",
+  "slave_name": {
+    "first": "Ben",
+    "last": "Milbrath"
+  },
+  "emoji": "👨🐻🐷",
+  "marching": {
+    "years_marched": [2006, 2007, 2008, 2009, 2010],
+    "shoutout": "https://www.instagram.com/p/CLE7t4cl2V1/"
+  },
+  "education": {
+    "major": "Political Science and History",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Munster",
+    "state": "Indiana"
+  },
+  "alumni": {
+    "job": "Strategic Account Manager"
+  },
+  "personality": {
+    "socials": {
+      "instagram": "https://www.instagram.com/purduetoobah/"
+    }
+  },
+  "achievements": {
+    "student_leader": [2010],
+    "kappa_kappa_psi": true
+  },
+  "metadata": {
+    "image": "manbearpig.jpg"
+  }
+}

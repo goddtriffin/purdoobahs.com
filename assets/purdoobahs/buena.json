@@ -1,0 +1,23 @@
+{
+  "name": "Buena",
+  "slave_name": {
+    "first": "Jamie",
+    "last": "Reed"
+  },
+  "emoji": "👌",
+  "marching": {
+    "years_marched": [2017, 2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/CHqGXDRlOS4/"
+  },
+  "education": {
+    "major": "Animal Science",
+    "year": "senior"
+  },
+  "hometown": {
+    "city": "Lowell",
+    "state": "Indiana"
+  },
+  "metadata": {
+    "image": "buena.jpg"
+  }
+}

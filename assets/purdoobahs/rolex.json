@@ -1,0 +1,23 @@
+{
+  "name": "Rolex",
+  "slave_name": {
+    "first": "Aaron",
+    "last": "Cruz"
+  },
+  "emoji": "⏱",
+  "marching": {
+    "years_marched": [2017, 2018, 2020],
+    "shoutout": "https://www.instagram.com/p/CHx9_V4lS9N/"
+  },
+  "education": {
+    "major": "Acting/Theatre",
+    "year": "senior"
+  },
+  "hometown": {
+    "city": "Elwood",
+    "state": "Indiana"
+  },
+  "metadata": {
+    "image": "rolex.jpg"
+  }
+}

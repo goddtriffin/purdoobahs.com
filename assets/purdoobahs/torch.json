@@ -1,0 +1,34 @@
+{
+  "name": "Torch",
+  "slave_name": {
+    "first": "Colin",
+    "last": "Mulron"
+  },
+  "emoji": "🔥",
+  "marching": {
+    "years_marched": [2017, 2018],
+    "shoutout": "https://www.instagram.com/p/BoPRq2Fgdu-/"
+  },
+  "education": {
+    "major": "UX Design",
+    "year": "senior"
+  },
+  "hometown": {
+    "city": "Nashville",
+    "state": "Tennessee"
+  },
+  "personality": {
+    "hobbies": [
+      "watching history documentaries",
+      "hanging out with his brothers in Phi Sigma Kappa",
+      "spending time with his family"
+    ]
+  },
+  "achievements": {
+    "student_leader": [2018],
+    "bottom_feeder_committee": true
+  },
+  "metadata": {
+    "image": "torch.jpg"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Turkey",
+  "slave_name": {
+    "first": "Matthew",
+    "last": "Gobel"
+  },
+  "emoji": "🦃",
+  "marching": {
+    "years_marched": [2018, 2019, 2020]
+  },
+  "education": {
+    "major": "Agricultural Engineering",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Oxford",
+    "state": "Indiana"
+  },
+  "achievements": {
+    "student_leader": [2019, 2020]
+  },
+  "metadata": {
+    "image": "turkey.jpg"
+  }
+}

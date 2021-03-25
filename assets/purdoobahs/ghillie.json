@@ -1,0 +1,30 @@
+{
+  "name": "Ghillie",
+  "slave_name": {
+    "first": "Tyler",
+    "last": "Eggert"
+  },
+  "emoji": "🌿",
+  "marching": {
+    "years_marched": [2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/CE9wCSkFtZU/"
+  },
+  "education": {
+    "major": "Agricultural Systems Management",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Laporte",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "working on his truck",
+      "working on his farm",
+      "hanging out with friends"
+    ]
+  },
+  "metadata": {
+    "image": "ghillie.jpg"
+  }
+}

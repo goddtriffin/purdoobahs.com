@@ -1,0 +1,30 @@
+{
+  "name": "Holdoor",
+  "slave_name": {
+    "first": "Logan",
+    "last": "Juran"
+  },
+  "emoji": "🚪",
+  "marching": {
+    "years_marched": [2019, 2020],
+    "shoutout": "https://www.instagram.com/p/CFH7rLWlllR/"
+  },
+  "education": {
+    "major": "Pharmacy",
+    "year": "sophomore"
+  },
+  "hometown": {
+    "city": "Highland",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "playing guitar",
+      "swimming",
+      "hanging out with his friends"
+    ]
+  },
+  "metadata": {
+    "image": "holdoor.jpg"
+  }
+}

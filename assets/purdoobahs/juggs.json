@@ -1,0 +1,33 @@
+{
+  "name": "Juggs",
+  "slave_name": {
+    "first": "Ben",
+    "last": "Guzek"
+  },
+  "emoji": "🏺",
+  "marching": {
+    "years_marched": [2015, 2016, 2017, 2018],
+    "shoutout": "https://www.instagram.com/p/BnmGLkQHkuC/"
+  },
+  "education": {
+    "major": "Business Management",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Schererville",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "supporting the cubs",
+      "reading/writing",
+      "spending time with his friends and family"
+    ]
+  },
+  "achievements": {
+    "student_leader": [2017, 2018]
+  },
+  "metadata": {
+    "image": "juggs.jpg"
+  }
+}

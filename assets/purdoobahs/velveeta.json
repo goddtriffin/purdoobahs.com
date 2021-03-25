@@ -1,0 +1,30 @@
+{
+  "name": "Velveeta",
+  "slave_name": {
+    "first": "Reagan",
+    "last": "Duffy"
+  },
+  "emoji": "🤢",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CFuUEovFhD2/"
+  },
+  "education": {
+    "major": "Actuarial Science / Statistics",
+    "minor": "Economics / MGMT / Environmental Policy",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Vero Beach",
+    "state": "Florida"
+  },
+  "personality": {
+    "hobbies": [
+      "watching stand-up comedy",
+      "painting"
+    ]
+  },
+  "metadata": {
+    "image": "velveeta.jpg"
+  }
+}

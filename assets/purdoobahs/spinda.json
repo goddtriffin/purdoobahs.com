@@ -1,0 +1,22 @@
+{
+  "name": "Spinda",
+  "slave_name": {
+    "first": "Elena",
+    "last": "Mendoza"
+  },
+  "emoji": "🐰🌪",
+  "marching": {
+    "years_marched": [2019, 2020]
+  },
+  "education": {
+    "major": "Elementary Education",
+    "year": "sophomore"
+  },
+  "hometown": {
+    "city": "Indianapolis",
+    "state": "Indiana"
+  },
+  "metadata": {
+    "image": "spinda.jpg"
+  }
+}

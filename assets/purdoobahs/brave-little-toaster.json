@@ -1,0 +1,31 @@
+{
+  "name": "Brave Little Toaster",
+  "slave_name": {
+    "first": "Tyler",
+    "last": "Hand"
+  },
+  "emoji": "👩‍❤️‍👨",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CGApEp9FhC3/"
+  },
+  "education": {
+    "major": "Exploratory Studies",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "San Marino",
+    "state": "California"
+  },
+  "personality": {
+    "hobbies": [
+      "Purdue Rail Road Club",
+      "Playing Valorant",
+      "finding new places to eat with his friends",
+      "biking to the beach"
+    ]
+  },
+  "metadata": {
+    "image": "brave-little-toaster.jpg"
+  }
+}

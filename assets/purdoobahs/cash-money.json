@@ -1,0 +1,31 @@
+{
+  "name": "Cash Money",
+  "slave_name": {
+    "first": "Cameron",
+    "last": "Morningstar"
+  },
+  "emoji": "💸",
+  "marching": {
+    "years_marched": [2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/B3vBZhBFPhK/"
+  },
+  "education": {
+    "major": "Electrical Engineering",
+    "minor": "Business Economics",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Shelbyville",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "playing video games",
+      "watching football",
+      "hanging out with friends and family"
+    ]
+  },
+  "metadata": {
+    "image": "cash-money.jpg"
+  }
+}

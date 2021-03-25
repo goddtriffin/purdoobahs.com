@@ -1,0 +1,27 @@
+{
+  "name": "Swoosh",
+  "slave_name": {
+    "first": "Stephanie",
+    "last": "Eichamer"
+  },
+  "emoji": "🏀",
+  "marching": {
+    "years_marched": [2019, 2020],
+    "shoutout": "https://www.instagram.com/p/B9uhMZwF8S6/"
+  },
+  "education": {
+    "major": "Marketing",
+    "year": "sophomore"
+  },
+  "hometown": {
+    "city": "Naperville",
+    "state": "Illinois"
+  },
+  "achievements": {
+    "student_leader": [2019, 2020],
+    "spoonsassins_victories": [2019]
+  },
+  "metadata": {
+    "image": "swoosh.jpg"
+  }
+}

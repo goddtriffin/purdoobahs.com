@@ -1,0 +1,22 @@
+{
+  "name": "Juice",
+  "slave_name": {
+    "first": "Zachary",
+    "last": "Ryan"
+  },
+  "emoji": "🧃",
+  "marching": {
+    "years_marched": [2020]
+  },
+  "education": {
+    "major": "Unmanned Aerial Systems",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Charlotte",
+    "state": "North Carolina"
+  },
+  "metadata": {
+    "image": "juice.jpg"
+  }
+}

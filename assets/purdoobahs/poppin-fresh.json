@@ -1,0 +1,30 @@
+{
+  "name": "Poppin' Fresh",
+  "slave_name": {
+    "first": "Liam",
+    "last": "Alford"
+  },
+  "emoji": "🥯",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CI_C5B4FV-l/"
+  },
+  "education": {
+    "major": "Physics",
+    "minor": "Philosophy",
+    "year": "sophomore"
+  },
+  "hometown": {
+    "city": "Los Angeles",
+    "state": "California"
+  },
+  "personality": {
+    "hobbies": [
+      "trying to brew the perfect cup of coffee",
+      "spending time with family"
+    ]
+  },
+  "metadata": {
+    "image": "poppin-fresh.jpg"
+  }
+}

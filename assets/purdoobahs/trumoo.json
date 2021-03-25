@@ -1,0 +1,29 @@
+{
+  "name": "TruMoo",
+  "slave_name": {
+    "first": "Rob",
+    "last": "Strange"
+  },
+  "emoji": "🐄",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CJG9ELnlRMi/"
+  },
+  "education": {
+    "major": "Polytechnic",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Ashburn",
+    "state": "Virginia"
+  },
+  "personality": {
+    "hobbies": [
+      "designing fictional roller coasters",
+      "playing with his dog"
+    ]
+  },
+  "metadata": {
+    "image": "trumoo.jpg"
+  }
+}

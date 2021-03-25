@@ -1,0 +1,29 @@
+{
+  "name": "Shirt",
+  "slave_name": {
+    "first": "Shawn",
+    "last": "Belongia"
+  },
+  "emoji": "👚",
+  "marching": {
+    "years_marched": [2020],
+    "shoutout": "https://www.instagram.com/p/CGU_r0Cpet5/"
+  },
+  "education": {
+    "major": "Engineering",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "North Andover",
+    "state": "Massachusetts"
+  },
+  "personality": {
+    "hobbies": [
+      "hiking and running outside",
+      "listening to music (especially the oldies)"
+    ]
+  },
+  "metadata": {
+    "image": "shirt.jpg"
+  }
+}

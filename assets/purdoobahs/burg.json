@@ -1,0 +1,26 @@
+{
+  "name": "Burg",
+  "slave_name": {
+    "first": "Calvin",
+    "last": "Held"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2017]
+  },
+  "education": {
+    "major": "",
+    "minor": "",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "",
+    "state": ""
+  },
+  "achievements": {
+    "bottom_feeder_committee": true
+  },
+  "metadata": {
+    "image": "burg.jpg"
+  }
+}

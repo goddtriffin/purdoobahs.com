@@ -26,10 +26,13 @@ buildstatic:  ## builds static resources
 	mkdir -p bin/static
 	rm -rf bin/static/*
 
-	# copy over html, files, images
+	# copy over ui: html, files, images
 	cp -Rn ui/html bin/html
 	cp -Rn ui/static/file bin/static/file
 	cp -Rn ui/static/image bin/static/image
+
+	# copy over assets
+	cp -Rn assets bin/assets
 
 .PHONY: buildlocal
 buildlocal: buildstatic  ## builds the binary locally

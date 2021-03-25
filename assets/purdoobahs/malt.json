@@ -1,0 +1,22 @@
+{
+  "name": "Malt",
+  "slave_name": {
+    "first": "Nicholas",
+    "last": "Zurchin"
+  },
+  "emoji": "🥃",
+  "marching": {
+    "years_marched": [2019, 2020]
+  },
+  "education": {
+    "major": "Chemical Engineering",
+    "year": "sophomore"
+  },
+  "hometown": {
+    "city": "Pittsburg",
+    "state": "Pennsylvania"
+  },
+  "metadata": {
+    "image": "malt.jpg"
+  }
+}

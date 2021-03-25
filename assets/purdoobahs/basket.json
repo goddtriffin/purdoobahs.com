@@ -1,0 +1,24 @@
+{
+  "name": "Basket",
+  "slave_name": {
+    "first": "Cameron",
+    "last": "McGugan"
+  },
+  "emoji": "🗑️",
+  "marching": {
+    "years_marched": [2017, 2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/CHvZDTjlFYy/"
+  },
+  "education": {
+    "major": "Electrical Engineering",
+    "minor": "Management",
+    "year": "senior"
+  },
+  "hometown": {
+    "city": "Shelbyville",
+    "state": "Indiana"
+  },
+  "metadata": {
+    "image": "basket.jpg"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Stark",
+  "slave_name": {
+    "first": "Greg",
+    "last": "Nelson"
+  },
+  "emoji": "🐦",
+  "marching": {
+    "years_marched": [2014, 2015, 2016, 2017],
+    "shoutout": "https://www.instagram.com/p/CKjaBueFdmW/"
+  },
+  "education": {
+    "major": "Building Construction Management",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "West Lafayette",
+    "state": "Indiana"
+  },
+  "achievements": {
+    "tau_beta_sigma": true
+  },
+  "metadata": {
+    "image": "stark.jpg"
+  }
+}

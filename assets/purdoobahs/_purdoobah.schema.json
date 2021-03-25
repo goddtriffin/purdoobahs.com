@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.purdoobahs.com/schemas/_purdoobah.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "Purdoobah",
+  "description": "A Purdoobah",
+  "required": ["name", "slave_name", "marching", "education", "hometown", "metadata"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name",
+      "description": "This Purdoobah's nickname"
+    },
+    "slave_name": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Slave Name",
+      "description": "This Purdoobah's real name",
+      "required": ["first", "last"],
+      "properties": {
+        "first": {
+          "type": "string",
+          "title": "First Name",
+          "description": "This Purdoobah's first name"
+        },
+        "middle": {
+          "type": "string",
+          "title": "Middle Name",
+          "description": "This Purdoobah's middle name"
+        },
+        "last": {
+          "type": "string",
+          "title": "Last Name",
+          "description": "This Purdoobah's last name"
+        }
+      }
+    },
+    "emoji": {
+      "type": "string",
+      "title": "Emoji",
+      "description": "An emoji related to this Purdoobah's nickname"
+    },
+    "marching": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Marching",
+      "description": "All details about this Purdoobah's marching career",
+      "required": ["years_marched"],
+      "properties": {
+        "years_marched": {
+          "type": "array",
+          "title": "Years Marched",
+          "description": "A list of all the years this Purdoobah marched",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "shoutout": {
+          "type": "string",
+          "format": "iri-reference",
+          "title": "Shoutout",
+          "description": "A link to this Purdoobah's Instagram shoutout post"
+        }
+      }
+    },
+    "education": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Education",
+      "description": "All details about this Purdoobah's educational career at Purdue",
+      "required": ["major", "year"],
+      "properties": {
+        "major": {
+          "type": "string",
+          "title": "Major",
+          "description": "This Purdoobah's educational Major"
+        },
+        "minor": {
+          "type": "string",
+          "title": "Minor",
+          "description": "This Purdoobah's educational Minor"
+        },
+        "year": {
+          "type": "string",
+          "title": "Year",
+          "description": "This Purdoobah's year in school",
+          "enum": ["freshman", "sophomore", "junior", "senior", "super-senior", "alumni"]
+        }
+      }
+    },
+    "hometown": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Home",
+      "description": "The hometown of this Purdoobah",
+      "required": ["city", "state"],
+      "properties": {
+        "city": {
+          "type": "string",
+          "title": "City",
+          "description": "The city where this Purdoobah grew up"
+        },
+        "state": {
+          "type": "string",
+          "title": "State",
+          "description": "The state where this Purdoobah grew up"
+        }
+      }
+    },
+    "alumni": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Alumni",
+      "description": "All details about this Purdoobah's post-grad life",
+      "required": [],
+      "properties": {
+        "job": {
+          "type": "string",
+          "title": "Job",
+          "description": "This Purdoobah's real life job"
+        }
+      }
+    },
+    "personality": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Personality",
+      "description": "Fun facts about this Purdoobah",
+      "required": [],
+      "properties": {
+        "hobbies": {
+          "type": "array",
+          "title": "Hobbies",
+          "description": "A list of this Purdoobah's hobbies",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "socials": {
+          "type": "object",
+          "additionalProperties": false,
+          "title": "Socials",
+          "description": "Links to this Purdoobah's social media accounts",
+          "required": [],
+          "properties": {
+            "facebook": {
+              "type": "string",
+              "format": "iri-reference",
+              "title": "Facebook",
+              "description": "A link to this Purdoobah's Facebook account"
+            },
+            "instagram": {
+              "type": "string",
+              "format": "iri-reference",
+              "title": "Instagram",
+              "description": "A link to this Purdoobah's Instagram account"
+            },
+            "linkedin": {
+              "type": "string",
+              "format": "iri-reference",
+              "title": "LinkedIn",
+              "description": "A link to this Purdoobah's LinkedIn account"
+            }
+          }
+        }
+      }
+    },
+    "achievements": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Achievements",
+      "description": "The achievements this Purdoobah garnered during their tenure",
+      "required": [],
+      "properties": {
+        "student_leader": {
+          "type": "array",
+          "title": "Student Leader",
+          "description": "The years this Purdoobah has been a section leader",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "bottom_feeder_committee": {
+          "type": "boolean",
+          "title": "Bottom Feeder Committee",
+          "description": "If this Purdoobah was a member of the Bottom Feeder Committee"
+        },
+        "spoonsassins_victories": {
+          "type": "array",
+          "title": "Spoon-sassins Winner",
+          "description": "The years this Purdoobah was a winner of Spoon-sassins",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "kappa_kappa_psi": {
+          "type": "boolean",
+          "title": "Kappa Kappa Psi",
+          "description": "If this Purdoobah was an honorary member of the Kappa Kappa Psi band service fraternity"
+        },
+        "tau_beta_sigma": {
+          "type": "boolean",
+          "title": "Tau Beta Sigma",
+          "description": "If this Purdoobah was an honorary member of the Tau Beta Sigma band service sorority"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Metadata",
+      "description": "Data needed for code reasons",
+      "required": ["image"],
+      "properties": {
+        "image": {
+          "type": "string",
+          "title": "Image",
+          "description": "The file name for this Purdoobah's image"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Domino",
+  "slave_name": {
+    "first": "William",
+    "last": "Rater"
+  },
+  "emoji": "🎲",
+  "marching": {
+    "years_marched": [2020]
+  },
+  "education": {
+    "major": "Political Science",
+    "minor": "Environmental Science",
+    "year": "freshman"
+  },
+  "hometown": {
+    "city": "Valparaiso",
+    "state": "Indiana"
+  },
+  "metadata": {
+    "image": "domino.jpg"
+  }
+}

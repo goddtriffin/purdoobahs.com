@@ -1,0 +1,36 @@
+{
+  "name": "Timber",
+  "slave_name": {
+    "first": "Tyler",
+    "last": "Goldsmith"
+  },
+  "emoji": "🪵",
+  "marching": {
+    "years_marched": [2015, 2016, 2017, 2018],
+    "shoutout": "https://www.instagram.com/p/BoKa5AqHoD2/"
+  },
+  "education": {
+    "major": "Mathematics",
+    "minor": "Music Theory and History",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Jacksonville",
+    "state": "Florida"
+  },
+  "alumni": {
+    "job": "Integration Engineer"
+  },
+  "personality": {
+    "hobbies": [
+      "write/listen to music",
+      "play videogames"
+    ]
+  },
+  "achievements": {
+    "student_leader": [2017, 2018]
+  },
+  "metadata": {
+    "image": "timber.jpg"
+  }
+}

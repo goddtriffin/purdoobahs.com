@@ -1,0 +1,24 @@
+{
+  "name": "Officer Wedge",
+  "slave_name": {
+    "first": "Nicholas",
+    "last": "Branson"
+  },
+  "emoji": "👮🏻‍",
+  "marching": {
+    "years_marched": [2017, 2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/CHstwZZlNW-/"
+  },
+  "education": {
+    "major": "Biochemistry",
+    "minor": "Statistics",
+    "year": "senior"
+  },
+  "hometown": {
+    "city": "Shelbyville",
+    "state": "Indiana"
+  },
+  "metadata": {
+    "image": "officer-wedge.jpg"
+  }
+}

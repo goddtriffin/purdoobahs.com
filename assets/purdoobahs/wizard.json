@@ -1,0 +1,27 @@
+{
+  "name": "Wizard",
+  "slave_name": {
+    "first": "Chadwick",
+    "last": "Choy"
+  },
+  "emoji": "🧙‍",
+  "marching": {
+    "years_marched": [2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/B9pHhsSFHzX/"
+  },
+  "education": {
+    "major": "Materials Engineering",
+    "minor": "Chinese",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Waipahu",
+    "state": "Hawaii"
+  },
+  "achievements": {
+    "student_leader": [2020]
+  },
+  "metadata": {
+    "image": "wizard.jpg"
+  }
+}

@@ -38,6 +38,14 @@ func main() {
 		helmet:   createHelmet(),
 	}
 
+	invalidFiles, err := app.validateJsonSchema()
+	if err != nil {
+		app.errorLog.Fatalln(err)
+	}
+	if invalidFiles {
+		app.errorLog.Fatalln("Invalid Purdoobah JSON detected - exiting.")
+	}
+
 	switch strings.ToLower(*env) {
 	case "dev", "develop", "development":
 		app.env = development
@@ -51,14 +59,14 @@ func main() {
 			*addr = ":80"
 		}
 	default:
-		log.Println("-env flag needs to be one of: 'dev', 'develop', 'development', 'prod', or 'production'")
+		app.errorLog.Println("-env flag needs to be one of: 'dev', 'develop', 'development', 'prod', or 'production'")
 		flag.Usage()
 		os.Exit(1)
 	}
 
 	templateCache, err := newTemplateCache("./ui/")
 	if err != nil {
-		app.errorLog.Fatal(err)
+		app.errorLog.Fatalln(err)
 	}
 	app.templateCache = templateCache
 
@@ -88,5 +96,5 @@ func main() {
 		err = srv.ListenAndServe()
 	}
 
-	app.errorLog.Fatal(err)
+	app.errorLog.Fatalln(err)
 }

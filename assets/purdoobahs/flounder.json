@@ -1,0 +1,32 @@
+{
+  "name": "Flounder",
+  "slave_name": {
+    "first": "Sean",
+    "last": "Knickerbocker"
+  },
+  "emoji": "🐟",
+  "marching": {
+    "years_marched": [2018, 2019, 2020],
+    "shoutout": "https://www.instagram.com/p/CFceFkUF2nF/"
+  },
+  "education": {
+    "major": "Insect Biology w/ concentration in Forensic Entomology",
+    "minor": "Criminal Justice and Forensics",
+    "year": "junior"
+  },
+  "hometown": {
+    "city": "Peru",
+    "state": "Indiana"
+  },
+  "personality": {
+    "hobbies": [
+      "hanging out with friends"
+    ]
+  },
+  "achievements": {
+    "bottom_feeder_committee": true
+  },
+  "metadata": {
+    "image": "flounder.jpg"
+  }
+}
