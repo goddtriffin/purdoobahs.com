@@ -3,20 +3,21 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/MagnusFrater/fontawesome"
 	"html/template"
 	"net/http"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/MagnusFrater/fontawesome"
 )
 
 // top-level
 type templateData struct {
 	Metadata metadata
-	Header header
-	Footer footer
-	Page page
+	Header   header
+	Footer   footer
+	Page     page
 }
 
 // layout / page / partial
@@ -26,16 +27,17 @@ type (
 		CountryCode  string
 		Charset      string
 		Description  string
-		Project string
+		Project      string
 		Author       string
 		Twitter      twitter
 		HomeURL      string
 		Keywords     []string
 		ThemeColor   string
+		SocialImage  string
 	}
 
 	header struct {
-		NavLinks  []navLink
+		NavLinks []navLink
 	}
 
 	footer struct {
@@ -44,7 +46,7 @@ type (
 
 	page struct {
 		DisplayName string
-		URL string
+		URL         string
 
 		StyleSheets []string
 		Scripts     []string
@@ -59,7 +61,7 @@ type (
 
 	copyright struct {
 		Start time.Time
-		End time.Time
+		End   time.Time
 	}
 
 	image struct {
@@ -176,13 +178,13 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 
 	td.Metadata = metadata{
 		LanguageCode: "en",
-		CountryCode: "US",
-		Charset: "utf-8",
-		Description: "The official website of the Purdue All-American Marching Band Toobah section.",
-		Project: "Purdoobahs",
-		Author: "Todd Everett Griffin",
-		Twitter: twitter{Username: "@goddtriffin"},
-		HomeURL: "https://www.purdoobahs.com",
+		CountryCode:  "US",
+		Charset:      "utf-8",
+		Description:  "The official website of the Purdue All-American Marching Band Toobah section.",
+		Project:      "Purdoobahs",
+		Author:       "Todd Everett Griffin",
+		Twitter:      twitter{Username: "@goddtriffin"},
+		HomeURL:      "https://www.purdoobahs.com",
 		Keywords: []string{
 			"purdoobahs", "purdoobah", "Purdue Toobah", "Purdue tuba",
 			"Purdue", "Purdue University", "university",
@@ -195,12 +197,18 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		ThemeColor: "#f7cb64",
 	}
 
+	// backup social image in case one isn't provided
+	if td.Metadata.SocialImage == "" {
+		td.Metadata.SocialImage = "/static/image/purdoobahs.webp"
+	}
+
 	td.Header = header{
 		NavLinks: []navLink{
 			{DisplayName: "Home", URL: "/"},
 			{DisplayName: "F.A.Q.", URL: "/faq"},
 			{DisplayName: "Cravers Hall of Fame", URL: "/cravers-hall-of-fame"},
 			{DisplayName: "Alumni", URL: "/alumni"},
+			{DisplayName: "Traditions", URL: "/traditions"},
 		},
 	}
 
@@ -211,8 +219,9 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		},
 	}
 
-	styles := []string{}
-	td.Page.StyleSheets = append(styles, td.Page.StyleSheets...)
+	// place default stylesheets before the ones provided
+	stylesheets := []string{}
+	td.Page.StyleSheets = append(stylesheets, td.Page.StyleSheets...)
 
 	return td
 }
