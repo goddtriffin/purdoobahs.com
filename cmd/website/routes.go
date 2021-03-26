@@ -1,9 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"runtime/debug"
+
+	"github.com/gorilla/mux"
 
 	"github.com/justinas/alice"
 )
@@ -11,35 +14,35 @@ import (
 func (app *application) routes() http.Handler {
 	standardMiddleware := alice.New(app.recoverPanic, app.logRequest, app.helmet.Secure)
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/faq", app.faq)
-	mux.HandleFunc("/cravers-hall-of-fame", app.craversHallOfFame)
-	mux.HandleFunc("/alumni", app.alumni)
-	mux.HandleFunc("/traditions", app.traditions)
+	router := mux.NewRouter()
+	apiSubrouter := router.PathPrefix("/api").Subrouter()
+	apiPurdoobahSubrouter := apiSubrouter.PathPrefix("/purdoobah").Subrouter()
 
-	mux.HandleFunc("/favicon.ico", app.favicon)
-	mux.HandleFunc("/robots.txt", app.robotsTxt)
-	mux.HandleFunc("/humans.txt", app.humansTxt)
+	router.HandleFunc("/faq", app.faq).Methods("GET")
+	router.HandleFunc("/cravers-hall-of-fame", app.craversHallOfFame).Methods("GET")
+	router.HandleFunc("/alumni", app.alumni).Methods("GET")
+	router.HandleFunc("/traditions", app.traditions).Methods("GET")
+	router.HandleFunc("/purdoobah/{name}", app.purdoobahProfile).Methods("GET")
+	router.HandleFunc("/favicon.ico", app.favicon).Methods("GET")
+	router.HandleFunc("/robots.txt", app.robotsTxt).Methods("GET")
+	router.HandleFunc("/humans.txt", app.humansTxt).Methods("GET")
+	router.HandleFunc("/health-check", app.healthCheck).Methods("GET")
+	router.Handle("/static/", http.StripPrefix(
+		"/static",
+		http.FileServer(http.Dir("./ui/static")),
+	),
+	).Methods("GET")
+	router.HandleFunc("/", app.home).Methods("GET")
 
-	mux.HandleFunc("/health-check", app.healthCheck)
+	apiPurdoobahSubrouter.HandleFunc("/all", app.allPurdoobahs).Methods("GET")
+	apiPurdoobahSubrouter.HandleFunc("/{name}", app.purdoobahByName).Methods("GET")
 
-	mux.HandleFunc("/", app.home)
-
-	fileServer := http.FileServer(http.Dir("./ui/static"))
-	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
-
-	return standardMiddleware.Then(mux)
+	return standardMiddleware.Then(router)
 }
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		app.notFound(w)
-		return
-	}
-
-	if r.Method != http.MethodGet {
-		w.Header().Set("Allow", http.MethodGet)
-		app.clientError(w, http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -52,12 +55,6 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) faq(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		w.Header().Set("Allow", http.MethodGet)
-		app.clientError(w, http.StatusMethodNotAllowed)
-		return
-	}
-
 	app.render(w, r, "faq.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "F.A.Q.",
@@ -67,12 +64,6 @@ func (app *application) faq(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) craversHallOfFame(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		w.Header().Set("Allow", http.MethodGet)
-		app.clientError(w, http.StatusMethodNotAllowed)
-		return
-	}
-
 	app.render(w, r, "cravers-hall-of-fame.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "Cravers Hall of Fame",
@@ -82,12 +73,6 @@ func (app *application) craversHallOfFame(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) alumni(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		w.Header().Set("Allow", http.MethodGet)
-		app.clientError(w, http.StatusMethodNotAllowed)
-		return
-	}
-
 	app.render(w, r, "alumni.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "Alumni",
@@ -97,17 +82,32 @@ func (app *application) alumni(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) traditions(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		w.Header().Set("Allow", http.MethodGet)
-		app.clientError(w, http.StatusMethodNotAllowed)
-		return
-	}
-
 	app.render(w, r, "traditions.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "Traditions",
 			URL:         "/traditions",
 		},
+	})
+}
+
+func (app *application) purdoobahProfile(w http.ResponseWriter, r *http.Request) {
+	// get name
+	vars := mux.Vars(r)
+	name := vars["name"]
+
+	// get purdoobah
+	purdoobahByName, err := app.purdoobahService.ByName(name)
+	if err != nil {
+		app.notFound(w)
+		return
+	}
+
+	app.render(w, r, "purdoobah-profile.page.tmpl", &templateData{
+		Page: page{
+			DisplayName: purdoobahByName.Name,
+			URL:         fmt.Sprintf("/purdoobah/%s", name),
+		},
+		PurdoobahByName: purdoobahByName,
 	})
 }
 
@@ -129,6 +129,56 @@ func (app *application) robotsTxt(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) humansTxt(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/static/file/humans.txt", http.StatusMovedPermanently)
+}
+
+func (app *application) allPurdoobahs(w http.ResponseWriter, r *http.Request) {
+	// get all purdoobahs
+	allPurdoobahs, err := app.purdoobahService.All()
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// convert to JSON bytes
+	b, err := json.Marshal(allPurdoobahs)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// send it out
+	_, err = w.Write(b)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+}
+
+func (app *application) purdoobahByName(w http.ResponseWriter, r *http.Request) {
+	// get name
+	vars := mux.Vars(r)
+	name := vars["name"]
+
+	// get purdoobah
+	purdoobahByName, err := app.purdoobahService.ByName(name)
+	if err != nil {
+		app.notFound(w)
+		return
+	}
+
+	// convert to JSON bytes
+	b, err := json.Marshal(purdoobahByName)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// send it out
+	_, err = w.Write(b)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
 }
 
 func (app *application) notFound(w http.ResponseWriter) {

@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/purdoobahs/purdoobahs.com/purdoobahs"
+
 	"github.com/MagnusFrater/fontawesome"
 )
 
@@ -18,6 +20,9 @@ type templateData struct {
 	Header   header
 	Footer   footer
 	Page     page
+
+	PurdoobahByName *purdoobahs.Purdoobah
+	AllPurdoobahs   []*purdoobahs.Purdoobah
 }
 
 // layout / page / partial

@@ -15,8 +15,12 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 	invalidFiles := false
 
 	// read in the Purdoobah JSON Schema
-	b, err := ioutil.ReadFile("./assets/purdoobahs/_purdoobah.schema.json")
+	purdoobahJSONSchemaFilepath := "./assets/purdoobahs/_purdoobah.schema.json"
+	b, err := ioutil.ReadFile(purdoobahJSONSchemaFilepath)
 	if err != nil {
+		errorLog.Println(fmt.Sprintf(
+			"error reading file: %s",
+			"./assets/purdoobahs/_purdoobah.schema.json"))
 		return true, err
 	}
 	schema := gojsonschema.NewStringLoader(string(b))
@@ -24,6 +28,7 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 	// find all the individual Purdoobah files
 	filepaths, err := walkMatch("./assets/purdoobahs/", `*.json`)
 	if err != nil {
+		errorLog.Println("error parsing Purdoobah assets directory")
 		return true, err
 	}
 
@@ -33,11 +38,11 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 		if strings.Contains(path, "_") {
 			continue
 		}
-		infoLog.Println(fmt.Sprintf("Validating %s ...", path))
 
 		// read in the Purdoobah JSON document
 		b, err := ioutil.ReadFile(path)
 		if err != nil {
+			errorLog.Println(fmt.Sprintf("error reading file: %s", path))
 			return true, err
 		}
 		document := gojsonschema.NewStringLoader(string(b))
@@ -45,6 +50,7 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 		// validate the document against the schema
 		result, err := gojsonschema.Validate(schema, document)
 		if err != nil {
+			errorLog.Println(fmt.Sprintf("error validating file: %s", path))
 			return true, err
 		}
 
@@ -52,7 +58,7 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 		if !result.Valid() {
 			invalidFiles = true
 			for _, desc := range result.Errors() {
-				errorLog.Println(fmt.Sprintf("ERROR - %s", desc))
+				errorLog.Println(fmt.Sprintf("validation error (%s): %s", path, desc))
 			}
 		}
 	}
