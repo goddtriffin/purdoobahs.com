@@ -5,7 +5,7 @@
 
 {{- range $i, $p := .AllPurdoobahs -}}
 <div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
-    <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a>{{- .Emoji -}}</h2>
+    <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
     <p>
         {{- range $j, $y := $p.Marching.YearsMarched -}}
             {{$y}}
