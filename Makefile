@@ -18,6 +18,10 @@ help: # displays Makefile target info
 			printf "%s\n" $$help_info; \
 	done
 
+.PHONY: watchsass
+watchsass: ## hot reloads Sass stylesheets
+	sass --watch --update --style=compressed --no-source-map --color --unicode ui/static/scss:bin/static/stylesheet
+
 .PHONY: buildstatic
 buildstatic:  ## builds static resources
 	# generate/clean bin
@@ -31,6 +35,9 @@ buildstatic:  ## builds static resources
 	cp -Rn ui/static/file bin/static/file
 	cp -Rn ui/static/image bin/static/image
 	cp -Rn ui/static/script bin/static/script
+
+	# generate css from sass
+	sass --style=compressed --no-source-map --color --unicode ui/static/scss:bin/static/stylesheet
 
 	# copy over assets
 	cp -Rn assets bin/assets

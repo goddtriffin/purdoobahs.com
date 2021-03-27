@@ -236,5 +236,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		},
 	}
 
+	td.Page.StyleSheets = []string{"main.css"}
+
 	return td
 }
