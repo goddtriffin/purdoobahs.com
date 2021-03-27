@@ -2,6 +2,19 @@ package purdoobahs
 
 import "strings"
 
+// defines a Purdoobahs year in school
+type Year string
+
+const (
+	Alumni      Year = "alumni"
+	SuperSenior      = "super-senior"
+	Senior           = "senior"
+	Junior           = "junior"
+	Sophomore        = "sophomore"
+	Freshman         = "freshman"
+)
+
+// sorts Purdoobahs by name
 type ByName []*Purdoobah
 
 func (p ByName) Len() int {
@@ -16,11 +29,7 @@ func (p ByName) Less(i, j int) bool {
 	return strings.Compare(p[i].Name, p[j].Name) < 0
 }
 
-type IPurdoobahService interface {
-	All() ([]*Purdoobah, error)
-	ByName(string) (*Purdoobah, error)
-}
-
+// defines a Purdoobah
 type Purdoobah struct {
 	ID                   string `json:"id"`
 	Name                 string `json:"name"`
@@ -39,7 +48,7 @@ type Purdoobah struct {
 	Education struct {
 		Major string `json:"major"`
 		Minor string `json:"minor,omitempty"`
-		Year  string `json:"year"`
+		Year  Year   `json:"year"`
 	} `json:"education"`
 
 	Hometown struct {
@@ -74,4 +83,30 @@ type Purdoobah struct {
 			Alt  string `json:"alt"`
 		} `json:"image"`
 	} `json:"metadata"`
+}
+
+func (p *Purdoobah) MarchedDuringYear(targetYear int) bool {
+	for _, year := range p.Marching.YearsMarched {
+		if year == targetYear {
+			return true
+		}
+	}
+	return false
+}
+
+func (p *Purdoobah) IsStudentLeader() bool {
+	return len(p.Achievements.StudentLeader) > 0
+}
+
+func (p *Purdoobah) IsStudentLeaderInYear(targetYear int) bool {
+	for _, year := range p.Achievements.StudentLeader {
+		if year == targetYear {
+			return true
+		}
+	}
+	return false
+}
+
+func (p *Purdoobah) IsYear(targetYear Year) bool {
+	return p.Education.Year == targetYear
 }

@@ -24,6 +24,7 @@ type templateData struct {
 
 	PurdoobahByName *purdoobahs.Purdoobah
 	AllPurdoobahs   []*purdoobahs.Purdoobah
+	CurrentSection  *purdoobahs.Section
 }
 
 // layout / page / partial
@@ -43,7 +44,8 @@ type (
 	}
 
 	header struct {
-		NavLinks []navLink
+		NavLinks    []navLink
+		SocialMedia []socialMedia
 	}
 
 	footer struct {
@@ -68,11 +70,6 @@ type (
 	copyright struct {
 		Start time.Time
 		End   time.Time
-	}
-
-	image struct {
-		Name string
-		Alt  string
 	}
 
 	socialMedia struct {

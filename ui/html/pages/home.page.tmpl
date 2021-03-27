@@ -1,5 +1,22 @@
 {{template "base" .}}
 
 {{define "main"}}
-<h1>Display all current members</h1>
+{{- template "purdoobah-cards" .CurrentSection.StudentLeaders -}}
+{{- template "purdoobah-cards" .CurrentSection.SuperSeniors -}}
+{{- template "purdoobah-cards" .CurrentSection.Seniors -}}
+{{- template "purdoobah-cards" .CurrentSection.Juniors -}}
+{{- template "purdoobah-cards" .CurrentSection.Sophomores -}}
+{{- template "purdoobah-cards" .CurrentSection.Freshmen -}}
+{{end}}
+
+{{define "purdoobah-cards"}}
+{{range $i, $p := .}}
+<div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
+    <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
+
+    <picture>
+        <img src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
+    </picture>
+</div>
+{{end}}
 {{end}}

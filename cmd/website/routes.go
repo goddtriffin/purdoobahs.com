@@ -57,11 +57,19 @@ func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get current section
+	currentSection, err := app.purdoobahService.CurrentSection()
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
 	app.render(w, r, "home.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "Home",
 			URL:         "/",
 		},
+		CurrentSection: currentSection,
 	})
 }
 
@@ -114,7 +122,7 @@ func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Requ
 }
 
 func (app *application) pagePurdoobahDirectory(w http.ResponseWriter, r *http.Request) {
-	// get purdoobah
+	// get all purdoobahs
 	allPurdoobahs, err := app.purdoobahService.All()
 	if err != nil {
 		app.serveError(w, err)

@@ -1,12 +1,12 @@
 {{define "base"}}
 <!DOCTYPE html>
-<html lang="{{.Metadata.LanguageCode}}-{{.Metadata.CountryCode}}">
+<html lang="{{- .Metadata.LanguageCode -}}-{{- .Metadata.CountryCode -}}">
 	<head>
 		{{template "metadata" .}}
         {{template "favicon" .}}
 
 		{{range .Page.StyleSheets}}
-		<link rel="stylesheet" type="text/css" href="/static/stylesheet/{{.}}" />
+		<link rel="stylesheet" type="text/css" href="/static/stylesheet/{{- . -}}" />
 		{{end}}
 	</head>
 
@@ -27,9 +27,9 @@
   	    {{template "footer" .}}
 		</footer>
 
-		{{range .Page.Scripts}}
-		<script type='text/javascript' src='/static/script/{{.}}' defer></script>
-		{{end}}
+		{{- range .Page.Scripts -}}
+		<script type='text/javascript' src='/static/script/{{- . -}}' defer></script>
+		{{- end -}}
 	</body>
 </html>
 {{end}}
