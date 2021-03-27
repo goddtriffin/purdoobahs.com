@@ -69,6 +69,9 @@ type Purdoobah struct {
 	} `json:"achievements,omitempty"`
 
 	Metadata struct {
-		Image string `json:"image"`
+		Image struct {
+			File string `json:"file"`
+			Alt  string `json:"alt"`
+		} `json:"image"`
 	} `json:"metadata"`
 }

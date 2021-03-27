@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -148,14 +149,22 @@ func loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, error) {
 			return allPurdoobahs, err
 		}
 
+		// marshal it from JSON to struct
 		var p purdoobahs.Purdoobah
 		err = json.Unmarshal(b, &p)
 		if err != nil {
 			return allPurdoobahs, err
 		}
 
+		// generate ID (their toobah name)
 		id := strings.ReplaceAll(filepath.Base(path), ".json", "")
 		p.ID = id
+
+		// generate image location
+		p.Metadata.Image.File = fmt.Sprintf("%s.jpg", id)
+		p.Metadata.Image.Alt = fmt.Sprintf("%s's Profile Picture", p.Name)
+
+		// add it to container of all toobahs
 		allPurdoobahs[id] = &p
 	}
 
