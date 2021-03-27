@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/purdoobahs/purdoobahs.com/purdoobahs"
+	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 )
 
 type PurdoobahService struct {

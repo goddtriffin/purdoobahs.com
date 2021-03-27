@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/purdoobahs/purdoobahs.com/purdoobahs"
+	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 
 	"github.com/MagnusFrater/fontawesome"
 )

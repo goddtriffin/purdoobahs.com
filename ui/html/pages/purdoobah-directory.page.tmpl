@@ -14,9 +14,9 @@
         {{- end -}}
     </p>
 
-    <object data="/static/image/purdoobah/{{.Metadata.Image.File}}">
-        <img src="/static/image/purdoobah/_unknown.jpg" alt="{{.Metadata.Image.Alt}}">
-    </object>
+    <picture>
+        <img src="/static/image/purdoobah/{{.Metadata.Image.File}}" alt="{{.Metadata.Image.Alt}}">
+    </picture>
 </div>
 {{- end -}}
 {{- end -}}

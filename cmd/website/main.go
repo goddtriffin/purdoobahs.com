@@ -14,11 +14,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/purdoobahs/purdoobahs.com/inmemorydatabase"
+	"github.com/purdoobahs/purdoobahs.com/internal/inmemorydatabase"
 
-	"github.com/purdoobahs/purdoobahs.com/jsonschema"
+	"github.com/purdoobahs/purdoobahs.com/internal/jsonschema"
 
-	"github.com/purdoobahs/purdoobahs.com/purdoobahs"
+	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 
 	"github.com/MagnusFrater/helmet"
 )
@@ -161,7 +161,11 @@ func loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, error) {
 		p.ID = id
 
 		// generate image location
-		p.Metadata.Image.File = fmt.Sprintf("%s.jpg", id)
+		if doesPurdoobahHaveProfilePicture(id) {
+			p.Metadata.Image.File = fmt.Sprintf("%s.jpg", id)
+		} else {
+			p.Metadata.Image.File = "_unknown.jpg"
+		}
 		p.Metadata.Image.Alt = fmt.Sprintf("%s's Profile Picture", p.Name)
 
 		// add it to container of all toobahs
@@ -191,4 +195,30 @@ func walkMatch(root, pattern string) ([]string, error) {
 		return nil, err
 	}
 	return matches, nil
+}
+
+func doesPurdoobahHaveProfilePicture(id string) bool {
+	switch id {
+	case "brave-little-toaster",
+		"bucket",
+		"cowboy",
+		"crabcakes",
+		"domino",
+		"guido",
+		"juice",
+		"manbearpig",
+		"mr-moeschberger",
+		"ocarina",
+		"pfreys",
+		"poppin-fresh",
+		"professor-x",
+		"remington",
+		"shirt",
+		"stark",
+		"trumoo",
+		"velveeta":
+		return false
+	default:
+		return true
+	}
 }
