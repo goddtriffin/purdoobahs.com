@@ -5,7 +5,7 @@
   "additionalProperties": false,
   "title": "Purdoobah",
   "description": "A Purdoobah",
-  "required": ["name", "birth_certificate_name", "marching", "education", "hometown", "metadata"],
+  "required": ["name", "birth_certificate_name", "marching", "education", "hometown"],
   "properties": {
     "name": {
       "type": "string",
@@ -211,20 +211,6 @@
           "type": "boolean",
           "title": "Tau Beta Sigma",
           "description": "If this Purdoobah was an honorary member of the Tau Beta Sigma band service sorority"
-        }
-      }
-    },
-    "metadata": {
-      "type": "object",
-      "additionalProperties": false,
-      "title": "Metadata",
-      "description": "Data needed for code reasons",
-      "required": ["image"],
-      "properties": {
-        "image": {
-          "type": "string",
-          "title": "Image",
-          "description": "The file name for this Purdoobah's image"
         }
       }
     }

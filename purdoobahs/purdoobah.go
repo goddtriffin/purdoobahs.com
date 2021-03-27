@@ -1,11 +1,28 @@
 package purdoobahs
 
+import "strings"
+
+type ByName []*Purdoobah
+
+func (p ByName) Len() int {
+	return len(p)
+}
+
+func (p ByName) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
+}
+
+func (p ByName) Less(i, j int) bool {
+	return strings.Compare(p[i].Name, p[j].Name) < 0
+}
+
 type IPurdoobahService interface {
 	All() ([]*Purdoobah, error)
 	ByName(string) (*Purdoobah, error)
 }
 
 type Purdoobah struct {
+	ID                   string `json:"id"`
 	Name                 string `json:"name"`
 	BirthCertificateName struct {
 		First  string `json:"first"`

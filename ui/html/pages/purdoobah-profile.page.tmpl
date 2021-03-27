@@ -1,5 +1,7 @@
 {{template "base" .}}
 
 {{define "main"}}
-<h1>{{.PurdoobahByName.Name}}'s Profile</h1>
+{{with .PurdoobahByName}}
+<h1>{{.Name}} {{.Emoji}}</h1>
+{{end}}
 {{end}}

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -109,7 +110,16 @@ func keywords(keywords []string) string {
 	return strings.Join(keywords, ",")
 }
 
-func newTemplateCache(dir string) (map[string]*template.Template, error) {
+func subtract(x, y int) int {
+	return x - y
+}
+
+func marshal(v interface{}) template.JS {
+	a, _ := json.Marshal(v)
+	return template.JS(a)
+}
+
+func newTemplateCache() (map[string]*template.Template, error) {
 	fa, err := fontawesome.New("./assets/icons.json")
 	if err != nil {
 		return nil, err
@@ -122,11 +132,13 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 		"isoDate":     isoDate,
 		"fontawesome": fa.SVG,
 		"keywords":    keywords,
+		"subtract":    subtract,
+		"marshal":     marshal,
 	}
 
 	cache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob(filepath.Join(dir, "html/pages/*.page.tmpl"))
+	pages, err := filepath.Glob("./html/pages/*.page.tmpl")
 	if err != nil {
 		return nil, err
 	}
@@ -139,12 +151,12 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob(filepath.Join(dir, "html/layouts/*.layout.tmpl"))
+		ts, err = ts.ParseGlob("./html/layouts/*.layout.tmpl")
 		if err != nil {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob(filepath.Join(dir, "html/partials/*.partial.tmpl"))
+		ts, err = ts.ParseGlob("./html/partials/*.partial.tmpl")
 		if err != nil {
 			return nil, err
 		}
@@ -212,7 +224,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 			{DisplayName: "Home", URL: "/"},
 			{DisplayName: "F.A.Q.", URL: "/faq"},
 			{DisplayName: "Cravers Hall of Fame", URL: "/cravers-hall-of-fame"},
-			{DisplayName: "Alumni", URL: "/alumni"},
+			{DisplayName: "Alumni", URL: "/purdoobah"},
 			{DisplayName: "Traditions", URL: "/traditions"},
 		},
 	}
@@ -223,10 +235,6 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 			End:   time.Now(),
 		},
 	}
-
-	// place default stylesheets before the ones provided
-	stylesheets := []string{}
-	td.Page.StyleSheets = append(stylesheets, td.Page.StyleSheets...)
 
 	return td
 }

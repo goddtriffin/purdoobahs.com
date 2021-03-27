@@ -4,7 +4,7 @@
     "first": "Cameron",
     "last": "McGugan"
   },
-  "emoji": "🗑️",
+  "emoji": "🗑",
   "marching": {
     "years_marched": [2017, 2018, 2019, 2020],
     "shoutout": "https://www.instagram.com/p/CHvZDTjlFYy/"
@@ -17,8 +17,5 @@
   "hometown": {
     "city": "Shelbyville",
     "state": "Indiana"
-  },
-  "metadata": {
-    "image": "basket.jpg"
   }
 }

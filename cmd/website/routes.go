@@ -14,33 +14,44 @@ import (
 func (app *application) routes() http.Handler {
 	standardMiddleware := alice.New(app.recoverPanic, app.logRequest, app.helmet.Secure)
 
+	// routers
 	router := mux.NewRouter()
 	apiSubrouter := router.PathPrefix("/api").Subrouter()
 	apiPurdoobahSubrouter := apiSubrouter.PathPrefix("/purdoobah").Subrouter()
 
-	router.HandleFunc("/faq", app.faq).Methods("GET")
-	router.HandleFunc("/cravers-hall-of-fame", app.craversHallOfFame).Methods("GET")
-	router.HandleFunc("/alumni", app.alumni).Methods("GET")
-	router.HandleFunc("/traditions", app.traditions).Methods("GET")
-	router.HandleFunc("/purdoobah/{name}", app.purdoobahProfile).Methods("GET")
-	router.HandleFunc("/favicon.ico", app.favicon).Methods("GET")
-	router.HandleFunc("/robots.txt", app.robotsTxt).Methods("GET")
-	router.HandleFunc("/humans.txt", app.humansTxt).Methods("GET")
-	router.HandleFunc("/health-check", app.healthCheck).Methods("GET")
-	router.Handle("/static/", http.StripPrefix(
-		"/static",
-		http.FileServer(http.Dir("./ui/static")),
-	),
-	).Methods("GET")
-	router.HandleFunc("/", app.home).Methods("GET")
+	// pages
+	router.HandleFunc("/faq", app.pageFAQ).Methods("GET")
+	router.HandleFunc("/cravers-hall-of-fame", app.pageCraversHallOfFame).Methods("GET")
+	router.HandleFunc("/traditions", app.pageTraditions).Methods("GET")
+	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
+	router.HandleFunc("/purdoobah", app.pagePurdoobahDirectory).Methods("GET")
 
-	apiPurdoobahSubrouter.HandleFunc("/all", app.allPurdoobahs).Methods("GET")
-	apiPurdoobahSubrouter.HandleFunc("/{name}", app.purdoobahByName).Methods("GET")
+	// files
+	router.HandleFunc("/favicon.ico", app.fileFavicon).Methods("GET")
+	router.HandleFunc("/robots.txt", app.fileRobotsTxt).Methods("GET")
+	router.HandleFunc("/humans.txt", app.fileHumansTxt).Methods("GET")
+
+	// static files
+	router.PathPrefix("/static/").
+		Handler(http.StripPrefix(
+			"/static/",
+			http.FileServer(http.Dir("./static")),
+		))
+
+	// has to occur last because it is the most generic route "/"
+	router.HandleFunc("/", app.pageHome).Methods("GET")
+
+	// generic API
+	apiSubrouter.HandleFunc("/health-check", app.apiHealthCheck).Methods("GET")
+
+	// Purdoobah API
+	apiPurdoobahSubrouter.HandleFunc("/all", app.apiAllPurdoobahs).Methods("GET")
+	apiPurdoobahSubrouter.HandleFunc("/{name}", app.apiPurdoobahByName).Methods("GET")
 
 	return standardMiddleware.Then(router)
 }
 
-func (app *application) home(w http.ResponseWriter, r *http.Request) {
+func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		app.notFound(w)
 		return
@@ -54,7 +65,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (app *application) faq(w http.ResponseWriter, r *http.Request) {
+func (app *application) pageFAQ(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "faq.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "F.A.Q.",
@@ -63,7 +74,7 @@ func (app *application) faq(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (app *application) craversHallOfFame(w http.ResponseWriter, r *http.Request) {
+func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "cravers-hall-of-fame.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "Cravers Hall of Fame",
@@ -72,16 +83,7 @@ func (app *application) craversHallOfFame(w http.ResponseWriter, r *http.Request
 	})
 }
 
-func (app *application) alumni(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "alumni.page.tmpl", &templateData{
-		Page: page{
-			DisplayName: "Alumni",
-			URL:         "/alumni",
-		},
-	})
-}
-
-func (app *application) traditions(w http.ResponseWriter, r *http.Request) {
+func (app *application) pageTraditions(w http.ResponseWriter, r *http.Request) {
 	app.render(w, r, "traditions.page.tmpl", &templateData{
 		Page: page{
 			DisplayName: "Traditions",
@@ -90,7 +92,7 @@ func (app *application) traditions(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (app *application) purdoobahProfile(w http.ResponseWriter, r *http.Request) {
+func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Request) {
 	// get name
 	vars := mux.Vars(r)
 	name := vars["name"]
@@ -104,14 +106,44 @@ func (app *application) purdoobahProfile(w http.ResponseWriter, r *http.Request)
 
 	app.render(w, r, "purdoobah-profile.page.tmpl", &templateData{
 		Page: page{
-			DisplayName: purdoobahByName.Name,
+			DisplayName: fmt.Sprintf("%s %s", purdoobahByName.Emoji, purdoobahByName.Name),
 			URL:         fmt.Sprintf("/purdoobah/%s", name),
 		},
 		PurdoobahByName: purdoobahByName,
 	})
 }
 
-func (app *application) healthCheck(w http.ResponseWriter, r *http.Request) {
+func (app *application) pagePurdoobahDirectory(w http.ResponseWriter, r *http.Request) {
+	// get purdoobah
+	allPurdoobahs, err := app.purdoobahService.All()
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	app.render(w, r, "purdoobah-directory.page.tmpl", &templateData{
+		Page: page{
+			DisplayName: "Purdoobah Directory",
+			URL:         "/purdoobah",
+			Scripts:     []string{"purdoobah-directory.js"},
+		},
+		AllPurdoobahs: allPurdoobahs,
+	})
+}
+
+func (app *application) fileFavicon(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/static/image/favicon.ico", http.StatusMovedPermanently)
+}
+
+func (app *application) fileRobotsTxt(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/static/file/robots.txt", http.StatusMovedPermanently)
+}
+
+func (app *application) fileHumansTxt(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/static/file/humans.txt", http.StatusMovedPermanently)
+}
+
+func (app *application) apiHealthCheck(w http.ResponseWriter, r *http.Request) {
 	_, err := w.Write([]byte("OK"))
 	if err != nil {
 		app.serveError(w, err)
@@ -119,19 +151,7 @@ func (app *application) healthCheck(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *application) favicon(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/static/image/favicon.ico", http.StatusMovedPermanently)
-}
-
-func (app *application) robotsTxt(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/static/file/robots.txt", http.StatusMovedPermanently)
-}
-
-func (app *application) humansTxt(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/static/file/humans.txt", http.StatusMovedPermanently)
-}
-
-func (app *application) allPurdoobahs(w http.ResponseWriter, r *http.Request) {
+func (app *application) apiAllPurdoobahs(w http.ResponseWriter, r *http.Request) {
 	// get all purdoobahs
 	allPurdoobahs, err := app.purdoobahService.All()
 	if err != nil {
@@ -154,7 +174,7 @@ func (app *application) allPurdoobahs(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *application) purdoobahByName(w http.ResponseWriter, r *http.Request) {
+func (app *application) apiPurdoobahByName(w http.ResponseWriter, r *http.Request) {
 	// get name
 	vars := mux.Vars(r)
 	name := vars["name"]

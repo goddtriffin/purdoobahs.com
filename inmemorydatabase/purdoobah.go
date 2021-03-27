@@ -2,6 +2,7 @@ package inmemorydatabase
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/purdoobahs/purdoobahs.com/purdoobahs"
 )
@@ -23,6 +24,7 @@ func (ps *PurdoobahService) All() ([]*purdoobahs.Purdoobah, error) {
 		allPurdoobahs = append(allPurdoobahs, v)
 	}
 
+	sort.Sort(purdoobahs.ByName(allPurdoobahs))
 	return allPurdoobahs, nil
 }
 

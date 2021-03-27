@@ -1,0 +1,17 @@
+{{template "base" .}}
+
+{{define "main"}}
+<h1>Search:</h1> <input type="text" id="inputSearch">
+
+{{- range $i, $p := .AllPurdoobahs -}}
+<div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
+    <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a>{{- .Emoji -}}</h2>
+    <p>
+        {{- range $j, $y := $p.Marching.YearsMarched -}}
+            {{$y}}
+            {{- if ne $j (subtract (len $p.Marching.YearsMarched) 1) -}}, {{end -}}
+        {{- end -}}
+    </p>
+</div>
+{{- end -}}
+{{- end -}}

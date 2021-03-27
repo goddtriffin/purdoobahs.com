@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/MagnusFrater/helmet"
 	"net/http"
+
+	"github.com/MagnusFrater/helmet"
 )
 
 func (app *application) logRequest(next http.Handler) http.Handler {
@@ -49,6 +50,7 @@ func createHelmet() *helmet.Helmet {
 		helmet.DirectiveReportTo:            {}, // TODO add support
 		helmet.DeprecatedDirectiveReportURI: {"/csp-report"},
 		helmet.DirectiveStyleSrc:            {helmet.SourceSelf, helmet.SourceReportSample},
+		helmet.DirectiveScriptSrc:           {helmet.SourceSelf, helmet.SourceReportSample},
 
 		// these are merely toggled and don't have options
 		helmet.DirectiveBlockAllMixedContent: {},

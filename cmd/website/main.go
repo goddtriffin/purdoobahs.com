@@ -88,7 +88,7 @@ func main() {
 	}
 
 	// create HTML template cache
-	templateCache, err := newTemplateCache("./ui/")
+	templateCache, err := newTemplateCache()
 	if err != nil {
 		app.errorLog.Fatalln(err)
 	}
@@ -154,8 +154,9 @@ func loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, error) {
 			return allPurdoobahs, err
 		}
 
-		name := strings.ReplaceAll(filepath.Base(path), ".json", "")
-		allPurdoobahs[name] = &p
+		id := strings.ReplaceAll(filepath.Base(path), ".json", "")
+		p.ID = id
+		allPurdoobahs[id] = &p
 	}
 
 	return allPurdoobahs, nil
