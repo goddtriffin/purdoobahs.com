@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -116,6 +117,20 @@ func marshal(v interface{}) template.JS {
 	return template.JS(a)
 }
 
+func prettyIntSlice(s []int) string {
+	var builder string
+
+	for i, num := range s {
+		builder += strconv.Itoa(num)
+
+		if i < len(s)-1 {
+			builder += ", "
+		}
+	}
+
+	return builder
+}
+
 func newTemplateCache() (map[string]*template.Template, error) {
 	fa, err := fontawesome.New("./assets/icons.json")
 	if err != nil {
@@ -123,14 +138,15 @@ func newTemplateCache() (map[string]*template.Template, error) {
 	}
 
 	var functions = template.FuncMap{
-		"capitalize":  strings.ToTitle,
-		"title":       title,
-		"humanDate":   humanDate,
-		"isoDate":     isoDate,
-		"fontawesome": fa.SVG,
-		"keywords":    keywords,
-		"subtract":    subtract,
-		"marshal":     marshal,
+		"capitalize":     strings.ToTitle,
+		"title":          title,
+		"humanDate":      humanDate,
+		"isoDate":        isoDate,
+		"fontawesome":    fa.SVG,
+		"keywords":       keywords,
+		"subtract":       subtract,
+		"marshal":        marshal,
+		"prettyIntSlice": prettyIntSlice,
 	}
 
 	cache := map[string]*template.Template{}
@@ -208,7 +224,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 			"marching band", "marching", "band",
 			"YMSH", "ΨΜΣΗ",
 		},
-		ThemeColor: "#f7cb64",
+		ThemeColor: "#c28e0e",
 	}
 
 	// backup social image in case one isn't provided

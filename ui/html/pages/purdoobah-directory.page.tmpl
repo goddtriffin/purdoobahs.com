@@ -7,12 +7,7 @@
 <div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
     <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
 
-    <p>
-        {{- range $j, $y := $p.Marching.YearsMarched -}}
-            {{- $y -}}
-            {{- if ne $j (subtract (len $p.Marching.YearsMarched) 1) -}}, {{end -}}
-        {{- end -}}
-    </p>
+    <p>{{- prettyIntSlice $p.Marching.YearsMarched -}}</p>
 
     <picture>
         <img src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
