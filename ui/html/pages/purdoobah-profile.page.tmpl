@@ -1,7 +1,9 @@
 {{template "base" .}}
 
 {{define "main"}}
-{{with .PurdoobahByName}}
-<h1>{{- .Name}} {{.Emoji -}}</h1>
-{{end}}
+<main>
+    {{with .PurdoobahByName}}
+    <h1>{{- .Name}} {{.Emoji -}}</h1>
+    {{end}}
+</main>
 {{end}}

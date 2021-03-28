@@ -1,17 +1,19 @@
 {{template "base" .}}
 
 {{define "main"}}
-<h1>Search:</h1> <input type="text" id="inputSearch">
+<main>
+    <h1>Search:</h1> <input type="text" id="inputSearch">
 
-{{range $i, $p := .AllPurdoobahs}}
-<div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
-    <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
+    {{range $i, $p := .AllPurdoobahs}}
+    <div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
+        <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
 
-    <p>{{- prettyIntSlice $p.Marching.YearsMarched -}}</p>
+        <p>{{- prettyIntSlice $p.Marching.YearsMarched -}}</p>
 
-    <picture>
-        <img src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
-    </picture>
-</div>
-{{end}}
+        <picture>
+            <img src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
+        </picture>
+    </div>
+    {{end}}
+</main>
 {{end}}

@@ -11,21 +11,10 @@
 	</head>
 
 	<body>
-		<header>
   	    {{template "header" .}}
-		</header>
-
-		<nav>
 		{{template "nav" .}}
-		</nav>
-
-		<main>
 		{{template "main" .}}
-		</main>
-
-		<footer>
   	    {{template "footer" .}}
-		</footer>
 
 		{{- range .Page.Scripts -}}
 		<script type='text/javascript' src='/static/script/{{- . -}}' defer></script>

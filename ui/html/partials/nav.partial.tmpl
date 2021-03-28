@@ -1,11 +1,19 @@
 {{define "nav"}}
-<ul>
-  {{range .Header.NavLinks}}
-    <li>
-      <a href="{{- .URL -}}">
-        {{- if eq $.Page.DisplayName .DisplayName -}}<b>{{- end -}}{{- .DisplayName -}}{{- if eq $.Page.DisplayName .DisplayName -}}</b>{{- end -}}
-      </a>
-    </li>
-  {{end}}
-</ul>
+<nav>
+    <ul>
+        {{range .Header.NavLinks}}
+        <li>
+            <a href="{{- .URL -}}">
+                {{- if eq $.Page.DisplayName .DisplayName -}}
+                    <b>
+                {{- end -}}
+                    {{- .DisplayName -}}
+                {{- if eq $.Page.DisplayName .DisplayName -}}
+                    </b>
+                {{- end -}}
+            </a>
+        </li>
+        {{end}}
+    </ul>
+</nav>
 {{end}}
