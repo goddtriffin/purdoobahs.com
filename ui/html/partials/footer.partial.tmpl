@@ -1,5 +1,17 @@
 {{define "footer"}}
 <footer>
-    <p><small>Copyright © {{- .Footer.Copyright.Start.Year}} - {{.Footer.Copyright.End.Year}} {{.Metadata.Project -}}</small></p>
+    <address>
+        Elliott Hall of Music<br>
+        712 3rd Street, West Lafayette, IN 47907
+    </address>
+
+    <p>
+        All photos by
+        <a class="link-underline" href="https://www.facebook.com/PurdueBandFan/">Purdue Band Fan</a>
+        and
+        <a class="link-underline" href="https://www.facebook.com/MilbrathPhotography/">Milbrath Photography</a>
+    </p>
+
+    <p><small>Copyright © {{- .Footer.Copyright.Start.Year}} - {{.Footer.Copyright.End.Year}} {{.Metadata.Project}}&ensp;|&ensp;All rights reserved.</small></p>
 </footer>
 {{end}}
