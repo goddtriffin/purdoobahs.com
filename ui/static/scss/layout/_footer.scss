@@ -1,11 +1,16 @@
-footer > * {
-  text-align: center;
-  font-size: 1.25rem;
-  margin-bottom: 0.75rem;
-}
+footer {
+  grid-area: footer;
 
-footer > p > a {
-  text-decoration: underline;
-  font-weight: bold;
-}
+  > * {
+    text-align: center;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
 
+  > p {
+    > a {
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+}
