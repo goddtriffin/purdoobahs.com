@@ -1,0 +1,12 @@
+.purdoobah-card {
+  border-radius: 18px;
+  position: relative;
+  text-align: center;
+
+  > picture > img {
+    border-radius: 18px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

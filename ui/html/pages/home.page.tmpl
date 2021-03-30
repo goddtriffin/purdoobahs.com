@@ -12,13 +12,24 @@
 {{end}}
 
 {{define "purdoobah-cards"}}
-{{range $i, $p := .}}
-<div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
-    <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
+<div class="roster-by-year">
+    {{range $i, $p := .}}
+    <div class="purdoobah-card">
+        <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
 
-    <picture>
-        <img src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
-    </picture>
+        <picture>
+            <img
+                class="{{- if .IsStudentLeader}} sl{{- else -}}
+                    {{- if (.IsYear "super-senior")}} super-senior{{- end -}}
+                    {{- if (.IsYear "senior")}} senior{{- end -}}
+                    {{- if (.IsYear "junior")}} junior{{- end -}}
+                    {{- if (.IsYear "sophomore")}} sophomore{{- end -}}
+                    {{- if (.IsYear "freshman")}} freshman{{- end -}}
+                {{- end -}}"
+                src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}"
+            >
+        </picture>
+    </div>
+    {{end}}
 </div>
-{{end}}
 {{end}}

@@ -1,0 +1,9 @@
+@mixin text-decoration {
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &, &:visited, &:focus, &:active {
+    text-decoration: none;
+  }
+}

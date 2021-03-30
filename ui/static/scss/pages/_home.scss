@@ -1,0 +1,30 @@
+.sl {
+  border: 3px solid #c28e0e;
+}
+
+.super-senior {
+  border: 3px solid #ba55d3;
+}
+
+.senior {
+  border: 3px solid #ed3742;
+}
+
+.junior {
+  border: 3px solid #62bb47;
+}
+
+.sophomore {
+  border: 3px solid #3bcaef;
+}
+
+.freshman {
+  border: 3px solid #f9beff;
+}
+
+.roster-by-year {
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  grid-auto-rows: 250px;
+  margin-left: 7%;
+  margin-right: 7%;
+}

@@ -1,21 +1,7 @@
 @use "../vendors-extensions/honeycomb";
 
 a {
-  text-decoration: none;
+  @include honeycomb.anchor-text-decoration;
+
   color: honeycomb.$light-theme-color-on-background;
-}
-a:visited {
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: none;
-}
-a:focus {
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: none;
-}
-a:active {
-  text-decoration: none;
 }
