@@ -3,6 +3,8 @@ body {
   grid-template-areas:
     "header nav ..."
     "main main main"
-    "... footer ...";
+    "footer footer footer";
   grid-template-columns: 1fr 1fr 1fr;
+
+  row-gap: 30px;
 }

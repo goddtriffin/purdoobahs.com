@@ -1,0 +1,36 @@
+{{template "base" .}}
+
+{{define "main"}}
+<main>
+    <h2>The Section of {{.Year}}</h2>
+
+    {{if .Purdoobahs}}
+    <div class="section">
+        {{range $i, $p := .Purdoobahs}}
+            <div class="purdoobah-card">
+                <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
+
+                {{template "years-marched" $p.Marching.YearsMarched}}
+
+                <a href="/purdoobah/{{- .ID -}}">
+                    <picture>
+                        <img class="member" src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
+                    </picture>
+                </a>
+            </div>
+        {{end}}
+    </div>
+    {{else}}
+    {{template "archives-incomplete" .}}
+    {{end}}
+</main>
+{{end}}
+
+{{define "years-marched" -}}
+<p>
+    {{- $length := (len .) -}}
+    {{- range $i, $y := . -}}
+    <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
+    {{- end -}}
+</p>
+{{- end}}

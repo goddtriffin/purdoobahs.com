@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"runtime/debug"
+	"strconv"
 
 	"github.com/gorilla/mux"
 
@@ -18,6 +19,7 @@ func (app *application) routes() http.Handler {
 	router := mux.NewRouter()
 	apiSubrouter := router.PathPrefix("/api").Subrouter()
 	apiPurdoobahSubrouter := apiSubrouter.PathPrefix("/purdoobah").Subrouter()
+	apiSectionSubrouter := apiSubrouter.PathPrefix("/section").Subrouter()
 
 	// pages
 	router.HandleFunc("/faq", app.pageFAQ).Methods("GET")
@@ -25,6 +27,7 @@ func (app *application) routes() http.Handler {
 	router.HandleFunc("/traditions", app.pageTraditions).Methods("GET")
 	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
 	router.HandleFunc("/purdoobah", app.pagePurdoobahDirectory).Methods("GET")
+	router.HandleFunc("/section/{year}", app.pageSectionByYear).Methods("GET")
 
 	// files
 	router.HandleFunc("/favicon.ico", app.fileFavicon).Methods("GET")
@@ -48,6 +51,10 @@ func (app *application) routes() http.Handler {
 	apiPurdoobahSubrouter.HandleFunc("/all", app.apiAllPurdoobahs).Methods("GET")
 	apiPurdoobahSubrouter.HandleFunc("/{name}", app.apiPurdoobahByName).Methods("GET")
 
+	// section API
+	apiSectionSubrouter.HandleFunc("/current", app.apiCurrentSection).Methods("GET")
+	apiSectionSubrouter.HandleFunc("/{year}", app.apiSectionByYear).Methods("GET")
+
 	return standardMiddleware.Then(router)
 }
 
@@ -64,7 +71,7 @@ func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.render(w, r, "home.page.tmpl", &templateData{
+	app.render(w, r, "home.page.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Home",
 			URL:         "/",
@@ -74,7 +81,7 @@ func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) pageFAQ(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "faq.page.tmpl", &templateData{
+	app.render(w, r, "faq.page.gohtml", &templateData{
 		Page: page{
 			DisplayName: "F.A.Q.",
 			URL:         "/faq",
@@ -83,7 +90,7 @@ func (app *application) pageFAQ(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "cravers-hall-of-fame.page.tmpl", &templateData{
+	app.render(w, r, "cravers-hall-of-fame.page.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Cravers Hall of Fame",
 			URL:         "/cravers-hall-of-fame",
@@ -92,7 +99,7 @@ func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Req
 }
 
 func (app *application) pageTraditions(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "traditions.page.tmpl", &templateData{
+	app.render(w, r, "traditions.page.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Traditions",
 			URL:         "/traditions",
@@ -112,7 +119,7 @@ func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	app.render(w, r, "purdoobah-profile.page.tmpl", &templateData{
+	app.render(w, r, "purdoobah-profile.page.gohtml", &templateData{
 		Page: page{
 			DisplayName: fmt.Sprintf("%s %s", purdoobahByName.Emoji, purdoobahByName.Name),
 			URL:         fmt.Sprintf("/purdoobah/%s", name),
@@ -129,13 +136,42 @@ func (app *application) pagePurdoobahDirectory(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	app.render(w, r, "purdoobah-directory.page.tmpl", &templateData{
+	app.render(w, r, "purdoobah-directory.page.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Purdoobah Directory",
 			URL:         "/purdoobah",
 			Scripts:     []string{"purdoobah-directory.js"},
 		},
-		AllPurdoobahs: allPurdoobahs,
+		Purdoobahs: allPurdoobahs,
+	})
+}
+
+func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request) {
+	// get year
+	vars := mux.Vars(r)
+	yearAsString := vars["year"]
+
+	// convert from string to int
+	yearAsInt, err := strconv.Atoi(yearAsString)
+	if err != nil {
+		app.notFound(w)
+		return
+	}
+
+	// get section by year
+	sectionByYear, err := app.purdoobahService.SectionByYear(yearAsInt)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	app.render(w, r, "section-by-year.page.gohtml", &templateData{
+		Page: page{
+			DisplayName: fmt.Sprintf("Section %d", yearAsInt),
+			URL:         fmt.Sprintf("/section/%d", yearAsInt),
+		},
+		Purdoobahs: sectionByYear,
+		Year:       yearAsInt,
 	})
 }
 
@@ -196,6 +232,63 @@ func (app *application) apiPurdoobahByName(w http.ResponseWriter, r *http.Reques
 
 	// convert to JSON bytes
 	b, err := json.Marshal(purdoobahByName)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// send it out
+	_, err = w.Write(b)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+}
+
+func (app *application) apiCurrentSection(w http.ResponseWriter, r *http.Request) {
+	// get current section
+	currentSection, err := app.purdoobahService.CurrentSection()
+	if err != nil {
+		app.notFound(w)
+		return
+	}
+
+	// convert to JSON bytes
+	b, err := json.Marshal(currentSection)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// send it out
+	_, err = w.Write(b)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+}
+
+func (app *application) apiSectionByYear(w http.ResponseWriter, r *http.Request) {
+	// get year
+	vars := mux.Vars(r)
+	yearAsString := vars["year"]
+
+	// convert from string to int
+	yearAsInt, err := strconv.Atoi(yearAsString)
+	if err != nil {
+		app.notFound(w)
+		return
+	}
+
+	// get section by year
+	sectionByYear, err := app.purdoobahService.SectionByYear(yearAsInt)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// convert to JSON bytes
+	b, err := json.Marshal(sectionByYear)
 	if err != nil {
 		app.serveError(w, err)
 		return

@@ -7,6 +7,7 @@ import (
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 )
 
+// `All` returns every single Purdoobah.
 func (ps *PurdoobahService) All() ([]*purdoobahs.Purdoobah, error) {
 	allPurdoobahs := make([]*purdoobahs.Purdoobah, 0, len(ps.purdoobahs))
 
@@ -18,6 +19,7 @@ func (ps *PurdoobahService) All() ([]*purdoobahs.Purdoobah, error) {
 	return allPurdoobahs, nil
 }
 
+// `ByName` returns a single Purdoobah by their nickname.
 func (ps *PurdoobahService) ByName(name string) (*purdoobahs.Purdoobah, error) {
 	if purdoobah, ok := ps.purdoobahs[name]; ok {
 		return purdoobah, nil

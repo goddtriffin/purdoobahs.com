@@ -5,7 +5,7 @@
     <h1>Search:</h1> <input type="text" id="inputSearch">
 
     <div class="section">
-        {{range $i, $p := .AllPurdoobahs}}
+        {{range $i, $p := .Purdoobahs}}
             <div class="purdoobah-card" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
                 <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
 
@@ -19,6 +19,7 @@
             </div>
         {{end}}
     </div>
+    {{template "archives-incomplete" .}}
 </main>
 {{end}}
 

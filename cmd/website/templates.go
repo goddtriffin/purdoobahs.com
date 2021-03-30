@@ -24,8 +24,9 @@ type templateData struct {
 	Page     page
 
 	PurdoobahByName *purdoobahs.Purdoobah
-	AllPurdoobahs   []*purdoobahs.Purdoobah
+	Purdoobahs      []*purdoobahs.Purdoobah
 	CurrentSection  *purdoobahs.Section
+	Year            int
 }
 
 // layout / page / partial
@@ -151,7 +152,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
 
 	cache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob("./html/pages/*.page.tmpl")
+	pages, err := filepath.Glob("./html/pages/*.page.gohtml")
 	if err != nil {
 		return nil, err
 	}
@@ -164,12 +165,12 @@ func newTemplateCache() (map[string]*template.Template, error) {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob("./html/layouts/*.layout.tmpl")
+		ts, err = ts.ParseGlob("./html/layouts/*.layout.gohtml")
 		if err != nil {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob("./html/partials/*.partial.tmpl")
+		ts, err = ts.ParseGlob("./html/partials/*.partial.gohtml")
 		if err != nil {
 			return nil, err
 		}

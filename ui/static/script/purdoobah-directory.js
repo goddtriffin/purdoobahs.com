@@ -2,12 +2,18 @@
 const inputSearch = document.getElementById("inputSearch");
 inputSearch.addEventListener("input", search);
 
+// the archives-incomplete gif
+// set it to invisible initially
+const archivesIncomplete = document.getElementsByClassName("archives-incomplete")[0];
+archivesIncomplete.style.display = "none";
+
 // `search` shows/hides Purdoobah Cards based on the search term
 function search() {
     const search = this.value.toLowerCase();
 
     const purdoobahCards = document.getElementsByClassName("purdoobah-card");
 
+    let cardsHidden = 0;
     for (let i = 0; i < purdoobahCards.length; i++) {
         const purdoobahCard = purdoobahCards.item(i);
 
@@ -20,7 +26,15 @@ function search() {
             purdoobahCard.style.display = "block";
         } else {
             purdoobahCard.style.display = "none";
+            cardsHidden++;
         }
+    }
+
+    // if every purdoobah card is hidden, show archives-incomplete gif
+    if (cardsHidden === purdoobahCards.length) {
+        archivesIncomplete.style.display = "block";
+    } else {
+        archivesIncomplete.style.display = "none";
     }
 }
 

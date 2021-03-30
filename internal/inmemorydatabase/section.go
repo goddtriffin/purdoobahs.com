@@ -7,6 +7,7 @@ import (
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 )
 
+// `CurrentSection` returns all the Purdoobahs that are marching this academic year.
 func (ps *PurdoobahService) CurrentSection() (*purdoobahs.Section, error) {
 	currentSection := &purdoobahs.Section{
 		StudentLeaders: make([]*purdoobahs.Purdoobah, 0),
@@ -19,23 +20,23 @@ func (ps *PurdoobahService) CurrentSection() (*purdoobahs.Section, error) {
 
 	currentAcademicYear := ps.currentAcademicYear()
 
-	for _, v := range ps.purdoobahs {
-		if !v.MarchedDuringYear(currentAcademicYear) {
+	for _, p := range ps.purdoobahs {
+		if !p.MarchedDuringYear(currentAcademicYear) {
 			continue
 		}
 
-		if v.IsStudentLeaderInYear(currentAcademicYear) {
-			currentSection.StudentLeaders = append(currentSection.StudentLeaders, v)
-		} else if v.IsYear(purdoobahs.SuperSenior) {
-			currentSection.SuperSeniors = append(currentSection.SuperSeniors, v)
-		} else if v.IsYear(purdoobahs.Senior) {
-			currentSection.Seniors = append(currentSection.Seniors, v)
-		} else if v.IsYear(purdoobahs.Junior) {
-			currentSection.Juniors = append(currentSection.Juniors, v)
-		} else if v.IsYear(purdoobahs.Sophomore) {
-			currentSection.Sophomores = append(currentSection.Sophomores, v)
-		} else if v.IsYear(purdoobahs.Freshman) {
-			currentSection.Freshmen = append(currentSection.Freshmen, v)
+		if p.IsStudentLeaderInYear(currentAcademicYear) {
+			currentSection.StudentLeaders = append(currentSection.StudentLeaders, p)
+		} else if p.IsYear(purdoobahs.SuperSenior) {
+			currentSection.SuperSeniors = append(currentSection.SuperSeniors, p)
+		} else if p.IsYear(purdoobahs.Senior) {
+			currentSection.Seniors = append(currentSection.Seniors, p)
+		} else if p.IsYear(purdoobahs.Junior) {
+			currentSection.Juniors = append(currentSection.Juniors, p)
+		} else if p.IsYear(purdoobahs.Sophomore) {
+			currentSection.Sophomores = append(currentSection.Sophomores, p)
+		} else if p.IsYear(purdoobahs.Freshman) {
+			currentSection.Freshmen = append(currentSection.Freshmen, p)
 		}
 	}
 
@@ -49,6 +50,21 @@ func (ps *PurdoobahService) CurrentSection() (*purdoobahs.Section, error) {
 	return currentSection, nil
 }
 
+// `SectionByYear` returns all the Purdoobahs that marched during the given year.
+func (ps *PurdoobahService) SectionByYear(targetYear int) ([]*purdoobahs.Purdoobah, error) {
+	sectionByYear := make([]*purdoobahs.Purdoobah, 0)
+
+	for _, p := range ps.purdoobahs {
+		if p.MarchedDuringYear(targetYear) {
+			sectionByYear = append(sectionByYear, p)
+		}
+	}
+
+	return sectionByYear, nil
+}
+
+// `currentAcademicYear` returns the value of the current academic year.
+// e.g. if the academic year is "Fall 2020 -> Spring 2021", it will return "2020"
 func (ps *PurdoobahService) currentAcademicYear() int {
 	t := time.Now()
 	switch t.Month() {
