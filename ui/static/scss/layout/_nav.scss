@@ -1,3 +1,9 @@
 nav {
   grid-area: nav;
+
+  > ul {
+    > li {
+      display: inline-block;
+    }
+  }
 }

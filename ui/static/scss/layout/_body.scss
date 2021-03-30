@@ -1,7 +1,8 @@
 body {
+  display: grid;
   grid-template-areas:
-    "header"
-    "nav"
-    "main"
-    "footer";
+    "header nav ..."
+    "main main main"
+    "... footer ...";
+  grid-template-columns: 1fr 1fr 1fr;
 }

@@ -6,7 +6,7 @@ inputSearch.addEventListener("input", search);
 function search() {
     const search = this.value.toLowerCase();
 
-    const purdoobahCards = document.getElementsByClassName("purdoobahCard");
+    const purdoobahCards = document.getElementsByClassName("purdoobah-card");
 
     for (let i = 0; i < purdoobahCards.length; i++) {
         const purdoobahCard = purdoobahCards.item(i);

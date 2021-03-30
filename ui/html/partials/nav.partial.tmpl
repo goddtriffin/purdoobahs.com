@@ -3,14 +3,8 @@
     <ul>
         {{range .Header.NavLinks}}
         <li>
-            <a href="{{- .URL -}}">
-                {{- if eq $.Page.DisplayName .DisplayName -}}
-                    <b>
-                {{- end -}}
-                    {{- .DisplayName -}}
-                {{- if eq $.Page.DisplayName .DisplayName -}}
-                    </b>
-                {{- end -}}
+            <a href="{{- .URL -}}" class="{{- if eq $.Page.DisplayName .DisplayName -}}bold{{- end -}}">
+                {{- .DisplayName -}}
             </a>
         </li>
         {{end}}

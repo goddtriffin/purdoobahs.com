@@ -1,12 +1,46 @@
+@use "../abstracts/variables";
+
 .purdoobah-card {
-  border-radius: 18px;
+  border-radius: variables.$border-radius;
   position: relative;
   text-align: center;
 
-  > picture > img {
-    border-radius: 18px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  > p {
+    margin-bottom: 2px;
+  }
+
+  > a {
+    > picture {
+      > img {
+        border-radius: variables.$border-radius;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+        &.section-leader, &.member {
+          border: 3px solid variables.$section-leader;
+        }
+
+        &.super-senior {
+          border: 3px solid variables.$super-senior;
+        }
+
+        &.senior {
+          border: 3px solid variables.$senior;
+        }
+
+        &.junior {
+          border: 3px solid variables.$junior;
+        }
+
+        &.sophomore {
+          border: 3px solid variables.$sophomore;
+        }
+
+        &.freshman {
+          border: 3px solid variables.$freshman;
+        }
+      }
+    }
   }
 }

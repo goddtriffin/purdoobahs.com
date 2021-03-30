@@ -2,12 +2,27 @@
 
 {{define "main"}}
 <main>
-    {{- template "purdoobah-cards" .CurrentSection.StudentLeaders -}}
-    {{- template "purdoobah-cards" .CurrentSection.SuperSeniors -}}
-    {{- template "purdoobah-cards" .CurrentSection.Seniors -}}
-    {{- template "purdoobah-cards" .CurrentSection.Juniors -}}
-    {{- template "purdoobah-cards" .CurrentSection.Sophomores -}}
-    {{- template "purdoobah-cards" .CurrentSection.Freshmen -}}
+    <div class="legend">
+        <div class="legend-scale">
+            <ul class="legend-labels">
+                <li><span class="section-leader"></span>Section Leader</li>
+                <li><span class="super-senior"></span>Super Senior</li>
+                <li><span class="senior"></span>Senior</li>
+                <li><span class="junior"></span>Junior</li>
+                <li><span class="sophomore"></span>Sophomore</li>
+                <li><span class="freshman"></span>Freshman</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        {{- template "purdoobah-cards" .CurrentSection.StudentLeaders -}}
+        {{- template "purdoobah-cards" .CurrentSection.SuperSeniors -}}
+        {{- template "purdoobah-cards" .CurrentSection.Seniors -}}
+        {{- template "purdoobah-cards" .CurrentSection.Juniors -}}
+        {{- template "purdoobah-cards" .CurrentSection.Sophomores -}}
+        {{- template "purdoobah-cards" .CurrentSection.Freshmen -}}
+    </div>
 </main>
 {{end}}
 
@@ -16,18 +31,20 @@
 <div class="purdoobah-card">
     <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
 
-    <picture>
-        <img
-            class="{{- if .IsStudentLeader}} sl{{- else -}}
-                {{- if (.IsYear "super-senior")}} super-senior{{- end -}}
-                {{- if (.IsYear "senior")}} senior{{- end -}}
-                {{- if (.IsYear "junior")}} junior{{- end -}}
-                {{- if (.IsYear "sophomore")}} sophomore{{- end -}}
-                {{- if (.IsYear "freshman")}} freshman{{- end -}}
-            {{- end -}}"
-            src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}"
-        >
-    </picture>
+    <a href="/purdoobah/{{- .ID -}}">
+        <picture>
+            <img
+                class="{{- if .IsStudentLeader}} section-leader{{- else -}}
+                    {{- if (.IsYear "super-senior")}} super-senior{{- end -}}
+                    {{- if (.IsYear "senior")}} senior{{- end -}}
+                    {{- if (.IsYear "junior")}} junior{{- end -}}
+                    {{- if (.IsYear "sophomore")}} sophomore{{- end -}}
+                    {{- if (.IsYear "freshman")}} freshman{{- end -}}
+                {{- end -}}"
+                src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}"
+            >
+        </picture>
+    </a>
 </div>
 {{end}}
 {{end}}

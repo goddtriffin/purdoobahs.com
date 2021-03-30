@@ -4,16 +4,29 @@
 <main>
     <h1>Search:</h1> <input type="text" id="inputSearch">
 
-    {{range $i, $p := .AllPurdoobahs}}
-    <div class="purdoobahCard" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
-        <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
+    <div class="section">
+        {{range $i, $p := .AllPurdoobahs}}
+            <div class="purdoobah-card" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
+                <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
 
-        <p>{{- prettyIntSlice $p.Marching.YearsMarched -}}</p>
+                {{template "years-marched" $p.Marching.YearsMarched}}
 
-        <picture>
-            <img src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
-        </picture>
+                <a href="/purdoobah/{{- .ID -}}">
+                    <picture>
+                        <img class="member" src="/static/image/purdoobah/{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
+                    </picture>
+                </a>
+            </div>
+        {{end}}
     </div>
-    {{end}}
 </main>
 {{end}}
+
+{{define "years-marched" -}}
+<p>
+    {{- $length := (len .) -}}
+    {{- range $i, $y := . -}}
+    <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
+    {{- end -}}
+</p>
+{{- end}}
