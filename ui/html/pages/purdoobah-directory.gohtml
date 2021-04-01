@@ -2,7 +2,7 @@
 
 {{define "main"}}
 <main>
-    <h1>Search:</h1> <input type="text" id="inputSearch">
+    {{template "search-bar-form" .}}
 
     <div class="section">
         {{range $i, $p := .Purdoobahs}}
@@ -22,6 +22,17 @@
     {{template "archives-incomplete" .}}
 </main>
 {{end}}
+
+{{define "search-bar-form" -}}
+<form class="search-bar-form">
+    <div class="search-bar">
+        <label for="inputSearch">Search:</label>
+        <input type="text" id="inputSearch" class="input" />
+    </div>
+
+    <p class="description">Search by nickname, year, emoji, or real name!</p>
+</form>
+{{- end}}
 
 {{define "years-marched" -}}
 <p>

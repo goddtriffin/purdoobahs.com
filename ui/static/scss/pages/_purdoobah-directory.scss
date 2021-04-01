@@ -1,0 +1,28 @@
+@use "../abstracts/variables";
+
+.search-bar-form {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  > .search-bar {
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 0.5rem;
+
+    > input {
+      font-size: 16px;
+      font-size: max(16px, 1em);
+      font-family: inherit;
+      padding: 0.25em 0.5em;
+      background-color: #fff;
+      border: 2px solid var(--input-border);
+      border-radius: 4px;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px variables.$dark-theme-color-on-background;
+      }
+    }
+  }
+}
