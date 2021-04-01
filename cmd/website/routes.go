@@ -71,7 +71,7 @@ func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.render(w, r, "home.page.gohtml", &templateData{
+	app.render(w, r, "home.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Home",
 			URL:         "/",
@@ -81,7 +81,7 @@ func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) pageFAQ(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "faq.page.gohtml", &templateData{
+	app.render(w, r, "faq.gohtml", &templateData{
 		Page: page{
 			DisplayName: "F.A.Q.",
 			URL:         "/faq",
@@ -90,7 +90,7 @@ func (app *application) pageFAQ(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "cravers-hall-of-fame.page.gohtml", &templateData{
+	app.render(w, r, "cravers-hall-of-fame.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Cravers Hall of Fame",
 			URL:         "/cravers-hall-of-fame",
@@ -99,7 +99,7 @@ func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Req
 }
 
 func (app *application) pageTraditions(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "traditions.page.gohtml", &templateData{
+	app.render(w, r, "traditions.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Traditions",
 			URL:         "/traditions",
@@ -119,7 +119,7 @@ func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	app.render(w, r, "purdoobah-profile.page.gohtml", &templateData{
+	app.render(w, r, "purdoobah-profile.gohtml", &templateData{
 		Page: page{
 			DisplayName: fmt.Sprintf("%s %s", purdoobahByName.Emoji, purdoobahByName.Name),
 			URL:         fmt.Sprintf("/purdoobah/%s", name),
@@ -136,7 +136,7 @@ func (app *application) pagePurdoobahDirectory(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	app.render(w, r, "purdoobah-directory.page.gohtml", &templateData{
+	app.render(w, r, "purdoobah-directory.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Purdoobah Directory",
 			URL:         "/purdoobah",
@@ -165,7 +165,7 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	app.render(w, r, "section-by-year.page.gohtml", &templateData{
+	app.render(w, r, "section-by-year.gohtml", &templateData{
 		Page: page{
 			DisplayName: fmt.Sprintf("Section %d", yearAsInt),
 			URL:         fmt.Sprintf("/section/%d", yearAsInt),

@@ -152,7 +152,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
 
 	cache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob("./html/pages/*.page.gohtml")
+	pages, err := filepath.Glob("./html/pages/*.gohtml")
 	if err != nil {
 		return nil, err
 	}
@@ -165,12 +165,12 @@ func newTemplateCache() (map[string]*template.Template, error) {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob("./html/layouts/*.layout.gohtml")
+		ts, err = ts.ParseGlob("./html/layouts/*.gohtml")
 		if err != nil {
 			return nil, err
 		}
 
-		ts, err = ts.ParseGlob("./html/partials/*.partial.gohtml")
+		ts, err = ts.ParseGlob("./html/partials/*.gohtml")
 		if err != nil {
 			return nil, err
 		}
