@@ -220,10 +220,11 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 			"purdoobahs", "purdoobah", "Purdue Toobah", "Purdue tuba",
 			"Purdue", "Purdue University", "university",
 			"toobah", "tuba", "sousa", "sousaphone", "helicon",
-			"Orville Redenbacher",
+			"Orville Redenbacher", "Orville", "Redenbacher",
 			"Purdue All-American Marching Band", "All-American Marching Band",
 			"marching band", "marching", "band",
 			"YMSH", "ΨΜΣΗ",
+			"Cravers Hall of Fame", "Cravers", "Hall", "Fame", "White Castle",
 		},
 		ThemeColor: "#c28e0e",
 	}
@@ -239,6 +240,43 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 			{DisplayName: "Alumni", URL: "/purdoobah"},
 			{DisplayName: "Traditions", URL: "/traditions"},
 			{DisplayName: "Cravers Hall of Fame", URL: "/cravers-hall-of-fame"},
+		},
+		SocialMedia: []socialMedia{
+			{
+				Link: "https://www.instagram.com/purdoobahs/",
+				Icon: fontawesome.TemplateIcon{
+					Name:   "instagram",
+					Prefix: "fab",
+				},
+			},
+			{
+				Link: "https://www.facebook.com/purdoobahs/",
+				Icon: fontawesome.TemplateIcon{
+					Name:   "facebook",
+					Prefix: "fab",
+				},
+			},
+			{
+				Link: "https://www.youtube.com/channel/UCIH2OACGjUeDPfkISb_lp_Q",
+				Icon: fontawesome.TemplateIcon{
+					Name:   "youtube",
+					Prefix: "fab",
+				},
+			},
+			{
+				Link: "https://github.com/purdoobahs",
+				Icon: fontawesome.TemplateIcon{
+					Name:   "github",
+					Prefix: "fab",
+				},
+			},
+			{
+				Link: "mailto:purdoobahs@gmail.com",
+				Icon: fontawesome.TemplateIcon{
+					Name:   "envelope",
+					Prefix: "far",
+				},
+			},
 		},
 	}
 

@@ -1,7 +1,31 @@
 {{define "header"}}
 <header>
-    <h1><a href="/">ΨΜΣΗ</a></h1>
+    <div class="top">
+        <h1><a href="/">ΨΜΣΗ</a></h1>
 
-    {{template "nav" .}}
+        {{template "nav" .}}
+    </div>
+
+    <div class="bottom">
+        {{template "social-media" .}}
+    </div>
 </header>
+{{end}}
+
+{{define "social-media"}}
+<div>
+    <ul>
+        {{range .Header.SocialMedia}}
+        {{template "social-media-icon" .}}
+        {{end}}
+    </ul>
+</div>
+{{end}}
+
+{{define "social-media-icon"}}
+<li class="social-media-icon">
+    <a href="{{.Link}}">
+        {{- fontawesome .Icon.Prefix .Icon.Name -}}
+    </a>
+</li>
 {{end}}
