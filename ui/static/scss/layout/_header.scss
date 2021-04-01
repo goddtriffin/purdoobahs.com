@@ -1,10 +1,19 @@
+@use "../abstracts/variables";
+
 header {
   grid-area: header;
 
-  margin-left: 1rem;
-  margin-top: 0.5rem;
+  margin-left: variables.$page-margin-left;
+  margin-top: variables.$page-margin-top;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   > h1 {
+    display: inline;
+    margin-right: 4rem;
+
     font-size: 3rem;
   }
 }
