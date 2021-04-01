@@ -1,7 +1,13 @@
-@use "../vendors-extensions/honeycomb";
+@use "../abstracts/variables";
 
 a {
-  @include honeycomb.anchor-text-decoration;
+  &:hover {
+    text-decoration: underline;
+  }
 
-  color: honeycomb.$light-theme-color-on-background;
+  &, &:visited, &:focus, &:active {
+    text-decoration: none;
+  }
+
+  color: variables.$dark-theme-color-on-background;
 }

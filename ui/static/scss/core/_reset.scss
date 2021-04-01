@@ -1,4 +1,4 @@
-@use "../vendors-extensions/honeycomb";
+@use "../abstracts/variables";
 
 * {
   margin: 0;
@@ -8,6 +8,6 @@
 }
 
 body {
-  background-color: honeycomb.$light-theme-color-background;
-  color: honeycomb.$light-theme-color-on-background;
+  background-color: variables.$dark-theme-color-background;
+  color: variables.$dark-theme-color-on-background;
 }
