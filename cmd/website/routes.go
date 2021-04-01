@@ -22,7 +22,6 @@ func (app *application) routes() http.Handler {
 	apiSectionSubrouter := apiSubrouter.PathPrefix("/section").Subrouter()
 
 	// pages
-	router.HandleFunc("/faq", app.pageFAQ).Methods("GET")
 	router.HandleFunc("/cravers-hall-of-fame", app.pageCraversHallOfFame).Methods("GET")
 	router.HandleFunc("/traditions", app.pageTraditions).Methods("GET")
 	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
@@ -77,15 +76,6 @@ func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 			URL:         "/",
 		},
 		CurrentSection: currentSection,
-	})
-}
-
-func (app *application) pageFAQ(w http.ResponseWriter, r *http.Request) {
-	app.render(w, r, "faq.gohtml", &templateData{
-		Page: page{
-			DisplayName: "F.A.Q.",
-			URL:         "/faq",
-		},
 	})
 }
 
