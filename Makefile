@@ -34,6 +34,7 @@ buildstatic:  ## builds static resources
 	cp -Rn ui/html bin/html
 	cp -Rn ui/static/file bin/static/file
 	cp -Rn ui/static/image bin/static/image
+	cp -Rn ui/static/video bin/static/video
 	cp -Rn ui/static/script bin/static/script
 
 	# generate css from sass

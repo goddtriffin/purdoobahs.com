@@ -51,6 +51,7 @@ func createHelmet() *helmet.Helmet {
 		helmet.DeprecatedDirectiveReportURI: {"/csp-report"},
 		helmet.DirectiveStyleSrc:            {helmet.SourceSelf, helmet.SourceReportSample},
 		helmet.DirectiveScriptSrc:           {helmet.SourceSelf, helmet.SourceReportSample},
+		helmet.DirectiveMediaSrc:            {helmet.SourceSelf},
 
 		// these are merely toggled and don't have options
 		helmet.DirectiveBlockAllMixedContent: {},
