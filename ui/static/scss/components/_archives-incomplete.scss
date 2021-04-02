@@ -1,5 +1,14 @@
-.archives-incomplete {
-  width: 40%;
+@use "../abstracts/variables";
+
+.video-mask {
   display: block;
   margin: auto;
+  width: 40%;
+  overflow: hidden;
+
+  border-radius: variables.$border-radius;
+}
+
+.archives-incomplete {
+  width: 100%;
 }
