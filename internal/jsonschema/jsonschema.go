@@ -3,24 +3,26 @@ package jsonschema
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
 
+	"github.com/purdoobahs/purdoobahs.com/internal/logger"
+
 	"github.com/xeipuuv/gojsonschema"
 )
 
-func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error) {
+func ValidateJsonSchema(logger logger.ILogger) (bool, error) {
 	invalidFiles := false
 
 	// read in the Purdoobah JSON Schema
 	purdoobahJSONSchemaFilepath := "./assets/purdoobahs/_purdoobah.schema.json"
 	b, err := ioutil.ReadFile(purdoobahJSONSchemaFilepath)
 	if err != nil {
-		errorLog.Println(fmt.Sprintf(
+		logger.Error(fmt.Sprintf(
 			"error reading file: %s",
-			"./assets/purdoobahs/_purdoobah.schema.json"))
+			"./assets/purdoobahs/_purdoobah.schema.json"),
+		)
 		return true, err
 	}
 	schema := gojsonschema.NewStringLoader(string(b))
@@ -28,7 +30,7 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 	// find all the individual Purdoobah files
 	filepaths, err := walkMatch("./assets/purdoobahs/", `*.json`)
 	if err != nil {
-		errorLog.Println("error parsing Purdoobah assets directory")
+		logger.Error("error parsing Purdoobah assets directory")
 		return true, err
 	}
 
@@ -42,7 +44,7 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 		// read in the Purdoobah JSON document
 		b, err := ioutil.ReadFile(path)
 		if err != nil {
-			errorLog.Println(fmt.Sprintf("error reading file: %s", path))
+			logger.Error(fmt.Sprintf("error reading file: %s", path))
 			return true, err
 		}
 		document := gojsonschema.NewStringLoader(string(b))
@@ -50,7 +52,7 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 		// validate the document against the schema
 		result, err := gojsonschema.Validate(schema, document)
 		if err != nil {
-			errorLog.Println(fmt.Sprintf("error validating file: %s", path))
+			logger.Error(fmt.Sprintf("error validating file: %s", path))
 			return true, err
 		}
 
@@ -58,7 +60,7 @@ func ValidateJsonSchema(infoLog *log.Logger, errorLog *log.Logger) (bool, error)
 		if !result.Valid() {
 			invalidFiles = true
 			for _, desc := range result.Errors() {
-				errorLog.Println(fmt.Sprintf("validation error (%s): %s", path, desc))
+				logger.Error(fmt.Sprintf("validation error (%s): %s", path, desc))
 			}
 		}
 	}

@@ -1,0 +1,19 @@
+{
+  "name": "Nee Lawrence",
+  "birth_certificate_name": {
+    "first": "Nee",
+    "last": "Lawrence"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2000]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

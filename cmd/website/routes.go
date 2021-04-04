@@ -7,6 +7,8 @@ import (
 	"runtime/debug"
 	"strconv"
 
+	"github.com/purdoobahs/purdoobahs.com/internal/logger"
+
 	"github.com/gorilla/mux"
 
 	"github.com/justinas/alice"
@@ -298,7 +300,11 @@ func (app *application) notFound(w http.ResponseWriter) {
 
 func (app *application) serveError(w http.ResponseWriter, err error) {
 	trace := fmt.Sprintf("%s\n%s", err.Error(), debug.Stack())
-	app.errorLog.Output(2, trace)
+	err = app.logger.(*logger.Logger).ErrorLog.Output(2, trace)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
 
