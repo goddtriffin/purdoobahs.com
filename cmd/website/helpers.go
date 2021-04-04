@@ -48,14 +48,16 @@ func (app *application) loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, erro
 		p.ID = id
 
 		// generate image location
+		const baseImagePath = "/static/image/purdoobah"
 		if app.doesPurdoobahHaveProfilePicture(id) {
-			p.Metadata.Image.File = fmt.Sprintf("%s.jpg", id)
+			p.Metadata.Image.File = fmt.Sprintf("%s/%s.jpg", baseImagePath, id)
 		} else {
-			p.Metadata.Image.File = "_unknown.jpg"
+			id := "_unknown"
+			p.Metadata.Image.File = fmt.Sprintf("%s/%s.jpg", baseImagePath, id)
 		}
 		p.Metadata.Image.Alt = fmt.Sprintf("%s's Profile Picture", p.Name)
 
-		// add it to container of all toobahs
+		// add it to container of all purdoobahs
 		allPurdoobahs[id] = &p
 	}
 

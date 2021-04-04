@@ -117,6 +117,9 @@ func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Requ
 			URL:         fmt.Sprintf("/purdoobah/%s", name),
 		},
 		PurdoobahByName: purdoobahByName,
+		Metadata: metadata{
+			SocialImage: purdoobahByName.Metadata.Image.File,
+		},
 	})
 }
 
