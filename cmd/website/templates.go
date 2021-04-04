@@ -237,7 +237,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 	td.Header = header{
 		NavLinks: []navLink{
 			{DisplayName: "Home", URL: "/"},
-			{DisplayName: "Alumni", URL: "/purdoobah"},
+			{DisplayName: "Alumni", URL: "/alumni"},
 			{DisplayName: "Traditions", URL: "/traditions"},
 			{DisplayName: "Cravers Hall of Fame", URL: "/cravers-hall-of-fame"},
 		},

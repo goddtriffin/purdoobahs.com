@@ -27,7 +27,7 @@ func (app *application) routes() http.Handler {
 	router.HandleFunc("/cravers-hall-of-fame", app.pageCraversHallOfFame).Methods("GET")
 	router.HandleFunc("/traditions", app.pageTraditions).Methods("GET")
 	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
-	router.HandleFunc("/purdoobah", app.pagePurdoobahDirectory).Methods("GET")
+	router.HandleFunc("/alumni", app.pageAlumni).Methods("GET")
 	router.HandleFunc("/section/{year}", app.pageSectionByYear).Methods("GET")
 
 	// files
@@ -120,7 +120,7 @@ func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Requ
 	})
 }
 
-func (app *application) pagePurdoobahDirectory(w http.ResponseWriter, r *http.Request) {
+func (app *application) pageAlumni(w http.ResponseWriter, r *http.Request) {
 	// get all purdoobahs
 	allPurdoobahs, err := app.purdoobahService.All()
 	if err != nil {
@@ -128,11 +128,11 @@ func (app *application) pagePurdoobahDirectory(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	app.render(w, r, "purdoobah-directory.gohtml", &templateData{
+	app.render(w, r, "alumni.gohtml", &templateData{
 		Page: page{
-			DisplayName: "Purdoobah Directory",
-			URL:         "/purdoobah",
-			Scripts:     []string{"purdoobah-directory.js"},
+			DisplayName: "Alumni",
+			URL:         "/alumni",
+			Scripts:     []string{"alumni.js"},
 		},
 		Purdoobahs: allPurdoobahs,
 	})
