@@ -207,29 +207,52 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		td = &templateData{}
 	}
 
-	td.Metadata = metadata{
-		LanguageCode: "en",
-		CountryCode:  "US",
-		Charset:      "utf-8",
-		Description:  "The official website of the Purdue All-American Marching Band Toobah section.",
-		Project:      "Purdoobahs",
-		Author:       "Todd Everett Griffin",
-		Twitter:      twitter{Username: "@goddtriffin"},
-		HomeURL:      "https://www.purdoobahs.com",
-		Keywords: []string{
-			"purdoobahs", "purdoobah", "Purdue Toobah", "Purdue tuba",
-			"Purdue", "Purdue University", "university",
-			"toobah", "tuba", "sousa", "sousaphone", "helicon",
-			"Orville Redenbacher", "Orville", "Redenbacher",
-			"Purdue All-American Marching Band", "All-American Marching Band",
-			"marching band", "marching", "band",
-			"YMSH", "ΨΜΣΗ",
-			"Cravers Hall of Fame", "Cravers", "Hall", "Fame", "White Castle",
-		},
-		ThemeColor: "#c28e0e",
+	if td.Metadata.LanguageCode == "" {
+		td.Metadata.LanguageCode = "en"
 	}
 
-	// backup social image in case one isn't provided
+	if td.Metadata.CountryCode == "" {
+		td.Metadata.CountryCode = "US"
+	}
+
+	if td.Metadata.Charset == "" {
+		td.Metadata.Charset = "utf-8"
+	}
+	if td.Metadata.Description == "" {
+		td.Metadata.Description = "The official website of the Purdue All-American Marching Band Toobah section."
+	}
+
+	if td.Metadata.Project == "" {
+		td.Metadata.Project = "Purdoobahs"
+	}
+
+	if td.Metadata.Author == "" {
+		td.Metadata.Author = "Todd Everett Griffin"
+	}
+
+	if td.Metadata.Twitter.Username == "" {
+		td.Metadata.Twitter = twitter{Username: "@goddtriffin"}
+	}
+
+	if td.Metadata.HomeURL == "" {
+		td.Metadata.HomeURL = "https://www.purdoobahs.com"
+	}
+
+	td.Metadata.Keywords = append([]string{
+		"purdoobahs", "purdoobah", "Purdue Toobah", "Purdue tuba",
+		"Purdue", "Purdue University", "university",
+		"toobah", "tuba", "sousa", "sousaphone", "helicon",
+		"Orville Redenbacher", "Orville", "Redenbacher",
+		"Purdue All-American Marching Band", "All-American Marching Band",
+		"marching band", "marching", "band",
+		"YMSH", "ΨΜΣΗ",
+		"Cravers Hall of Fame", "Cravers", "Hall", "Fame", "White Castle",
+	}, td.Metadata.Keywords...)
+
+	if td.Metadata.ThemeColor == "" {
+		td.Metadata.ThemeColor = "#c28e0e"
+	}
+
 	if td.Metadata.SocialImage == "" {
 		td.Metadata.SocialImage = "/static/image/purdoobahs.webp"
 	}

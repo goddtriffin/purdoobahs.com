@@ -113,12 +113,18 @@ func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Requ
 
 	app.render(w, r, "purdoobah-profile.gohtml", &templateData{
 		Page: page{
-			DisplayName: fmt.Sprintf("%s %s", purdoobahByName.Emoji, purdoobahByName.Name),
+			DisplayName: fmt.Sprintf("%s %s", purdoobahByName.Name, purdoobahByName.Emoji),
 			URL:         fmt.Sprintf("/purdoobah/%s", name),
 		},
 		PurdoobahByName: purdoobahByName,
 		Metadata: metadata{
 			SocialImage: purdoobahByName.Metadata.Image.File,
+			Description: fmt.Sprintf(
+				"Meet %s! %s Member of the %s Purdoobah section(s).",
+				purdoobahByName.Name,
+				purdoobahByName.Emoji,
+				prettyIntSlice(purdoobahByName.Marching.YearsMarched),
+			),
 		},
 	})
 }
