@@ -310,8 +310,8 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		},
 	}
 
-	td.Page.Scripts = []string{"scitylana.js"}
-	td.Page.StyleSheets = []string{"main.css"}
+	td.Page.Scripts = append([]string{"scitylana.js"}, td.Page.Scripts...)
+	td.Page.StyleSheets = append([]string{"main.css"}, td.Page.StyleSheets...)
 
 	return td
 }

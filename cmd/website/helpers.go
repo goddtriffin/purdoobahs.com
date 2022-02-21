@@ -51,10 +51,10 @@ func (app *application) loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, erro
 		// generate image location
 		const baseImagePath = "/static/image/purdoobah"
 		if app.doesPurdoobahHaveProfilePicture(id) {
-			p.Metadata.Image.File = fmt.Sprintf("%s/%s.jpg", baseImagePath, id)
+			p.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
 		} else {
 			id := "_unknown"
-			p.Metadata.Image.File = fmt.Sprintf("%s/%s.jpg", baseImagePath, id)
+			p.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
 		}
 		p.Metadata.Image.Alt = fmt.Sprintf("%s's Profile Picture", p.Name)
 
@@ -89,7 +89,7 @@ func (app *application) walkMatch(root, pattern string) ([]string, error) {
 
 func (app *application) doesPurdoobahHaveProfilePicture(targetID string) bool {
 	// read in the Purdoobah JSON Schema
-	filepaths, err := app.walkMatch("./static/image/purdoobah/", `*.jpg`)
+	filepaths, err := app.walkMatch("./static/image/purdoobah/", `*.webp`)
 	if err != nil {
 		app.logger.Error("failed to load Purdoobah image filepaths")
 		os.Exit(1)
@@ -97,7 +97,7 @@ func (app *application) doesPurdoobahHaveProfilePicture(targetID string) bool {
 
 	// loop through each file
 	for _, path := range filepaths {
-		id := strings.ReplaceAll(filepath.Base(path), ".jpg", "")
+		id := strings.ReplaceAll(filepath.Base(path), ".webp", "")
 		if id == targetID {
 			return true
 		}
