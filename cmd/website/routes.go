@@ -181,14 +181,14 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 	}
 
 	// get social image
-	socialImage := fmt.Sprintf("/static/image/socials/section/%v.webp", yearAsInt)
+	socialImage := fmt.Sprintf("/static/image/section/%v.webp", yearAsInt)
 	if !app.doesSectionHaveSocialImage(yearAsInt) {
 		socialImage = ""
 	}
 
 	app.render(w, r, "section-by-year.gohtml", &templateData{
 		Page: page{
-			DisplayName: fmt.Sprintf("Section %d", yearAsInt),
+			DisplayName: fmt.Sprintf("%d Section", yearAsInt),
 			URL:         fmt.Sprintf("/section/%d", yearAsInt),
 		},
 		Purdoobahs: sectionByYear,

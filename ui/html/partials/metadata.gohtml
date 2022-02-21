@@ -24,36 +24,36 @@
 
 {{/* https://ogp.me/ */}}
 {{define "metadata-opengraph"}}
-<meta property="og:title" content="{{- .Metadata.Project -}}" />
+<meta property="og:title" content="{{- title .Page.DisplayName}} | Purdoobahs ΨΜΣΗ" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="{{- template "canonical-url" . -}}" />
 <meta property="og:image" content="{{- .Metadata.SocialImage -}}" />
-<meta property='og:description' content='{{- .Metadata.Description -}}' />
-<meta property='og:locale' content='{{- .Metadata.LanguageCode -}}_{{- .Metadata.CountryCode -}}' />
-<meta property='og:site_name' content='{{- .Metadata.Project -}}' />
+<meta property="og:image:alt" content="{{- title .Page.DisplayName}} | Purdoobahs ΨΜΣΗ" />
+<meta property="og:description" content="{{- .Metadata.Description -}}" />
+<meta property="og:locale" content="{{- .Metadata.LanguageCode -}}_{{- .Metadata.CountryCode -}}" />
+<meta property="og:site_name" content="{{- .Metadata.Project -}}" />
 {{end}}
 
 {{/* https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards */}}
 {{define "metadata-twitter"}}
-<meta name='twitter:card' content='summary' />
-<meta name='twitter:creator' content='{{- .Metadata.Twitter.Username -}}' />
-<meta name='twitter:site' content='{{- .Metadata.Twitter.Username -}}' />
-<meta name='twitter:title' content='{{- .Metadata.Project -}}' />
-<meta name='twitter:description' content='{{- .Metadata.Description -}}' />
-<meta name='twitter:url' content='{{- template "canonical-url" . -}}' />
-<meta name='twitter:image' content='{{- .Metadata.SocialImage -}}' />
-<meta name='twitter:image:alt' content='{{- .Metadata.Project -}}' />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="{{- .Metadata.Twitter.Username -}}" />
+<meta name="twitter:site" content="{{- .Metadata.Twitter.Username -}}" />
+<meta name="twitter:title" content="{{- title .Page.DisplayName}} | Purdoobahs ΨΜΣΗ" />
+<meta name="twitter:description" content="{{- .Metadata.Description -}}" />
+<meta name="twitter:url" content="{{- template "canonical-url" . -}}" />
+<meta name="twitter:image" content="{{- .Metadata.SocialImage -}}" />
+<meta name="twitter:image:alt" content="{{- title .Page.DisplayName}} | Purdoobahs ΨΜΣΗ" />
 {{end}}
 
 {{define "metadata-android"}}
-<meta name='theme-color' content='{{- .Metadata.ThemeColor -}}' />
+<meta name="theme-color" content="{{- .Metadata.ThemeColor -}}" />
 {{end}}
 
 {{define "metadata-microformats"}}
-<link href='{{- template "canonical-url" . -}}' rel='canonical' />
-<link href='{{- .Metadata.HomeURL -}}' rel='home' />
+<link href="{{- template "canonical-url" . -}}" rel="canonical" />
+<link href="{{- .Metadata.HomeURL -}}" rel="home" />
 <meta name="robots" content="index,follow" />
-<link type='text/plain' rel='author' href='/humans.txt' />
-{{/* <link href='/help' rel='help' > */}}
+<link type="text/plain" rel="author" href="/humans.txt" />
+{{/* <link href="/help" rel="help" > */}}
 {{end}}
-
