@@ -49,7 +49,7 @@ func (app *application) routes() http.Handler {
 	router.HandleFunc("/", app.pageHome).Methods("GET")
 
 	// generic API
-	apiSubrouter.HandleFunc("/health-check", app.apiHealthCheck).Methods("GET")
+	apiSubrouter.HandleFunc("/health", app.apiHealthCheck).Methods("GET")
 
 	// analytics API
 	apiSubrouter.HandleFunc("/scitylana", app.apiAnalytics).Methods("POST")
