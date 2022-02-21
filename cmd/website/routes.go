@@ -246,7 +246,14 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", r.FormValue("user_agent"))
 	req.Header.Set("X-Forwarded-For", r.RemoteAddr)
-	app.logger.Info(fmt.Sprintf("Request's X-Forwarded-For: %v", r.FormValue("X-Forwarded-For")))
+
+	// print headers
+	if reqHeadersBytes, err := json.Marshal(req.Header); err == nil {
+		app.logger.Info(fmt.Sprintf("Plausible Analytics headers: %v", string(reqHeadersBytes)))
+	}
+
+	// print body
+	app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(bodyBytes)))
 
 	if app.env == production {
 		// POST analytics event
@@ -263,14 +270,6 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 		app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(body)))
 	} else {
 		app.logger.Info("Not sending Plausible analytics request due to being in development environment.")
-
-		// print headers
-		if reqHeadersBytes, err := json.Marshal(req.Header); err == nil {
-			app.logger.Info(fmt.Sprintf("Plausible Analytics headers: %v", string(reqHeadersBytes)))
-		}
-
-		// print body
-		app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(bodyBytes)))
 	}
 
 	w.WriteHeader(http.StatusOK)
