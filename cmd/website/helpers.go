@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
@@ -103,5 +104,30 @@ func (app *application) doesPurdoobahHaveProfilePicture(targetID string) bool {
 	}
 
 	app.logger.Error(fmt.Sprintf("failed to load Purdoobah image for %s", targetID))
+	return false
+}
+
+func (app *application) doesSectionHaveSocialImage(targetYear int) bool {
+	// read in the section social images
+	filepaths, err := app.walkMatch("./static/image/section/", `*.webp`)
+	if err != nil {
+		app.logger.Error("failed to load section image filepaths")
+		return false
+	}
+
+	// loop through each file
+	for _, path := range filepaths {
+		year := strings.ReplaceAll(filepath.Base(path), ".webp", "")
+		yearAsInt, err := strconv.Atoi(year)
+		if err != nil {
+			return false
+		}
+
+		if yearAsInt == targetYear {
+			return true
+		}
+	}
+
+	app.logger.Error(fmt.Sprintf("failed to load section social image for year %v", targetYear))
 	return false
 }

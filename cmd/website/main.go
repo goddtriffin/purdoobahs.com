@@ -34,6 +34,8 @@ type application struct {
 	helmet        *helmet.Helmet
 
 	purdoobahService purdoobahs.IPurdoobahService
+
+	httpClient *http.Client
 }
 
 func main() {
@@ -41,6 +43,11 @@ func main() {
 	addr := flag.String("addr", "", "HTTP network address")
 	env := flag.String("env", "", "dictates application environment")
 	flag.Parse()
+
+	// set default address if it isn't set
+	if *addr == "" {
+		*addr = ":8080"
+	}
 
 	// initialize the application
 	app := &application{
@@ -79,16 +86,22 @@ func main() {
 		os.Exit(1)
 	}
 
-	if *addr == "" {
-		*addr = ":8080"
-	}
-
 	// create HTML template cache
 	templateCache, err := newTemplateCache()
 	if err != nil {
 		app.logger.Error(err.Error())
 	}
 	app.templateCache = templateCache
+
+	// create http Client for Analytics API
+	tr := http.DefaultTransport.(*http.Transport).Clone()
+	tr.MaxIdleConns = 100
+	tr.MaxConnsPerHost = 100
+	tr.MaxIdleConnsPerHost = 100
+	app.httpClient = &http.Client{
+		Timeout:   time.Second * 10,
+		Transport: tr,
+	}
 
 	// create the server
 	srv := &http.Server{

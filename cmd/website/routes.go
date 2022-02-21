@@ -1,13 +1,16 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"runtime/debug"
 	"strconv"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/logger"
+	"github.com/purdoobahs/purdoobahs.com/internal/plausibleanalytics"
 
 	"github.com/gorilla/mux"
 
@@ -19,7 +22,7 @@ func (app *application) routes() http.Handler {
 
 	// routers
 	router := mux.NewRouter()
-	apiSubrouter := router.PathPrefix("/api").Subrouter()
+	apiSubrouter := router.PathPrefix("/api/v1").Subrouter()
 	apiPurdoobahSubrouter := apiSubrouter.PathPrefix("/purdoobah").Subrouter()
 	apiSectionSubrouter := apiSubrouter.PathPrefix("/section").Subrouter()
 
@@ -47,6 +50,9 @@ func (app *application) routes() http.Handler {
 
 	// generic API
 	apiSubrouter.HandleFunc("/health-check", app.apiHealthCheck).Methods("GET")
+
+	// analytics API
+	apiSubrouter.HandleFunc("/scitylana", app.apiAnalytics).Methods("POST")
 
 	// Purdoobah API
 	apiPurdoobahSubrouter.HandleFunc("/all", app.apiAllPurdoobahs).Methods("GET")
@@ -86,6 +92,10 @@ func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Req
 		Page: page{
 			DisplayName: "Cravers Hall of Fame",
 			URL:         "/cravers-hall-of-fame",
+		},
+		Metadata: metadata{
+			SocialImage: "/static/image/socials/cravers-hall-of-fame.webp",
+			Description: "Inductees of the 2019 White Castle Cravers Hall of Fame!",
 		},
 	})
 }
@@ -144,6 +154,10 @@ func (app *application) pageAlumni(w http.ResponseWriter, r *http.Request) {
 			Scripts:     []string{"alumni.js"},
 		},
 		Purdoobahs: allPurdoobahs,
+		Metadata: metadata{
+			SocialImage: "/static/image/section/2019.webp",
+			Description: "OOOOOOOOOOOOOOOOOOLLLLDDDDDD",
+		},
 	})
 }
 
@@ -166,6 +180,12 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 		return
 	}
 
+	// get social image
+	socialImage := fmt.Sprintf("/static/image/socials/section/%v.webp", yearAsInt)
+	if !app.doesSectionHaveSocialImage(yearAsInt) {
+		socialImage = ""
+	}
+
 	app.render(w, r, "section-by-year.gohtml", &templateData{
 		Page: page{
 			DisplayName: fmt.Sprintf("Section %d", yearAsInt),
@@ -173,6 +193,10 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 		},
 		Purdoobahs: sectionByYear,
 		Year:       yearAsInt,
+		Metadata: metadata{
+			SocialImage: socialImage,
+			Description: "OOOOOOOOOOOOOOOOOOLLLLDDDDDD",
+		},
 	})
 }
 
@@ -189,7 +213,68 @@ func (app *application) fileHumansTxt(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) apiHealthCheck(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusOK)
 	_, err := w.Write([]byte("OK"))
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+}
+
+func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
+	// body
+	screenWidth, err := strconv.Atoi(r.FormValue("screen_width"))
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+	body := plausibleanalytics.NewPlausibleAnalyticsBody(r.FormValue("url"), r.FormValue("referrer"), screenWidth)
+	bodyBytes, err := json.Marshal(body)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// create request
+	req, err := http.NewRequestWithContext(r.Context(), "POST", "https://plausible.io/api/event", bytes.NewBuffer(bodyBytes))
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("User-Agent", r.FormValue("user_agent"))
+	req.Header.Set("X-Forwarded-For", r.RemoteAddr)
+	app.logger.Info(fmt.Sprintf("Request's X-Forwarded-For: %v", r.FormValue("X-Forwarded-For")))
+
+	if app.env == production {
+		// POST analytics event
+		resp, err := app.httpClient.Do(req)
+		if err != nil {
+			app.serveError(w, err)
+			return
+		}
+		defer resp.Body.Close()
+		body, _ := ioutil.ReadAll(resp.Body)
+
+		// print response
+		app.logger.Info(fmt.Sprintf("Plausible Analytics status: %v %v", resp.Status, resp.Header))
+		app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(body)))
+	} else {
+		app.logger.Info("Not sending Plausible analytics request due to being in development environment.")
+
+		// print headers
+		if reqHeadersBytes, err := json.Marshal(req.Header); err == nil {
+			app.logger.Info(fmt.Sprintf("Plausible Analytics headers: %v", string(reqHeadersBytes)))
+		}
+
+		// print body
+		app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(bodyBytes)))
+	}
+
+	w.WriteHeader(http.StatusOK)
+	_, err = w.Write([]byte("OK"))
 	if err != nil {
 		app.serveError(w, err)
 		return

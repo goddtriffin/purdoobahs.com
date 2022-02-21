@@ -254,7 +254,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 	}
 
 	if td.Metadata.SocialImage == "" {
-		td.Metadata.SocialImage = "/static/image/purdoobahs.webp"
+		td.Metadata.SocialImage = "/static/image/socials/purdoobahs.webp"
 	}
 
 	td.Header = header{
@@ -310,6 +310,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		},
 	}
 
+	td.Page.Scripts = []string{"scitylana.js"}
 	td.Page.StyleSheets = []string{"main.css"}
 
 	return td
