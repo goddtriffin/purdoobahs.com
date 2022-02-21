@@ -2,7 +2,6 @@ package inmemorydatabase
 
 import (
 	"sort"
-	"time"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 )
@@ -66,18 +65,19 @@ func (ps *PurdoobahService) SectionByYear(targetYear int) ([]*purdoobahs.Purdoob
 // `currentAcademicYear` returns the value of the current academic year.
 // e.g. if the academic year is "Fall 2020 -> Spring 2021", it will return "2020"
 func (ps *PurdoobahService) currentAcademicYear() int {
-	t := time.Now()
-	switch t.Month() {
-	case time.January,
-		time.February,
-		time.March,
-		time.April,
-		time.May,
-		time.June,
-		time.July,
-		time.August:
-		return t.Year() - 1
-	default:
-		return t.Year()
-	}
+	// t := time.Now()
+	// switch t.Month() {
+	// case time.January,
+	// 	time.February,
+	// 	time.March,
+	// 	time.April,
+	// 	time.May,
+	// 	time.June,
+	// 	time.July,
+	// 	time.August:
+	// 	return t.Year() - 1
+	// default:
+	// 	return t.Year()
+	// }
+	return 2020
 }
