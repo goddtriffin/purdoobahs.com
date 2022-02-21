@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"flag"
 	"fmt"
 	"html/template"
@@ -68,23 +67,20 @@ func main() {
 	}
 	app.purdoobahService = inmemorydatabase.NewPurdoobahService(allPurdoobahs)
 
-	// switch port to serve on based on environment deployed in
+	// set environment
 	switch strings.ToLower(*env) {
 	case "dev", "develop", "development":
 		app.env = development
-
-		if *addr == "" {
-			*addr = ":443"
-		}
 	case "prod", "production":
 		app.env = production
-		if *addr == "" {
-			*addr = ":80"
-		}
 	default:
 		app.logger.Error("-env flag needs to be one of: 'dev', 'develop', 'development', 'prod', or 'production'")
 		flag.Usage()
 		os.Exit(1)
+	}
+
+	if *addr == "" {
+		*addr = ":8080"
 	}
 
 	// create HTML template cache
@@ -101,26 +97,13 @@ func main() {
 		Handler:  app.routes(),
 
 		IdleTimeout:  time.Minute,
-		ReadTimeout:  5 * time.Second,
+		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
-	}
-
-	// if this is the local environment, load dummy TLS files
-	if app.env == development {
-		srv.TLSConfig = &tls.Config{
-			PreferServerCipherSuites: true,
-			CurvePreferences:         []tls.CurveID{tls.X25519, tls.CurveP256},
-		}
 	}
 
 	// start the server
 	app.logger.Info(fmt.Sprintf("Starting server on %s\n", *addr))
-	switch app.env {
-	case development:
-		err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
-	case production:
-		err = srv.ListenAndServe()
-	}
+	err = srv.ListenAndServe()
 
 	// print error on exit
 	if err != nil {
