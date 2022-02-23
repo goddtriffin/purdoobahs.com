@@ -139,7 +139,7 @@ func (app *application) generateIndexSitemap() error {
 	homeUrl := "https://www.purdoobahs.com"
 
 	// use today's date to generate Last Modified
-	lastModified := time.Now().Format("2006-01-02")
+	lastModified := time.Now().Format(time.RFC3339)
 
 	// generate index sitemap
 	indexSitemap := sitemap.NewIndexFile([]sitemap.SitemapEntry{
@@ -159,7 +159,7 @@ func (app *application) generateRootSitemap(router *mux.Router) {
 	homeUrl := "https://www.purdoobahs.com"
 
 	// use today's date to generate Last Modified
-	lastModified := time.Now().Format("2006-01-02")
+	lastModified := time.Now().Format(time.RFC3339)
 
 	// gather routes for root sitemap (/sitemap-root.xml)
 	rootSitemap := sitemap.NewFile([]sitemap.UrlEntry{})
@@ -224,7 +224,7 @@ func (app *application) generateProfilesSitemap() error {
 	homeUrl := "https://www.purdoobahs.com/purdoobah"
 
 	// use today's date to generate Last Modified
-	lastModified := time.Now().Format("2006-01-02")
+	lastModified := time.Now().Format(time.RFC3339)
 
 	// init profiles sitemap
 	profilesSitemap := sitemap.NewFile([]sitemap.UrlEntry{})
@@ -255,7 +255,7 @@ func (app *application) generateSectionsSitemap() error {
 	homeUrl := "https://www.purdoobahs.com/section"
 
 	// use today's date to generate Last Modified
-	lastModified := time.Now().Format("2006-01-02")
+	lastModified := time.Now().Format(time.RFC3339)
 
 	// init profiles sitemap
 	profilesSitemap := sitemap.NewFile([]sitemap.UrlEntry{})
