@@ -49,7 +49,6 @@ func createHelmet() *helmet.Helmet {
 		helmet.DirectiveImgSrc:              {helmet.SourceSelf, helmet.SourceReportSample},
 		helmet.DirectiveNavigateTo:          {helmet.SourceSelf, helmet.SourceReportSample},
 		helmet.DirectiveObjectSrc:           {helmet.SourceSelf},
-		helmet.DirectivePluginTypes:         {"application/pdf"},
 		helmet.DirectiveReportTo:            {}, // TODO add support
 		helmet.DeprecatedDirectiveReportURI: {"/csp-report"},
 		helmet.DirectiveStyleSrc:            {helmet.SourceSelf, helmet.SourceReportSample},

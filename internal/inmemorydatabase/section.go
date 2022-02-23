@@ -80,6 +80,8 @@ func (ps *PurdoobahService) AllSectionYears() ([]int, error) {
 		uniqueYearsMarchedSlice = append(uniqueYearsMarchedSlice, uniqueYear)
 	}
 
+	sort.Ints(uniqueYearsMarchedSlice)
+
 	return uniqueYearsMarchedSlice, nil
 }
 

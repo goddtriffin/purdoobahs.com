@@ -4,6 +4,10 @@
   text-align: center;
   margin-bottom: 2rem;
 
+  > .description {
+      margin-bottom: 8px;
+  }
+
   > .search-bar {
     display: flex;
     justify-content: center;
@@ -25,4 +29,21 @@
       }
     }
   }
+}
+
+.every-year-marched {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    > .years {
+        margin: 0 auto;
+        text-align: center;
+
+        > p {
+            display: inline-block;
+            vertical-align: top;
+            margin: 5px;
+            font-size: larger;
+        }
+    }
 }

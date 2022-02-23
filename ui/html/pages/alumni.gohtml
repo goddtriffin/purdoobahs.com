@@ -1,15 +1,17 @@
-{{template "base" .}}
+{{ template "base" . }}
 
-{{define "main"}}
+{{ define "main" }}
 <main>
-    {{template "search-bar-form" .}}
+    {{ template "search-bar-form" . }}
+
+    {{ template "every-year-marched" . }}
 
     <div class="section">
-        {{range $i, $p := .Purdoobahs}}
+        {{ range $i, $p := .Purdoobahs }}
             <div class="purdoobah-card" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
-                <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
+                <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{ .Emoji -}}</h2>
 
-                {{template "years-marched" $p.Marching.YearsMarched}}
+                {{ template "years-marched" $p.Marching.YearsMarched }}
 
                 <a href="/purdoobah/{{- .ID -}}">
                     <picture>
@@ -17,28 +19,41 @@
                     </picture>
                 </a>
             </div>
-        {{end}}
+        {{ end }}
     </div>
-    {{template "archives-incomplete" .}}
+    {{ template "archives-incomplete" . }}
 </main>
-{{end}}
+{{ end }}
 
-{{define "search-bar-form" -}}
+{{ define "search-bar-form" }}
 <form class="search-bar-form">
+    <p class="description">Search by nickname, year, emoji, or real name!</p>
+
     <div class="search-bar">
         <label for="inputSearch">Search:</label>
         <input type="text" id="inputSearch" class="input" />
     </div>
-
-    <p class="description">Search by nickname, year, emoji, or real name!</p>
 </form>
-{{- end}}
+{{ end }}
 
-{{define "years-marched" -}}
+
+{{ define "every-year-marched" }}
+<div class="every-year-marched">
+    <p>or choose a section to view by year!</p>
+
+    <div class="years">
+    {{ range $i, $y := .AllYearsMarched }}
+        <p><a href="/section/{{$y}}">{{$y}}</a></p>
+    {{ end }}
+    </div>
+</div>
+{{ end }}
+
+{{ define "years-marched" }}
 <p>
     {{- $length := (len .) -}}
     {{- range $i, $y := . -}}
     <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
     {{- end -}}
 </p>
-{{- end}}
+{{ end }}

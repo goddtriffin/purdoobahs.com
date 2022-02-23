@@ -134,7 +134,7 @@ func main() {
 	}
 
 	// start the server
-	app.logger.Info(fmt.Sprintf("Starting server on %s\n", *addr))
+	app.logger.Info(fmt.Sprintf("Starting server on %s", *addr))
 	err = srv.ListenAndServe()
 
 	// print error on exit

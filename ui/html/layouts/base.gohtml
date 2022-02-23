@@ -1,23 +1,23 @@
-{{define "base"}}
+{{ define "base" }}
 <!DOCTYPE html>
 <html lang="{{- .Metadata.LanguageCode -}}-{{- .Metadata.CountryCode -}}">
 	<head>
-		{{template "metadata" .}}
-        {{template "favicon" .}}
+		{{ template "metadata" . }}
+        {{ template "favicon" . }}
 
-		{{range .Page.StyleSheets}}
+		{{ range .Page.StyleSheets }}
 		<link rel="stylesheet" type="text/css" href="/static/stylesheet/{{- . -}}" />
-		{{end}}
+		{{ end }}
 	</head>
 
 	<body>
-  	    {{template "header" .}}
-		{{template "main" .}}
-  	    {{template "footer" .}}
+  	    {{ template "header" . }}
+		{{ template "main" . }}
+  	    {{ template "footer" . }}
 
-		{{- range .Page.Scripts -}}
+		{{ range .Page.Scripts }}
 		<script type='text/javascript' src='/static/script/{{- . -}}' defer></script>
-		{{- end -}}
+		{{ end }}
 	</body>
 </html>
-{{end}}
+{{ end }}

@@ -1,4 +1,5 @@
 {{define "metadata"}}
+{{ template "metadata-robots" . }}
 {{ template "metadata-standard" . }}
 {{ template "metadata-opengraph" . }}
 {{ template "metadata-twitter" . }}
@@ -6,7 +7,7 @@
 {{ template "metadata-microformats" . }}
 {{end}}
 
-{{define "metadata-robots}}
+{{define "metadata-robots"}}
 <meta name="robots" content="all" />
 {{end}}
 

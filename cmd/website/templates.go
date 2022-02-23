@@ -26,6 +26,7 @@ type templateData struct {
 	PurdoobahByName *purdoobahs.Purdoobah
 	Purdoobahs      []*purdoobahs.Purdoobah
 	CurrentSection  *purdoobahs.Section
+	AllYearsMarched []int
 	Year            int
 }
 

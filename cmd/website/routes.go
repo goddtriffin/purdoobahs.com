@@ -155,13 +155,21 @@ func (app *application) pageAlumni(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get all years marched
+	allYearsMarched, err := app.purdoobahService.AllSectionYears()
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
 	app.render(w, r, "alumni.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Alumni",
 			URL:         "/alumni",
 			Scripts:     []string{"alumni.js"},
 		},
-		Purdoobahs: allPurdoobahs,
+		Purdoobahs:      allPurdoobahs,
+		AllYearsMarched: allYearsMarched,
 		Metadata: metadata{
 			SocialImage: "/static/image/section/2019.webp",
 			Description: "OOOOOOOOOOOOOOOOOOLLLLDDDDDD",
