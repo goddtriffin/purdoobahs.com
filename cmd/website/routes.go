@@ -26,17 +26,21 @@ func (app *application) routes() http.Handler {
 	apiPurdoobahSubrouter := apiSubrouter.PathPrefix("/purdoobah").Subrouter()
 	apiSectionSubrouter := apiSubrouter.PathPrefix("/section").Subrouter()
 
+	// files
+	router.HandleFunc("/favicon.ico", app.fileFavicon).Methods("GET")
+	router.HandleFunc("/sitemap.xml", app.fileIndexSitemapXml).Methods("GET")
+	router.HandleFunc("/sitemap-root.xml", app.fileRootSitemapXml).Methods("GET")
+	router.HandleFunc("/purdoobah/sitemap.xml", app.fileProfilesSitemapXml).Methods("GET")
+	router.HandleFunc("/section/sitemap.xml", app.fileSectionsSitemapXml).Methods("GET")
+	router.HandleFunc("/robots.txt", app.fileRobotsTxt).Methods("GET")
+	router.HandleFunc("/humans.txt", app.fileHumansTxt).Methods("GET")
+
 	// pages
 	router.HandleFunc("/cravers-hall-of-fame", app.pageCraversHallOfFame).Methods("GET")
 	router.HandleFunc("/traditions", app.pageTraditions).Methods("GET")
 	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
 	router.HandleFunc("/alumni", app.pageAlumni).Methods("GET")
 	router.HandleFunc("/section/{year}", app.pageSectionByYear).Methods("GET")
-
-	// files
-	router.HandleFunc("/favicon.ico", app.fileFavicon).Methods("GET")
-	router.HandleFunc("/robots.txt", app.fileRobotsTxt).Methods("GET")
-	router.HandleFunc("/humans.txt", app.fileHumansTxt).Methods("GET")
 
 	// static files
 	router.PathPrefix("/static/").
@@ -61,6 +65,10 @@ func (app *application) routes() http.Handler {
 	// section API
 	apiSectionSubrouter.HandleFunc("/current", app.apiCurrentSection).Methods("GET")
 	apiSectionSubrouter.HandleFunc("/{year}", app.apiSectionByYear).Methods("GET")
+
+	// use router to automatically generate sitemap-root.xml
+	// (not to be confused with sitemap-index.xml)
+	app.generateRootSitemap(router)
 
 	return standardMiddleware.Then(router)
 }
@@ -201,15 +209,36 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) fileFavicon(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/static/image/favicon.ico", http.StatusMovedPermanently)
+	w.Header().Add("Content-Type", "image/x-icon")
+	http.ServeFile(w, r, "./static/image/favicon/favicon.ico")
+}
+
+func (app *application) fileIndexSitemapXml(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/xml")
+	http.ServeFile(w, r, "./static/file/sitemap-index.xml")
+}
+
+func (app *application) fileRootSitemapXml(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/xml")
+	http.ServeFile(w, r, "./static/file/sitemap-root.xml")
+}
+
+func (app *application) fileProfilesSitemapXml(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/xml")
+	http.ServeFile(w, r, "./static/file/sitemap-profiles.xml")
+}
+
+func (app *application) fileSectionsSitemapXml(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/xml")
+	http.ServeFile(w, r, "./static/file/sitemap-sections.xml")
 }
 
 func (app *application) fileRobotsTxt(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/static/file/robots.txt", http.StatusMovedPermanently)
+	http.ServeFile(w, r, "./static/file/robots.txt")
 }
 
 func (app *application) fileHumansTxt(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/static/file/humans.txt", http.StatusMovedPermanently)
+	http.ServeFile(w, r, "./static/file/humans.txt")
 }
 
 func (app *application) apiHealthCheck(w http.ResponseWriter, r *http.Request) {

@@ -1,9 +1,13 @@
 {{define "metadata"}}
-{{- template "metadata-standard" . -}}
-{{- template "metadata-opengraph" . -}}
-{{- template "metadata-twitter" . -}}
-{{- template "metadata-android" . -}}
-{{- template "metadata-microformats" . -}}
+{{ template "metadata-standard" . }}
+{{ template "metadata-opengraph" . }}
+{{ template "metadata-twitter" . }}
+{{ template "metadata-android" . }}
+{{ template "metadata-microformats" . }}
+{{end}}
+
+{{define "metadata-robots}}
+<meta name="robots" content="all" />
 {{end}}
 
 {{define "metadata-standard"}}
@@ -32,6 +36,10 @@
 <meta property="og:description" content="{{- .Metadata.Description -}}" />
 <meta property="og:locale" content="{{- .Metadata.LanguageCode -}}_{{- .Metadata.CountryCode -}}" />
 <meta property="og:site_name" content="{{- .Metadata.Project -}}" />
+<meta property="og:see_also" content="https://www.instagram.com/purdoobahs/" />
+<meta property="og:see_also" content="https://www.facebook.com/purdoobahs/" />
+<meta property="og:see_also" content="https://www.youtube.com/channel/UCIH2OACGjUeDPfkISb_lp_Q" />
+<meta property="og:see_also" content="https://github.com/purdoobahs" />
 {{end}}
 
 {{/* https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/abouts-cards */}}
@@ -53,7 +61,5 @@
 {{define "metadata-microformats"}}
 <link href="{{- template "canonical-url" . -}}" rel="canonical" />
 <link href="{{- .Metadata.HomeURL -}}" rel="home" />
-<meta name="robots" content="index,follow" />
-<link type="text/plain" rel="author" href="/humans.txt" />
-{{/* <link href="/help" rel="help" > */}}
+<link type="text/plain" rel="author" href="{{- .Metadata.HomeURL -}}/humans.txt" />
 {{end}}

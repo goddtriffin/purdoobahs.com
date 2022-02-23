@@ -55,6 +55,13 @@ func main() {
 		helmet: createHelmet(),
 	}
 
+	// generate index sitemap
+	err := app.generateIndexSitemap()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+
 	// validate all Purdoobah JSON schema files
 	invalidFiles, err := jsonschema.ValidateJsonSchema(app.logger)
 	if err != nil {
@@ -73,6 +80,18 @@ func main() {
 		os.Exit(1)
 	}
 	app.purdoobahService = inmemorydatabase.NewPurdoobahService(allPurdoobahs)
+
+	// generate profile/section sitemaps
+	err = app.generateProfilesSitemap()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+	err = app.generateSectionsSitemap()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
 
 	// set environment
 	switch strings.ToLower(*env) {

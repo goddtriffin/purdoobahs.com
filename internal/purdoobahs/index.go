@@ -6,4 +6,5 @@ type IPurdoobahService interface {
 	ByName(string) (*Purdoobah, error)
 	CurrentSection() (*Section, error)
 	SectionByYear(int) ([]*Purdoobah, error)
+	AllSectionYears() ([]int, error)
 }

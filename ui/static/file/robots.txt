@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: https://www.purdoobahs.com/sitemap.xml
+Sitemap: https://www.purdoobahs.com/sitemap-root.xml
+Sitemap: https://www.purdoobahs.com/purdoobah/sitemap.xml
+Sitemap: https://www.purdoobahs.com/section/sitemap.xml

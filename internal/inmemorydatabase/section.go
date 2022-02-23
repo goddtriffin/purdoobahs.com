@@ -62,6 +62,27 @@ func (ps *PurdoobahService) SectionByYear(targetYear int) ([]*purdoobahs.Purdoob
 	return sectionByYear, nil
 }
 
+// `AllYears` returns all the years at least one Purdoobah has marched.
+func (ps *PurdoobahService) AllSectionYears() ([]int, error) {
+	// use Map like a Set
+	uniqueYearsMarched := make(map[int]bool)
+
+	// remember each year a Purdoobah marched
+	for _, p := range ps.purdoobahs {
+		for _, yearMarched := range p.Marching.YearsMarched {
+			uniqueYearsMarched[yearMarched] = true
+		}
+	}
+
+	// convert Map keys to a Slice
+	uniqueYearsMarchedSlice := []int{}
+	for uniqueYear := range uniqueYearsMarched {
+		uniqueYearsMarchedSlice = append(uniqueYearsMarchedSlice, uniqueYear)
+	}
+
+	return uniqueYearsMarchedSlice, nil
+}
+
 // `currentAcademicYear` returns the value of the current academic year.
 // e.g. if the academic year is "Fall 2020 -> Spring 2021", it will return "2020"
 func (ps *PurdoobahService) currentAcademicYear() int {
