@@ -1,0 +1,21 @@
+@use "../abstracts/variables";
+
+.section-by-year-header {
+    text-align: center;
+
+    > .title {
+        margin-bottom: 1rem;
+    }
+
+    > a {
+        > picture {
+            > .section-photo {
+                border-radius: variables.$border-radius;
+                object-fit: contain;
+                width: auto;
+                height: 500px;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+}

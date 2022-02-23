@@ -18,27 +18,27 @@
         object-fit: cover;
 
         &.section-leader, &.member {
-          border: 3px solid variables.$section-leader;
+          border: 5px solid variables.$section-leader;
         }
 
         &.super-senior {
-          border: 3px solid variables.$super-senior;
+          border: 5px solid variables.$super-senior;
         }
 
         &.senior {
-          border: 3px solid variables.$senior;
+          border: 5px solid variables.$senior;
         }
 
         &.junior {
-          border: 3px solid variables.$junior;
+          border: 5px solid variables.$junior;
         }
 
         &.sophomore {
-          border: 3px solid variables.$sophomore;
+          border: 5px solid variables.$sophomore;
         }
 
         &.freshman {
-          border: 3px solid variables.$freshman;
+          border: 5px solid variables.$freshman;
         }
       }
     }
