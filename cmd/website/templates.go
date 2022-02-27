@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
+	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 
 	"github.com/MagnusFrater/fontawesome"
 )
@@ -23,11 +24,13 @@ type templateData struct {
 	Footer   footer
 	Page     page
 
-	PurdoobahByName *purdoobahs.Purdoobah
 	Purdoobahs      []*purdoobahs.Purdoobah
+	PurdoobahByName *purdoobahs.Purdoobah
 	CurrentSection  *purdoobahs.Section
 	AllYearsMarched []int
 	Year            int
+	Traditions      []*traditions.Tradition
+	TraditionByName *traditions.Tradition
 }
 
 // layout / page / partial
@@ -262,7 +265,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		NavLinks: []navLink{
 			{DisplayName: "Home", URL: "/"},
 			{DisplayName: "Alumni", URL: "/alumni"},
-			{DisplayName: "Traditions", URL: "/traditions"},
+			{DisplayName: "Traditions", URL: "/tradition"},
 			{DisplayName: "Cravers Hall of Fame", URL: "/cravers-hall-of-fame"},
 		},
 		SocialMedia: []socialMedia{

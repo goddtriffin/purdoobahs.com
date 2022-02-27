@@ -1,0 +1,28 @@
+@use "../abstracts/variables";
+
+.tradition-profile {
+    text-align: center;
+
+    > .title {
+        margin-bottom: 1rem;
+
+        > p {
+            width: 50%;
+            margin: 1rem auto;
+            font-size: 1.5rem;
+        }
+    }
+
+    > a {
+        > picture {
+            > .tradition-picture {
+                border-radius: variables.$border-radius;
+                object-fit: contain;
+                width: auto;
+                height: 500px;
+                margin-top: 1rem;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+}

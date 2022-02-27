@@ -1,12 +1,44 @@
 package inmemorydatabase
 
 import (
+	"fmt"
 	"sort"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 )
 
-// `CurrentSection` returns all the Purdoobahs that are marching this academic year.
+type PurdoobahService struct {
+	purdoobahs map[string]*purdoobahs.Purdoobah
+}
+
+func NewPurdoobahService(purdoobahs map[string]*purdoobahs.Purdoobah) *PurdoobahService {
+	return &PurdoobahService{
+		purdoobahs: purdoobahs,
+	}
+}
+
+// All returns every single Purdoobah.
+func (ps *PurdoobahService) All() ([]*purdoobahs.Purdoobah, error) {
+	allPurdoobahs := make([]*purdoobahs.Purdoobah, 0, len(ps.purdoobahs))
+
+	for _, v := range ps.purdoobahs {
+		allPurdoobahs = append(allPurdoobahs, v)
+	}
+
+	sort.Sort(purdoobahs.ByName(allPurdoobahs))
+	return allPurdoobahs, nil
+}
+
+// ByName returns a single Purdoobah by their nickname.
+func (ps *PurdoobahService) ByName(name string) (*purdoobahs.Purdoobah, error) {
+	if purdoobah, ok := ps.purdoobahs[name]; ok {
+		return purdoobah, nil
+	}
+
+	return &purdoobahs.Purdoobah{}, fmt.Errorf("no Purdoobah exists with that name")
+}
+
+// CurrentSection returns all the Purdoobahs that are marching this academic year.
 func (ps *PurdoobahService) CurrentSection() (*purdoobahs.Section, error) {
 	currentSection := &purdoobahs.Section{
 		StudentLeaders: make([]*purdoobahs.Purdoobah, 0),
@@ -49,7 +81,7 @@ func (ps *PurdoobahService) CurrentSection() (*purdoobahs.Section, error) {
 	return currentSection, nil
 }
 
-// `SectionByYear` returns all the Purdoobahs that marched during the given year.
+// SectionByYear returns all the Purdoobahs that marched during the given year.
 func (ps *PurdoobahService) SectionByYear(targetYear int) ([]*purdoobahs.Purdoobah, error) {
 	sectionByYear := make([]*purdoobahs.Purdoobah, 0)
 
@@ -62,7 +94,7 @@ func (ps *PurdoobahService) SectionByYear(targetYear int) ([]*purdoobahs.Purdoob
 	return sectionByYear, nil
 }
 
-// `AllYears` returns all the years at least one Purdoobah has marched.
+// AllSectionYears returns all the years at least one Purdoobah has marched.
 func (ps *PurdoobahService) AllSectionYears() ([]int, error) {
 	// use Map like a Set
 	uniqueYearsMarched := make(map[int]bool)
@@ -85,7 +117,7 @@ func (ps *PurdoobahService) AllSectionYears() ([]int, error) {
 	return uniqueYearsMarchedSlice, nil
 }
 
-// `currentAcademicYear` returns the value of the current academic year.
+// currentAcademicYear returns the value of the current academic year.
 // e.g. if the academic year is "Fall 2020 -> Spring 2021", it will return "2020"
 func (ps *PurdoobahService) currentAcademicYear() int {
 	// t := time.Now()

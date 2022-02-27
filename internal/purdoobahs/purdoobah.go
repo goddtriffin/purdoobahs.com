@@ -2,7 +2,7 @@ package purdoobahs
 
 import "strings"
 
-// defines a Purdoobahs year in school
+// Year defines a Purdoobahs year in school
 type Year string
 
 const (
@@ -14,7 +14,7 @@ const (
 	Freshman         = "freshman"
 )
 
-// sorts Purdoobahs by name
+// ByName sorts Purdoobahs by name
 type ByName []*Purdoobah
 
 func (p ByName) Len() int {
@@ -29,7 +29,6 @@ func (p ByName) Less(i, j int) bool {
 	return strings.Compare(p[i].Name, p[j].Name) < 0
 }
 
-// defines a Purdoobah
 type Purdoobah struct {
 	ID                   string `json:"id"`
 	Name                 string `json:"name"`

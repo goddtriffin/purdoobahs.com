@@ -1,6 +1,6 @@
 package plausibleanalytics
 
-type PlausibleAnalyticsBody struct {
+type Body struct {
 	Domain      string `json:"domain"`
 	Name        string `json:"name"`
 	Url         string `json:"url"`
@@ -8,12 +8,12 @@ type PlausibleAnalyticsBody struct {
 	ScreenWidth int    `json:"screen_width"`
 }
 
-func NewPlausibleAnalyticsBody(url, referrer string, screen_width int) *PlausibleAnalyticsBody {
-	return &PlausibleAnalyticsBody{
+func NewPlausibleAnalyticsBody(url, referrer string, screenWidth int) *Body {
+	return &Body{
 		Domain:      "purdoobahs.com",
 		Name:        "pageview",
 		Url:         url,
 		Referrer:    referrer,
-		ScreenWidth: screen_width,
+		ScreenWidth: screenWidth,
 	}
 }

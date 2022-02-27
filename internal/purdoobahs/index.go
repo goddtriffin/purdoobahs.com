@@ -1,6 +1,6 @@
 package purdoobahs
 
-// defines a Purdoobah Service
+// IPurdoobahService defines a Purdoobah Service
 type IPurdoobahService interface {
 	All() ([]*Purdoobah, error)
 	ByName(string) (*Purdoobah, error)

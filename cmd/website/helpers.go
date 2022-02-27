@@ -10,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gorilla/mux"
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 	"github.com/purdoobahs/purdoobahs.com/internal/sitemap"
+	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 )
 
 func (app *application) loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, error) {
@@ -47,7 +47,7 @@ func (app *application) loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, erro
 			return allPurdoobahs, err
 		}
 
-		// generate ID (their toobah name)
+		// generate ID (the purdoobah file name)
 		id := strings.ReplaceAll(filepath.Base(path), ".json", "")
 		p.ID = id
 
@@ -66,6 +66,59 @@ func (app *application) loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, erro
 	}
 
 	return allPurdoobahs, nil
+}
+
+func (app *application) loadTraditions() (map[string]*traditions.Tradition, error) {
+	allTraditions := make(map[string]*traditions.Tradition)
+
+	// read in the Tradition JSON Schema
+	filepaths, err := app.walkMatch("./assets/traditions/", `*.json`)
+	if err != nil {
+		app.logger.Error("failed to load Tradition JSON filepaths")
+		return allTraditions, err
+	}
+
+	// loop through each file
+	for _, path := range filepaths {
+		// ignore _tradition.schema.json and _template.json
+		if strings.Contains(path, "_") {
+			continue
+		}
+
+		// read in the Tradition JSON document
+		b, err := ioutil.ReadFile(path)
+		if err != nil {
+			app.logger.Error("failed to read in Tradition JSON file")
+			return allTraditions, err
+		}
+
+		// marshal it from JSON to struct
+		var t traditions.Tradition
+		err = json.Unmarshal(b, &t)
+		if err != nil {
+			app.logger.Error("failed to unmarshal Tradition JSON")
+			return allTraditions, err
+		}
+
+		// generate ID (the tradition file name)
+		id := strings.ReplaceAll(filepath.Base(path), ".json", "")
+		t.ID = id
+
+		// generate image location
+		const baseImagePath = "/static/image/tradition"
+		if app.doesTraditionHavePicture(id) {
+			t.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
+		} else {
+			id := "_unknown"
+			t.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
+		}
+		t.Metadata.Image.Alt = fmt.Sprintf("%s", t.Name)
+
+		// add it to container of all purdoobahs
+		allTraditions[id] = &t
+	}
+
+	return allTraditions, nil
 }
 
 func (app *application) walkMatch(root, pattern string) ([]string, error) {
@@ -88,6 +141,26 @@ func (app *application) walkMatch(root, pattern string) ([]string, error) {
 		return nil, err
 	}
 	return matches, nil
+}
+
+func (app *application) doesTraditionHavePicture(targetID string) bool {
+	// read in the Tradition JSON Schema
+	filepaths, err := app.walkMatch("./static/image/tradition/", `*.webp`)
+	if err != nil {
+		app.logger.Error("failed to load Tradition image filepaths")
+		os.Exit(1)
+	}
+
+	// loop through each file
+	for _, path := range filepaths {
+		id := strings.ReplaceAll(filepath.Base(path), ".webp", "")
+		if id == targetID {
+			return true
+		}
+	}
+
+	app.logger.Error(fmt.Sprintf("failed to load Tradition image for %s", targetID))
+	return false
 }
 
 func (app *application) doesPurdoobahHaveProfilePicture(targetID string) bool {
@@ -142,10 +215,11 @@ func (app *application) generateIndexSitemap() error {
 	lastModified := time.Now().Format(time.RFC3339)
 
 	// generate index sitemap
-	indexSitemap := sitemap.NewIndexFile([]sitemap.SitemapEntry{
+	indexSitemap := sitemap.NewIndexFile([]sitemap.Entry{
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/sitemap-root.xml"), lastModified),
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/purdoobah/sitemap.xml"), lastModified),
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/section/sitemap.xml"), lastModified),
+		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/tradition/sitemap.xml"), lastModified),
 	})
 	err := indexSitemap.WriteToFile("./static/file/sitemap-index.xml")
 	if err != nil {
@@ -155,69 +229,32 @@ func (app *application) generateIndexSitemap() error {
 	return nil
 }
 
-func (app *application) generateRootSitemap(router *mux.Router) {
+func (app *application) generateRootSitemap() error {
 	homeUrl := "https://www.purdoobahs.com"
 
 	// use today's date to generate Last Modified
 	lastModified := time.Now().Format(time.RFC3339)
 
-	// gather routes for root sitemap (/sitemap-root.xml)
+	// generate root sitemap
 	rootSitemap := sitemap.NewFile([]sitemap.UrlEntry{})
-	err := router.Walk(func(route *mux.Route, router *mux.Router, ancestors []*mux.Route) error {
-		// get path from route
-		pathTemplate, err := route.GetPathTemplate()
-		if err != nil {
-			return err
-		}
 
-		// disallow API endpoints
-		if strings.HasPrefix(pathTemplate, "/api") {
-			return nil
-		}
-
-		// disallow static resources
-		if strings.HasPrefix(pathTemplate, "/static") {
-			return nil
-		}
-
-		// disallow profile pages (those will be done in their own sitemap-purdoobah.xml)
-		if strings.HasPrefix(pathTemplate, "/purdoobah") {
-			return nil
-		}
-
-		// disallow section pages (those will be done in their own sitemap-section.xml)
-		if strings.HasPrefix(pathTemplate, "/section") {
-			return nil
-		}
-
-		// disallow standalone files
-		standalone_files := []string{"/favicon.ico", "/sitemap.xml", "/robots.txt", "/humans.txt", "/sitemap-root.xml"}
-		for _, file := range standalone_files {
-			if pathTemplate == file {
-				return nil
-			}
-		}
-
-		// add path as UrlEntry to rootSitemap
-		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s%s", homeUrl, pathTemplate), lastModified, sitemap.Monthly, 0.5)
+	// add new UrlEntry for each root route
+	routes := []string{"", "alumni", "tradition", "cravers-hall-of-fame"}
+	for _, route := range routes {
+		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, route), lastModified, sitemap.Monthly, 0.5)
 		if err != nil {
 			return err
 		}
 		rootSitemap.AddUrl(urlEntry)
-
-		return nil
-	})
-	if err != nil {
-		app.logger.Error(err.Error())
-		os.Exit(1)
 	}
 
 	// generate root sitemap (GET /sitemap-root.xml)
-	err = rootSitemap.WriteToFile("./static/file/sitemap-root.xml")
+	err := rootSitemap.WriteToFile("./static/file/sitemap-root.xml")
 	if err != nil {
-		app.logger.Error(err.Error())
-		os.Exit(1)
+		return err
 	}
+
+	return nil
 }
 
 func (app *application) generateProfilesSitemap() error {
@@ -275,6 +312,37 @@ func (app *application) generateSectionsSitemap() error {
 
 	// generate profiles sitemap (GET /purdoobah/sitemap.xml)
 	err = profilesSitemap.WriteToFile("./static/file/sitemap-sections.xml")
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (app *application) generateTraditionsSitemap() error {
+	homeUrl := "https://www.purdoobahs.com/tradition"
+
+	// use today's date to generate Last Modified
+	lastModified := time.Now().Format(time.RFC3339)
+
+	// init profiles sitemap
+	traditionsSitemap := sitemap.NewFile([]sitemap.UrlEntry{})
+
+	// add new UrlEntry for every Purdoobah (by ID, not Name/BirthCertificateName)
+	allTraditions, err := app.traditionService.All()
+	if err != nil {
+		return err
+	}
+	for _, tradition := range allTraditions {
+		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, tradition.ID), lastModified, sitemap.Monthly, 0.5)
+		if err != nil {
+			return err
+		}
+		traditionsSitemap.AddUrl(urlEntry)
+	}
+
+	// generate traditions sitemap (GET /tradition/sitemap.xml)
+	err = traditionsSitemap.WriteToFile("./static/file/sitemap-traditions.xml")
 	if err != nil {
 		return err
 	}

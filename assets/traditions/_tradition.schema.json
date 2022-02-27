@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.purdoobahs.com/schemas/_tradition.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "Tradition",
+  "description": "A Tradition",
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name",
+      "description": "This tradition's name"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description",
+      "description": "An explanation that provides further context about this tradition."
+    }
+  }
+}

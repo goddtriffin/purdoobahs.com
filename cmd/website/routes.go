@@ -32,15 +32,17 @@ func (app *application) routes() http.Handler {
 	router.HandleFunc("/sitemap-root.xml", app.fileRootSitemapXml).Methods("GET")
 	router.HandleFunc("/purdoobah/sitemap.xml", app.fileProfilesSitemapXml).Methods("GET")
 	router.HandleFunc("/section/sitemap.xml", app.fileSectionsSitemapXml).Methods("GET")
+	router.HandleFunc("/tradition/sitemap.xml", app.fileTraditionsSitemapXml).Methods("GET")
 	router.HandleFunc("/robots.txt", app.fileRobotsTxt).Methods("GET")
 	router.HandleFunc("/humans.txt", app.fileHumansTxt).Methods("GET")
 
 	// pages
 	router.HandleFunc("/cravers-hall-of-fame", app.pageCraversHallOfFame).Methods("GET")
-	router.HandleFunc("/traditions", app.pageTraditions).Methods("GET")
-	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
+	router.HandleFunc("/tradition", app.pageTraditions).Methods("GET")
+	router.HandleFunc("/tradition/{name}", app.pageTraditionProfile).Methods("GET")
 	router.HandleFunc("/alumni", app.pageAlumni).Methods("GET")
 	router.HandleFunc("/section/{year}", app.pageSectionByYear).Methods("GET")
+	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
 
 	// static files
 	router.PathPrefix("/static/").
@@ -65,10 +67,6 @@ func (app *application) routes() http.Handler {
 	// section API
 	apiSectionSubrouter.HandleFunc("/current", app.apiCurrentSection).Methods("GET")
 	apiSectionSubrouter.HandleFunc("/{year}", app.apiSectionByYear).Methods("GET")
-
-	// use router to automatically generate sitemap-root.xml
-	// (not to be confused with sitemap-index.xml)
-	app.generateRootSitemap(router)
 
 	return standardMiddleware.Then(router)
 }
@@ -109,10 +107,47 @@ func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Req
 }
 
 func (app *application) pageTraditions(w http.ResponseWriter, r *http.Request) {
+	// get all traditions
+	allTraditions, err := app.traditionService.All()
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
 	app.render(w, r, "traditions.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Traditions",
-			URL:         "/traditions",
+			URL:         "/tradition",
+		},
+		Traditions: allTraditions,
+		Metadata: metadata{
+			SocialImage: "/static/image/socials/traditions.webp",
+			Description: "It's surprising what you get when you put a bunch of toobahs together in the same room.",
+		},
+	})
+}
+
+func (app *application) pageTraditionProfile(w http.ResponseWriter, r *http.Request) {
+	// get name
+	vars := mux.Vars(r)
+	name := vars["name"]
+
+	// get tradition
+	traditionByName, err := app.traditionService.ByName(name)
+	if err != nil {
+		app.notFound(w)
+		return
+	}
+
+	app.render(w, r, "tradition-profile.gohtml", &templateData{
+		Page: page{
+			DisplayName: traditionByName.Name,
+			URL:         fmt.Sprintf("/tradition/%s", name),
+		},
+		TraditionByName: traditionByName,
+		Metadata: metadata{
+			SocialImage: traditionByName.Metadata.Image.File,
+			Description: traditionByName.Description,
 		},
 	})
 }
@@ -239,6 +274,11 @@ func (app *application) fileProfilesSitemapXml(w http.ResponseWriter, r *http.Re
 func (app *application) fileSectionsSitemapXml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/xml")
 	http.ServeFile(w, r, "./static/file/sitemap-sections.xml")
+}
+
+func (app *application) fileTraditionsSitemapXml(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/xml")
+	http.ServeFile(w, r, "./static/file/sitemap-traditions.xml")
 }
 
 func (app *application) fileRobotsTxt(w http.ResponseWriter, r *http.Request) {

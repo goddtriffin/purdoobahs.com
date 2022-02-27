@@ -7,12 +7,12 @@ import (
 )
 
 type IndexFile struct {
-	XMLName    xml.Name       `xml:"sitemapindex"`
-	VersionUrl string         `xml:"xmlns,attr"`
-	Sitemaps   []SitemapEntry `xml:",omitempty"`
+	XMLName    xml.Name `xml:"sitemapindex"`
+	VersionUrl string   `xml:"xmlns,attr"`
+	Sitemaps   []Entry  `xml:",omitempty"`
 }
 
-func NewIndexFile(entries []SitemapEntry) *IndexFile {
+func NewIndexFile(entries []Entry) *IndexFile {
 	return &IndexFile{
 		VersionUrl: "http://www.sitemaps.org/schemas/sitemap/0.9",
 		Sitemaps:   entries,

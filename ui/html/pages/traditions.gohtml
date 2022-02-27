@@ -1,7 +1,21 @@
 {{template "base" .}}
 
 {{define "main"}}
-<main>
-    <h1>Display all our traditions</h1>
+<main class="traditions-page">
+    <p>Click on any tradition to read more!</p>
+
+    <div class="traditions">
+        {{ range $i, $p := .Traditions }}
+            <div class="tradition-card" data-name="{{- .Name -}}" >
+                <h2><a href="/tradition/{{- .ID -}}">{{- .Name -}}</a></h2>
+
+                <a href="/tradition/{{- .ID -}}">
+                    <picture>
+                        <img class="tradition" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
+                    </picture>
+                </a>
+            </div>
+        {{ end }}
+    </div>
 </main>
 {{end}}

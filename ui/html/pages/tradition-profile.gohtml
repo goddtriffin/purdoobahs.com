@@ -1,0 +1,21 @@
+{{ template "base" . }}
+
+{{ define "main" }}
+    <main>
+        <div class="tradition-profile">
+            {{ with .TraditionByName }}
+                <div class="title">
+                    <h1 class="title">{{- .Name }}</h1>
+
+                    <p class="description">{{- .Description -}}</p>
+                </div>
+
+                <a href="/tradition/{{- .ID -}}">
+                    <picture>
+                        <img class="tradition-picture" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" >
+                    </picture>
+                </a>
+            {{ end }}
+        </div>
+    </main>
+{{ end }}

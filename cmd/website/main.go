@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/logger"
+	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/inmemorydatabase"
 
@@ -34,6 +35,7 @@ type application struct {
 	helmet        *helmet.Helmet
 
 	purdoobahService purdoobahs.IPurdoobahService
+	traditionService traditions.ITraditionService
 
 	httpClient *http.Client
 }
@@ -55,8 +57,13 @@ func main() {
 		helmet: createHelmet(),
 	}
 
-	// generate index sitemap
+	// generate index/root sitemaps
 	err := app.generateIndexSitemap()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+	err = app.generateRootSitemap()
 	if err != nil {
 		app.logger.Error(err.Error())
 		os.Exit(1)
@@ -69,7 +76,7 @@ func main() {
 		os.Exit(1)
 	}
 	if invalidFiles {
-		app.logger.Error("Invalid Purdoobah JSON detected - exiting.")
+		app.logger.Error("Invalid JSON Schema detected - exiting.")
 		os.Exit(1)
 	}
 
@@ -81,13 +88,28 @@ func main() {
 	}
 	app.purdoobahService = inmemorydatabase.NewPurdoobahService(allPurdoobahs)
 
-	// generate profile/section sitemaps
+	// generate profiles/sections sitemaps
 	err = app.generateProfilesSitemap()
 	if err != nil {
 		app.logger.Error(err.Error())
 		os.Exit(1)
 	}
 	err = app.generateSectionsSitemap()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+
+	// load Tradition files into Tradition service
+	allTraditions, err := app.loadTraditions()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+	app.traditionService = inmemorydatabase.NewTraditionService(allTraditions)
+
+	// generate traditions sitemaps
+	err = app.generateTraditionsSitemap()
 	if err != nil {
 		app.logger.Error(err.Error())
 		os.Exit(1)
