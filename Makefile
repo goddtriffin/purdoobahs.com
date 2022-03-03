@@ -82,7 +82,7 @@ restart_deployment: ## restarts all pods in the purdoobahs-website k8s deploymen
 	kubectl rollout restart deployment purdoobahs-website
 
 .PHONY: deploy
-deploy: build_docker push_docker restart_deployment # builds/pushes new docker image at :latest and restarts k8s deployment
+deploy: build_docker push_docker restart_deployment ## builds/pushes new docker image at :latest and restarts k8s deployment
 
 .PHONY: mem_usage
 mem_usage: ## displays the memory usage of the currently running Docker container
