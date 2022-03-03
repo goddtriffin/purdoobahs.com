@@ -241,7 +241,7 @@ func (app *application) generateRootSitemap() error {
 	// add new UrlEntry for each root route
 	routes := []string{"", "alumni", "tradition", "cravers-hall-of-fame"}
 	for _, route := range routes {
-		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, route), lastModified, sitemap.Monthly, 0.5)
+		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, route), lastModified, sitemap.Weekly, 0.5)
 		if err != nil {
 			return err
 		}
@@ -272,7 +272,7 @@ func (app *application) generateProfilesSitemap() error {
 		return err
 	}
 	for _, purdoobah := range allPurdoobahs {
-		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, purdoobah.ID), lastModified, sitemap.Monthly, 0.5)
+		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, purdoobah.ID), lastModified, sitemap.Weekly, 0.5)
 		if err != nil {
 			return err
 		}
@@ -303,7 +303,7 @@ func (app *application) generateSectionsSitemap() error {
 		return err
 	}
 	for _, uniqueYear := range allSectionYears {
-		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%d", homeUrl, uniqueYear), lastModified, sitemap.Monthly, 0.5)
+		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%d", homeUrl, uniqueYear), lastModified, sitemap.Weekly, 0.5)
 		if err != nil {
 			return err
 		}
@@ -334,7 +334,7 @@ func (app *application) generateTraditionsSitemap() error {
 		return err
 	}
 	for _, tradition := range allTraditions {
-		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, tradition.ID), lastModified, sitemap.Monthly, 0.5)
+		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%s", homeUrl, tradition.ID), lastModified, sitemap.Weekly, 0.5)
 		if err != nil {
 			return err
 		}
