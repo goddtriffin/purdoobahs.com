@@ -25,6 +25,7 @@ func (app *application) routes() http.Handler {
 	apiSubrouter := router.PathPrefix("/api/v1").Subrouter()
 	apiPurdoobahSubrouter := apiSubrouter.PathPrefix("/purdoobah").Subrouter()
 	apiSectionSubrouter := apiSubrouter.PathPrefix("/section").Subrouter()
+	apiTraditionSubrouter := apiSubrouter.PathPrefix("/tradition").Subrouter()
 
 	// files
 	router.HandleFunc("/favicon.ico", app.fileFavicon).Methods("GET")
@@ -67,6 +68,9 @@ func (app *application) routes() http.Handler {
 	// section API
 	apiSectionSubrouter.HandleFunc("/current", app.apiCurrentSection).Methods("GET")
 	apiSectionSubrouter.HandleFunc("/{year}", app.apiSectionByYear).Methods("GET")
+
+	// tradition API
+	apiTraditionSubrouter.HandleFunc("/all", app.apiAllTraditions).Methods("GET")
 
 	return standardMiddleware.Then(router)
 }
@@ -451,6 +455,29 @@ func (app *application) apiSectionByYear(w http.ResponseWriter, r *http.Request)
 
 	// convert to JSON bytes
 	b, err := json.Marshal(sectionByYear)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// send it out
+	_, err = w.Write(b)
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+}
+
+func (app *application) apiAllTraditions(w http.ResponseWriter, r *http.Request) {
+	// get all traditions
+	allTraditions, err := app.traditionService.All()
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
+	// convert to JSON bytes
+	b, err := json.Marshal(allTraditions)
 	if err != nil {
 		app.serveError(w, err)
 		return
