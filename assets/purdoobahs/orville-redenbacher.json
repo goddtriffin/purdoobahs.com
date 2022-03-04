@@ -1,0 +1,32 @@
+{
+  "name": "Orville Redenbacher",
+  "birth_certificate_name": {
+    "first": "Orville",
+    "middle": "Clarence",
+    "last": "Redenbacher"
+  },
+  "emoji": "🍿",
+  "marching": {
+    "years_marched": [1925, 1926, 1927, 1928],
+    "shoutout": ""
+  },
+  "education": {
+    "major": "Agronomy",
+    "minor": "",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "Brazil",
+    "state": "Indiana"
+  },
+  "alumni": {
+    "job": "Founder of Orville Redenbacher's Gourmet Popping Corn"
+  },
+  "personal": {
+    "hobbies": [],
+    "socials": {
+      "facebook": "https://www.facebook.com/orvilleredenbachers/",
+      "instagram": "https://www.instagram.com/orvillepopcorn/"
+    }
+  }
+}
