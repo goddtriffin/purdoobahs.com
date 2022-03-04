@@ -57,18 +57,6 @@ func main() {
 		helmet: createHelmet(),
 	}
 
-	// generate index/root sitemaps
-	err := app.generateIndexSitemap()
-	if err != nil {
-		app.logger.Error(err.Error())
-		os.Exit(1)
-	}
-	err = app.generateRootSitemap()
-	if err != nil {
-		app.logger.Error(err.Error())
-		os.Exit(1)
-	}
-
 	// validate all Purdoobah JSON schema files
 	invalidFiles, err := jsonschema.ValidateJsonSchema(app.logger)
 	if err != nil {
@@ -88,18 +76,6 @@ func main() {
 	}
 	app.purdoobahService = inmemorydatabase.NewPurdoobahService(allPurdoobahs)
 
-	// generate profiles/sections sitemaps
-	err = app.generateProfilesSitemap()
-	if err != nil {
-		app.logger.Error(err.Error())
-		os.Exit(1)
-	}
-	err = app.generateSectionsSitemap()
-	if err != nil {
-		app.logger.Error(err.Error())
-		os.Exit(1)
-	}
-
 	// load Tradition files into Tradition service
 	allTraditions, err := app.loadTraditions()
 	if err != nil {
@@ -107,13 +83,6 @@ func main() {
 		os.Exit(1)
 	}
 	app.traditionService = inmemorydatabase.NewTraditionService(allTraditions)
-
-	// generate traditions sitemaps
-	err = app.generateTraditionsSitemap()
-	if err != nil {
-		app.logger.Error(err.Error())
-		os.Exit(1)
-	}
 
 	// set environment
 	switch strings.ToLower(*env) {
@@ -133,6 +102,13 @@ func main() {
 		app.logger.Error(err.Error())
 	}
 	app.templateCache = templateCache
+
+	// generate sitemaps
+	err = app.generateSitemaps()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
 
 	// create http Client for Analytics API
 	tr := http.DefaultTransport.(*http.Transport).Clone()
