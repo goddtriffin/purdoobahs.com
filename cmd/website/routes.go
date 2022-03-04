@@ -22,10 +22,8 @@ func (app *application) routes() http.Handler {
 
 	// routers
 	router := mux.NewRouter()
-	apiSubrouter := router.PathPrefix("/api/v1").Subrouter()
-	apiPurdoobahSubrouter := apiSubrouter.PathPrefix("/purdoobah").Subrouter()
-	apiSectionSubrouter := apiSubrouter.PathPrefix("/section").Subrouter()
-	apiTraditionSubrouter := apiSubrouter.PathPrefix("/tradition").Subrouter()
+	apiSubrouter := router.PathPrefix("/api").Subrouter()
+	apiV1Subrouter := apiSubrouter.PathPrefix("/v1").Subrouter()
 
 	// files
 	router.HandleFunc("/favicon.ico", app.fileFavicon).Methods("GET")
@@ -52,32 +50,41 @@ func (app *application) routes() http.Handler {
 			http.FileServer(http.Dir("./static")),
 		))
 
+	// catch all
 	// has to occur last because it is the most generic route "/"
-	router.HandleFunc("/", app.pageHome).Methods("GET")
+	router.PathPrefix("/").HandlerFunc(app.pageHome).Methods("GET")
 
 	// generic API
-	apiSubrouter.HandleFunc("/health", app.apiHealthCheck).Methods("GET")
+	apiV1Subrouter.HandleFunc("/health", app.apiHealthCheck).Methods("GET")
 
 	// analytics API
-	apiSubrouter.HandleFunc("/scitylana", app.apiAnalytics).Methods("POST")
+	apiV1Subrouter.HandleFunc("/scitylana", app.apiAnalytics).Methods("POST")
 
 	// Purdoobah API
-	apiPurdoobahSubrouter.HandleFunc("/all", app.apiAllPurdoobahs).Methods("GET")
-	apiPurdoobahSubrouter.HandleFunc("/{name}", app.apiPurdoobahByName).Methods("GET")
+	apiV1PurdoobahSubrouter := apiV1Subrouter.PathPrefix("/purdoobah").Subrouter()
+	apiV1PurdoobahSubrouter.HandleFunc("/all", app.apiAllPurdoobahs).Methods("GET")
+	apiV1PurdoobahSubrouter.HandleFunc("/{name}", app.apiPurdoobahByName).Methods("GET")
 
 	// section API
-	apiSectionSubrouter.HandleFunc("/current", app.apiCurrentSection).Methods("GET")
-	apiSectionSubrouter.HandleFunc("/{year}", app.apiSectionByYear).Methods("GET")
+	apiV1SectionSubrouter := apiV1Subrouter.PathPrefix("/section").Subrouter()
+	apiV1SectionSubrouter.HandleFunc("/current", app.apiCurrentSection).Methods("GET")
+	apiV1SectionSubrouter.HandleFunc("/{year}", app.apiSectionByYear).Methods("GET")
 
 	// tradition API
-	apiTraditionSubrouter.HandleFunc("/all", app.apiAllTraditions).Methods("GET")
+	apiV1TraditionSubrouter := apiV1Subrouter.PathPrefix("/tradition").Subrouter()
+	apiV1TraditionSubrouter.HandleFunc("/all", app.apiAllTraditions).Methods("GET")
+
+	// api catch all
+	// has to occur last because it is the most generic route "/api/" and "/api/v1/"
+	apiSubrouter.PathPrefix("/").HandlerFunc(app.apiNotFound).Methods("GET")
+	apiSubrouter.PathPrefix("").HandlerFunc(app.apiNotFound).Methods("GET")
 
 	return standardMiddleware.Then(router)
 }
 
 func (app *application) pageHome(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
-		app.notFound(w)
+		app.pageNotFound(w, r)
 		return
 	}
 
@@ -139,7 +146,7 @@ func (app *application) pageTraditionProfile(w http.ResponseWriter, r *http.Requ
 	// get tradition
 	traditionByName, err := app.traditionService.ByName(name)
 	if err != nil {
-		app.notFound(w)
+		app.pageNotFound(w, r)
 		return
 	}
 
@@ -164,7 +171,7 @@ func (app *application) pagePurdoobahProfile(w http.ResponseWriter, r *http.Requ
 	// get purdoobah
 	purdoobahByName, err := app.purdoobahService.ByName(name)
 	if err != nil {
-		app.notFound(w)
+		app.pageNotFound(w, r)
 		return
 	}
 
@@ -224,7 +231,7 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 	// convert from string to int
 	yearAsInt, err := strconv.Atoi(yearAsString)
 	if err != nil {
-		app.notFound(w)
+		app.pageNotFound(w, r)
 		return
 	}
 
@@ -232,6 +239,11 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 	sectionByYear, err := app.purdoobahService.SectionByYear(yearAsInt)
 	if err != nil {
 		app.serveError(w, err)
+		return
+	}
+
+	if len(sectionByYear) == 0 {
+		app.pageNotFound(w, r)
 		return
 	}
 
@@ -251,6 +263,19 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 		Metadata: metadata{
 			SocialImage: socialImage,
 			Description: "OOOOOOOOOOOOOOOOOOLLLLDDDDDD",
+		},
+	})
+}
+
+func (app *application) pageNotFound(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+	app.render(w, r, "404.gohtml", &templateData{
+		Page: page{
+			DisplayName: "404",
+			URL:         r.URL.Path,
+		},
+		Metadata: metadata{
+			SocialImage: "/static/image/socials/404.webp",
 		},
 	})
 }
@@ -294,7 +319,6 @@ func (app *application) fileHumansTxt(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) apiHealthCheck(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
 	_, err := w.Write([]byte("OK"))
 	if err != nil {
 		app.serveError(w, err)
@@ -343,7 +367,10 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 			app.serveError(w, err)
 			return
 		}
-		defer resp.Body.Close()
+		defer func() {
+			err := resp.Body.Close()
+			app.logger.Error(err.Error())
+		}()
 		body, _ := ioutil.ReadAll(resp.Body)
 
 		// print response
@@ -353,7 +380,6 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 		app.logger.Info("Not sending Plausible analytics request due to being in development environment.")
 	}
 
-	w.WriteHeader(http.StatusOK)
 	_, err = w.Write([]byte("OK"))
 	if err != nil {
 		app.serveError(w, err)
@@ -392,7 +418,7 @@ func (app *application) apiPurdoobahByName(w http.ResponseWriter, r *http.Reques
 	// get purdoobah
 	purdoobahByName, err := app.purdoobahService.ByName(name)
 	if err != nil {
-		app.notFound(w)
+		app.apiNotFound(w, r)
 		return
 	}
 
@@ -415,7 +441,7 @@ func (app *application) apiCurrentSection(w http.ResponseWriter, r *http.Request
 	// get current section
 	currentSection, err := app.purdoobahService.CurrentSection()
 	if err != nil {
-		app.notFound(w)
+		app.apiNotFound(w, r)
 		return
 	}
 
@@ -442,7 +468,7 @@ func (app *application) apiSectionByYear(w http.ResponseWriter, r *http.Request)
 	// convert from string to int
 	yearAsInt, err := strconv.Atoi(yearAsString)
 	if err != nil {
-		app.notFound(w)
+		app.apiNotFound(w, r)
 		return
 	}
 
@@ -491,7 +517,7 @@ func (app *application) apiAllTraditions(w http.ResponseWriter, r *http.Request)
 	}
 }
 
-func (app *application) notFound(w http.ResponseWriter) {
+func (app *application) apiNotFound(w http.ResponseWriter, r *http.Request) {
 	app.clientError(w, http.StatusNotFound)
 }
 

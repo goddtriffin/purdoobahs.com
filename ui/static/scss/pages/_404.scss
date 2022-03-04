@@ -1,0 +1,16 @@
+.four04 {
+  text-align: center;
+
+  > .title, > .description {
+    width: 800px;
+    margin: 0 auto 1rem;
+  }
+
+  > .description {
+    > p {
+      text-align: left;
+      margin: 1rem 0;
+      font-size: 1.5rem;
+    }
+  }
+}
