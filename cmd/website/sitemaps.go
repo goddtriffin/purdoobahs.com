@@ -149,6 +149,15 @@ func generateSectionsSitemap(allSectionYears []int) error {
 
 	// add new UrlEntry for every unique section year
 	for _, uniqueYear := range allSectionYears {
+		if uniqueYear == -1 {
+			urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/unknown", homeUrl), lastModified, sitemap.Weekly, 0.5)
+			if err != nil {
+				return err
+			}
+			profilesSitemap.AddUrl(urlEntry)
+			continue
+		}
+
 		urlEntry, err := sitemap.NewUrlEntry(fmt.Sprintf("%s/%d", homeUrl, uniqueYear), lastModified, sitemap.Weekly, 0.5)
 		if err != nil {
 			return err

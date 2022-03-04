@@ -191,8 +191,17 @@ func (app *application) doesSectionHaveSocialImage(targetYear int) bool {
 
 	// loop through each file
 	for _, path := range filepaths {
-		year := strings.ReplaceAll(filepath.Base(path), ".webp", "")
-		yearAsInt, err := strconv.Atoi(year)
+		yearAsStr := strings.ReplaceAll(filepath.Base(path), ".webp", "")
+
+		if yearAsStr == "unknown" {
+			if targetYear == -1 {
+				return true
+			} else {
+				continue
+			}
+		}
+
+		yearAsInt, err := strconv.Atoi(yearAsStr)
 		if err != nil {
 			return false
 		}

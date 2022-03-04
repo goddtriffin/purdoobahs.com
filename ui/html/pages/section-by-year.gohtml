@@ -3,7 +3,7 @@
 {{ define "main" }}
 <main>
     <div class="section-by-year-header">
-        <h2 class="title">The Section of {{ .Year }}</h2>
+        <h2 class="title">The Section of {{ if eq .Year -1 }}Unknown{{ else }}{{ .Year }}{{ end }}</h2>
 
         {{ template "section-photo" . }}
     </div>
@@ -40,7 +40,11 @@
 <p>
     {{- $length := (len .) -}}
     {{- range $i, $y := . -}}
+    {{- if eq $y -1 -}}
+    <a href="/section/unknown">unknown</a>
+    {{- else -}}
     <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
+    {{- end -}}
     {{- end -}}
 </p>
 {{ end }}

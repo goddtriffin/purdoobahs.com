@@ -25,7 +25,11 @@
 <p class="years-marched">Years Marched:
     {{ $length := (len .) -}}
     {{- range $i, $y := . -}}
-    <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
+    {{- if eq $y -1 -}}
+        <a href="/section/unknown">unknown</a>
+    {{- else -}}
+        <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
+    {{- end -}}
     {{- end -}}
 </p>
 {{ end }}

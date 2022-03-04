@@ -229,10 +229,15 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 	yearAsString := vars["year"]
 
 	// convert from string to int
-	yearAsInt, err := strconv.Atoi(yearAsString)
-	if err != nil {
-		app.pageNotFound(w, r)
-		return
+	// (section -1 is for purdoobahs we don't know their marching history)
+	yearAsInt := -1
+	var err error
+	if yearAsString != "unknown" {
+		yearAsInt, err = strconv.Atoi(yearAsString)
+		if err != nil {
+			app.pageNotFound(w, r)
+			return
+		}
 	}
 
 	// get section by year
@@ -248,15 +253,34 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 	}
 
 	// get social image
-	socialImage := fmt.Sprintf("/static/image/section/%v.webp", yearAsInt)
+	var socialImage string
+	if yearAsInt == -1 {
+		socialImage = "/static/image/section/unknown.webp"
+	} else {
+		socialImage = fmt.Sprintf("/static/image/section/%v.webp", yearAsInt)
+	}
 	if !app.doesSectionHaveSocialImage(yearAsInt) {
 		socialImage = ""
 	}
 
+	var displayName string
+	if yearAsInt == -1 {
+		displayName = "Unknown Section"
+	} else {
+		displayName = fmt.Sprintf("%d Section", yearAsInt)
+	}
+
+	var url string
+	if yearAsInt == -1 {
+		url = "/section/unknown"
+	} else {
+		url = fmt.Sprintf("/section/%d", yearAsInt)
+	}
+
 	app.render(w, r, "section-by-year.gohtml", &templateData{
 		Page: page{
-			DisplayName: fmt.Sprintf("%d Section", yearAsInt),
-			URL:         fmt.Sprintf("/section/%d", yearAsInt),
+			DisplayName: displayName,
+			URL:         url,
 		},
 		Purdoobahs: sectionByYear,
 		Year:       yearAsInt,
