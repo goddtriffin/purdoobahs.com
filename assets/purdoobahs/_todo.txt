@@ -1,14 +1,15 @@
-Fix names/pictures/info first:
+TODO:
 ==========
-Tonsils
-Cradle
-Llama
-Stitch
-Heisenberg
-Scoots
-Raptor
-Dart
-Nombre
-Grey
-Hugs
-Wedge
+- fix names/pictures/info
+    - Tonsils
+    - Cradle
+    - Llama
+    - Stitch
+    - Heisenberg
+    - Scoots
+    - Raptor
+    - Dart
+    - Nombre
+    - Grey
+    - Hugs
+    - Wedge
