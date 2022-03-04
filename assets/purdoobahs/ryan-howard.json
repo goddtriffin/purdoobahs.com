@@ -1,0 +1,19 @@
+{
+  "name": "Ryan Howard",
+  "birth_certificate_name": {
+    "first": "Ryan",
+    "last": "Howard"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2002]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Brick",
+  "birth_certificate_name": {
+    "first": "unknown",
+    "last": "unknown"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2013]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

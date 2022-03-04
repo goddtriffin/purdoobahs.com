@@ -1,0 +1,19 @@
+{
+  "name": "Eric Lonn",
+  "birth_certificate_name": {
+    "first": "Eric",
+    "last": "Lonn"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2002]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

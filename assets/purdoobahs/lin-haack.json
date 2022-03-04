@@ -1,0 +1,19 @@
+{
+  "name": "Lin Haack",
+  "birth_certificate_name": {
+    "first": "Lin",
+    "last": "Haack"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2002]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

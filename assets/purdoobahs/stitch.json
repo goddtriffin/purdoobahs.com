@@ -1,0 +1,19 @@
+{
+  "name": "Stitch",
+  "birth_certificate_name": {
+    "first": "unknown",
+    "last": "unknown"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2014]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

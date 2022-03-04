@@ -1,0 +1,19 @@
+{
+  "name": "MFS",
+  "birth_certificate_name": {
+    "first": "Mike",
+    "last": "Sheehan"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [-1]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

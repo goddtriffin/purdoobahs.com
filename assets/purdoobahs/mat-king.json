@@ -1,0 +1,19 @@
+{
+  "name": "Mat King",
+  "birth_certificate_name": {
+    "first": "Mat",
+    "last": "King"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2002]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Nick Soboleski",
+  "birth_certificate_name": {
+    "first": "Nick",
+    "last": "Soboleski"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2002]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

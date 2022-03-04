@@ -1,0 +1,19 @@
+{
+  "name": "Dart",
+  "birth_certificate_name": {
+    "first": "Taylor",
+    "last": "Kern"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2016]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

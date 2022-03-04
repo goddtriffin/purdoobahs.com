@@ -1,0 +1,19 @@
+{
+  "name": "Scott Reed",
+  "birth_certificate_name": {
+    "first": "Scott",
+    "last": "Reed"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2000]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

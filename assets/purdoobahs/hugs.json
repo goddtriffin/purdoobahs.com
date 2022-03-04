@@ -1,0 +1,19 @@
+{
+  "name": "Hugs",
+  "birth_certificate_name": {
+    "first": "unknown",
+    "last": "unknown"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2017]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}

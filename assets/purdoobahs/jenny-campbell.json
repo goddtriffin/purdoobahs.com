@@ -1,0 +1,19 @@
+{
+  "name": "Jenny Campbell",
+  "birth_certificate_name": {
+    "first": "Jenny",
+    "last": "Campbell"
+  },
+  "emoji": "",
+  "marching": {
+    "years_marched": [2000]
+  },
+  "education": {
+    "major": "unknown",
+    "year": "alumni"
+  },
+  "hometown": {
+    "city": "unknown",
+    "state": "unknown"
+  }
+}
