@@ -7,15 +7,17 @@ import (
 )
 
 type File struct {
-	XMLName    xml.Name   `xml:"urlset"`
-	VersionUrl string     `xml:"xmlns,attr"`
-	Urls       []UrlEntry `xml:",omitempty"`
+	XMLName         xml.Name   `xml:"urlset"`
+	VersionUrl      string     `xml:"xmlns,attr"`
+	ImageVersionUrl string     `xml:"xmlns:image,attr"`
+	Urls            []UrlEntry `xml:",omitempty"`
 }
 
 func NewFile(entries []UrlEntry) *File {
 	return &File{
-		VersionUrl: "http://www.sitemaps.org/schemas/sitemap/0.9",
-		Urls:       entries,
+		VersionUrl:      "http://www.sitemaps.org/schemas/sitemap/0.9",
+		ImageVersionUrl: "http://www.google.com/schemas/sitemap-image/1.1",
+		Urls:            entries,
 	}
 }
 
@@ -24,7 +26,7 @@ func (f *File) AddUrl(urlEntry UrlEntry) {
 }
 
 func (f *File) WriteToFile(filepath string) error {
-	// write sitemapindex header line
+	// write sitemap header line
 	err := ioutil.WriteFile(filepath, []byte("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"), 0644)
 	if err != nil {
 		return err

@@ -26,13 +26,16 @@ type UrlEntry struct {
 	LastModified    string          `xml:"lastmod,omitempty"`
 	ChangeFrequency ChangeFrequency `xml:"changefreq,omitempty"`
 	Priority        float64         `xml:"priority,omitempty"`
+	Images          []ImageEntry    `xml:",omitempty"`
 }
 
-func NewUrlEntry(location, lastModified string, changeFrequency ChangeFrequency, priority float64) (UrlEntry, error) {
+func NewUrlEntry(location, lastModified string, changeFrequency ChangeFrequency, priority float64, images []ImageEntry) (UrlEntry, error) {
+	// validate Priority
 	if priority < 0 || priority > 1 {
 		return UrlEntry{}, errors.New("valid `priority` values range from 0.0 to 1.0")
 	}
 
+	// validate ChangeFrequency
 	found := false
 	for _, cf := range allChangeFrequencies {
 		if changeFrequency == cf {
@@ -43,10 +46,16 @@ func NewUrlEntry(location, lastModified string, changeFrequency ChangeFrequency,
 		return UrlEntry{}, fmt.Errorf("valid `changeFrequency` values: '%s', '%s', '%s', '%s', '%s', '%s', '%s'", Always, Hourly, Daily, Weekly, Monthly, Yearly, Never)
 	}
 
+	// validate Images
+	if len(images) > 1000 {
+		return UrlEntry{}, fmt.Errorf("sitemap URL entries can only have up to 1,000 images per page")
+	}
+
 	return UrlEntry{
 		Location:        location,
 		LastModified:    lastModified,
 		ChangeFrequency: changeFrequency,
 		Priority:        priority,
+		Images:          images,
 	}, nil
 }

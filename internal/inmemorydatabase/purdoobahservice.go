@@ -91,6 +91,7 @@ func (ps *PurdoobahService) SectionByYear(targetYear int) ([]*purdoobahs.Purdoob
 		}
 	}
 
+	sort.Sort(purdoobahs.ByName(sectionByYear))
 	return sectionByYear, nil
 }
 
@@ -107,13 +108,12 @@ func (ps *PurdoobahService) AllSectionYears() ([]int, error) {
 	}
 
 	// convert Map keys to a Slice
-	uniqueYearsMarchedSlice := []int{}
+	var uniqueYearsMarchedSlice []int
 	for uniqueYear := range uniqueYearsMarched {
 		uniqueYearsMarchedSlice = append(uniqueYearsMarchedSlice, uniqueYear)
 	}
 
 	sort.Ints(uniqueYearsMarchedSlice)
-
 	return uniqueYearsMarchedSlice, nil
 }
 

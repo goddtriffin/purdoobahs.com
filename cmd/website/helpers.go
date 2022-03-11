@@ -193,16 +193,9 @@ func (app *application) doesSectionHaveSocialImage(targetYear int) bool {
 	for _, path := range filepaths {
 		yearAsStr := strings.ReplaceAll(filepath.Base(path), ".webp", "")
 
-		if yearAsStr == "unknown" {
-			if targetYear == -1 {
-				return true
-			} else {
-				continue
-			}
-		}
-
 		yearAsInt, err := strconv.Atoi(yearAsStr)
 		if err != nil {
+			app.logger.Error("failed to parse Section image name from string to integer")
 			return false
 		}
 

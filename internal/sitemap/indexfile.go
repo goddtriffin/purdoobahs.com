@@ -20,7 +20,7 @@ func NewIndexFile(entries []Entry) *IndexFile {
 }
 
 func (f *IndexFile) WriteToFile(filepath string) error {
-	// write sitemapindex header line
+	// write sitemap header line
 	err := ioutil.WriteFile(filepath, []byte("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"), 0644)
 	if err != nil {
 		return err
