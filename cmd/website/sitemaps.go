@@ -69,7 +69,6 @@ func generateIndexSitemap() error {
 
 	// generate index sitemap
 	indexSitemap := sitemap.NewIndexFile([]sitemap.Entry{
-		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/sitemap.xml"), lastModified),
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/sitemap-root.xml"), lastModified),
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/purdoobah/sitemap.xml"), lastModified),
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/section/sitemap.xml"), lastModified),
