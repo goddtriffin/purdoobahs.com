@@ -23,30 +23,50 @@ watch_sass: ## hot reloads Sass stylesheets
 	sass --watch --update --style=compressed --no-source-map --color --unicode ui/static/scss:bin/static/stylesheet
 
 .PHONY: gen_static
-gen_static:  ## generates static resources
+gen_static: ## generates static resources
 	# generate/clean bin
-	rm -rf bin
+	rm -rf bin/assets/
+	rm -rf bin/html/
+	rm -rf bin/static/file/
+	rm -rf bin/static/image/
+	rm -rf bin/static/stylesheet/
+	rm -rf bin/static/video/
 	mkdir -p bin/static
+
+	# copy over assets
+	cp -R assets bin/assets
 
 	# copy over ui: html, files, images
 	cp -R ui/html bin/html
 	cp -R ui/static/file bin/static/file
 	cp -R ui/static/image bin/static/image
 	cp -R ui/static/video bin/static/video
-	cp -R ui/static/script bin/static/script
 
 	# generate css from sass
 	sass --style=compressed --no-source-map --color --unicode ui/static/scss:bin/static/stylesheet
 
-	# copy over assets
-	cp -R assets bin/assets
+.PHONY: gen_js
+gen_js: ## generates Javascript from Typescript
+	# generate/clean bin scripts
+	rm -rf bin/static/script
+	mkdir -p bin/static/script
+
+	# lint Typescript
+	deno lint --config deno.jsonc ui/static/script/
+
+	# format Typescript
+	deno fmt --config deno.jsonc ui/static/script/
+
+	# generate Javascript from Typescript
+	deno bundle --config deno.jsonc ui/static/script/scitylana.ts bin/static/script/scitylana.js
+	deno bundle --config deno.jsonc ui/static/script/alumni.ts bin/static/script/alumni.js
 
 .PHONY: build
 build: ## builds the binary locally
 	go build -o bin/website ./cmd/website
 
 .PHONY: dev
-dev: gen_static build ## runs the binary locally
+dev: gen_js gen_static build ## runs the binary locally
 	cd bin && ./website -env=development
 
 .PHONY: build_docker

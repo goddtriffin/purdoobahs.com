@@ -16,7 +16,7 @@
   	    {{ template "footer" . }}
 
 		{{ range .Page.Scripts }}
-		<script type='text/javascript' src='/static/script/{{- . -}}' defer></script>
+		<script type="module" src="/static/script/{{- . -}}" defer></script>
 		{{ end }}
 	</body>
 </html>
