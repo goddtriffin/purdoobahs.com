@@ -12,11 +12,7 @@ import (
 
 func (app *application) generateSitemaps() error {
 	imageEntryGeoLocation := "West Lafayette, Indiana USA"
-	imageEntryLicense := fmt.Sprintf(
-		"Copyright © %d - %d Purdoobahs™, Purdue Band Fan, Milbrath Photography, and friends/family :)",
-		1889,
-		time.Now().Year(),
-	)
+	imageEntryLicense := "https://creativecommons.org/licenses/by-nc-nd/4.0/"
 
 	// get all purdoobahs
 	allPurdoobahs, err := app.purdoobahService.All()
