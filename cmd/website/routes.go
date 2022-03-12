@@ -393,7 +393,9 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 		}
 		defer func() {
 			err := resp.Body.Close()
-			app.logger.Error(err.Error())
+			if err != nil {
+				app.logger.Error(err.Error())
+			}
 		}()
 		body, _ := ioutil.ReadAll(resp.Body)
 
