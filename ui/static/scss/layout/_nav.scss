@@ -1,14 +1,32 @@
 @use "../abstracts/variables";
+@use "../abstracts/media-queries";
 
 nav {
-  display: inline-block;
+  grid-area: nav;
+  display: flex;
+  align-items: center;
+
+  @include media-queries.for_breakpoint(desktop tablet) {
+    text-align: left;
+  }
+  @include media-queries.for_breakpoint(mobile) {
+    text-align: center;
+  }
 
   > ul {
     > li {
       display: inline-block;
-      margin-right: 2rem;
+      list-style-type: none;
 
-      font-size: 1.5rem;
+      @include media-queries.for_breakpoint(desktop tablet) {
+        margin-right: 2rem;
+        font-size: 1.5rem;
+      }
+      @include media-queries.for_breakpoint(mobile) {
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
     }
   }
 }

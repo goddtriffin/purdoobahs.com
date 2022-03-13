@@ -1,28 +1,42 @@
 @use "../abstracts/variables";
+@use "../abstracts/media-queries";
 
 header {
+  display: grid;
   grid-area: header;
+
+  @include media-queries.for_breakpoint(desktop tablet) {
+    grid-template-areas:
+      "logo nav"
+      "socials socials";
+  }
+  @include media-queries.for_breakpoint(mobile) {
+    grid-template-areas:
+      "logo"
+      "nav"
+      "socials";
+  }
 
   margin-left: variables.$page-margin-left;
   margin-top: variables.$page-margin-top;
 
-  > .top {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  > .logo {
+    grid-area: logo;
 
-    > h1 {
-      display: inline;
+    @include media-queries.for_breakpoint(desktop tablet) {
+      text-align: right;
       margin-right: 4rem;
-
+      font-size: 3rem;
+    }
+    @include media-queries.for_breakpoint(mobile) {
+      text-align: center;
       font-size: 3rem;
     }
   }
 
-  > .bottom {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  > .socials {
+    grid-area: socials;
+    text-align: center;
   }
 }
 
