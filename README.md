@@ -9,6 +9,7 @@ The official Purdoobahs website.
 - install: [git](https://git-scm.com/)
 - install: [Go(lang)](https://golang.org/)
 - install: [Sass](https://sass-lang.com/)
+- install: [Deno](https://deno.land/)
 
 ### Usage
 

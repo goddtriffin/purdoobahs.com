@@ -1,19 +1,15 @@
 {{define "header"}}
 <header>
-    <div class="top">
-        <h1><a href="/">ΨΜΣΗ</a></h1>
+    <h1 class="logo"><a href="/">ΨΜΣΗ</a></h1>
 
-        {{template "nav" .}}
-    </div>
+    {{template "nav" .}}
 
-    <div class="bottom">
-        {{template "social-media" .}}
-    </div>
+    {{template "social-media" .}}
 </header>
 {{end}}
 
 {{define "social-media"}}
-<div>
+<div class="socials">
     <ul>
         {{range .Header.SocialMedia}}
         {{template "social-media-icon" .}}
