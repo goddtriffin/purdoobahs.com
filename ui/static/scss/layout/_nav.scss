@@ -3,19 +3,22 @@
 
 nav {
   grid-area: nav;
-  display: inline-block;
-  text-align: center;
+  display: flex;
+  align-items: center;
+
+  @include media-queries.for_breakpoint(desktop tablet) {
+    text-align: left;
+  }
+  @include media-queries.for_breakpoint(mobile) {
+    text-align: center;
+  }
 
   > ul {
     > li {
       display: inline-block;
       list-style-type: none;
 
-      @include media-queries.for_breakpoint(desktop) {
-        margin-right: 2rem;
-        font-size: 1.5rem;
-      }
-      @include media-queries.for_breakpoint(tablet) {
+      @include media-queries.for_breakpoint(desktop tablet) {
         margin-right: 2rem;
         font-size: 1.5rem;
       }

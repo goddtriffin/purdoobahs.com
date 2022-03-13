@@ -5,17 +5,10 @@ header {
   display: grid;
   grid-area: header;
 
-  @include media-queries.for_breakpoint(desktop) {
+  @include media-queries.for_breakpoint(desktop tablet) {
     grid-template-areas:
-      "logo"
-      "nav"
-      "socials";
-  }
-  @include media-queries.for_breakpoint(tablet) {
-    grid-template-areas:
-      "logo"
-      "nav"
-      "socials";
+      "logo nav"
+      "socials socials";
   }
   @include media-queries.for_breakpoint(mobile) {
     grid-template-areas:
@@ -29,18 +22,14 @@ header {
 
   > .logo {
     grid-area: logo;
-    text-align: center;
 
-    @include media-queries.for_breakpoint(desktop) {
-      margin-right: 4rem;
-      font-size: 3rem;
-    }
-    @include media-queries.for_breakpoint(tablet) {
+    @include media-queries.for_breakpoint(desktop tablet) {
+      text-align: right;
       margin-right: 4rem;
       font-size: 3rem;
     }
     @include media-queries.for_breakpoint(mobile) {
-      margin-right: 4rem;
+      text-align: center;
       font-size: 3rem;
     }
   }
