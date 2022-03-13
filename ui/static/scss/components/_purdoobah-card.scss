@@ -1,9 +1,29 @@
 @use "../abstracts/variables";
+@use "../abstracts/media-queries";
 
 .purdoobah-card {
   border-radius: variables.$border-radius;
   position: relative;
   text-align: center;
+
+  > .purdoobah-card-header {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-110%);
+
+    > h2 {
+      @include media-queries.for_breakpoint(desktop) {
+        font-size: 1.5rem;
+      }
+      @include media-queries.for_breakpoint(tablet) {
+        font-size: 1.5rem;
+      }
+      @include media-queries.for_breakpoint(mobile) {
+        font-size: 1.25rem;
+      }
+    }
+  }
 
   > p {
     margin-bottom: 2px;
