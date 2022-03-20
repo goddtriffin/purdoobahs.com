@@ -1,0 +1,29 @@
+@use "../abstracts/variables";
+@use "../abstracts/media-queries";
+
+.profile {
+  text-align: center;
+
+  > .title {
+    margin-bottom: 1rem;
+  }
+
+  > a {
+    > picture {
+      > .profile-picture {
+        border-radius: variables.$border-radius;
+        object-fit: contain;
+        height: auto;
+        margin-top: 1rem;
+
+        @include media-queries.for_breakpoint(desktop tablet) {
+          width: variables.$breakpoint-mobile - 69px;
+          margin-bottom: 1rem;
+        }
+        @include media-queries.for_breakpoint(mobile) {
+          width: 90%;
+        }
+      }
+    }
+  }
+}

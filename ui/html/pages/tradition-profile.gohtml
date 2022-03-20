@@ -2,7 +2,7 @@
 
 {{ define "main" }}
     <main>
-        <div class="tradition-profile">
+        <div class="profile tradition-profile">
             {{ with .TraditionByName }}
                 <div class="title">
                     <h1 class="title">{{- .Name }}</h1>
@@ -12,7 +12,7 @@
 
                 <a href="/tradition/{{- .ID -}}">
                     <picture>
-                        <img class="tradition-picture" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy">
+                        <img class="profile-picture" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy">
                     </picture>
                 </a>
             {{ end }}

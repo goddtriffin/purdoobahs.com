@@ -1,25 +1,9 @@
 @use "../abstracts/variables";
 
 .purdoobah-profile {
-    text-align: center;
-
     > .title {
-        margin-bottom: 1rem;
-
         > .years-marched {
             margin: 1rem 0;
-        }
-    }
-
-    > a {
-        > picture {
-            > .profile-picture {
-                border-radius: variables.$border-radius;
-                object-fit: contain;
-                width: auto;
-                height: 500px;
-                margin-bottom: 2rem;
-            }
         }
     }
 }
