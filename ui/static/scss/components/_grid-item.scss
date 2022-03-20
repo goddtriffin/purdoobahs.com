@@ -1,12 +1,12 @@
 @use "../abstracts/variables";
 @use "../abstracts/media-queries";
 
-.purdoobah-card {
+.grid-card {
   border-radius: variables.$border-radius;
   position: relative;
   text-align: center;
 
-  > .purdoobah-card-header {
+  > .grid-card-header {
     position: absolute;
     width: 100%;
     text-align: center;

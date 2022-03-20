@@ -4,10 +4,12 @@
 <main class="traditions-page">
     <p>Click on any tradition to read more!</p>
 
-    <div class="traditions">
+    <div class="grid">
         {{ range $i, $p := .Traditions }}
-            <div class="tradition-card" data-name="{{- .Name -}}" >
-                <h2><a href="/tradition/{{- .ID -}}">{{- .Name -}}</a></h2>
+            <div class="grid-card" data-name="{{- .Name -}}" >
+                <div class="grid-card-header">
+                    <h2><a href="/tradition/{{- .ID -}}">{{- .Name -}}</a></h2>
+                </div>
 
                 <a href="/tradition/{{- .ID -}}">
                     <picture>

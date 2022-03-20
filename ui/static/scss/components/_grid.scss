@@ -1,6 +1,6 @@
 @use "../abstracts/media-queries";
 
-.section {
+.grid {
   display: grid;
   column-gap: 15px;
 
@@ -24,7 +24,7 @@
     margin-bottom: 1.5rem;
 
     row-gap: 110px;
-    &.vertically-tighter {
+    &.grid-vertically-tighter {
       margin-top: 2.5rem;
       row-gap: 65px;
     }

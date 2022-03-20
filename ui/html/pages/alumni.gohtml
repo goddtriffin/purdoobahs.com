@@ -6,10 +6,10 @@
 
     {{ template "every-year-marched" . }}
 
-    <div class="section">
+    <div class="grid">
         {{ range $i, $p := .Purdoobahs }}
-            <div class="purdoobah-card" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
-                <div class="purdoobah-card-header">
+            <div class="grid-card" data-name="{{- .Name -}}" data-emoji="{{- .Emoji -}}" data-birth-certificate-name="{{- marshal .BirthCertificateName -}}" data-years-marched="{{- marshal .Marching.YearsMarched -}}">
+                <div class="grid-card-header">
                     <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{ .Emoji -}}</h2>
 
                     {{ template "years-marched" $p.Marching.YearsMarched }}

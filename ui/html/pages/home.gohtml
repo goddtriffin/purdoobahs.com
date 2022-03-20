@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="section vertically-tighter">
+    <div class="grid grid-vertically-tighter">
         {{- template "purdoobah-cards" .CurrentSection.StudentLeaders -}}
         {{- template "purdoobah-cards" .CurrentSection.SuperSeniors -}}
         {{- template "purdoobah-cards" .CurrentSection.Seniors -}}
@@ -28,8 +28,8 @@
 
 {{define "purdoobah-cards"}}
 {{range $i, $p := .}}
-<div class="purdoobah-card">
-    <div class="purdoobah-card-header">
+<div class="grid-card">
+    <div class="grid-card-header">
         <h2><a href="/purdoobah/{{- .ID -}}">{{- .Name -}}</a> {{.Emoji -}}</h2>
     </div>
 
