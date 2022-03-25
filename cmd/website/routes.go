@@ -12,13 +12,13 @@ import (
 	"github.com/purdoobahs/purdoobahs.com/internal/logger"
 	"github.com/purdoobahs/purdoobahs.com/internal/plausibleanalytics"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-
 	"github.com/justinas/alice"
 )
 
 func (app *application) routes() http.Handler {
-	standardMiddleware := alice.New(app.recoverPanic, app.logRequest, app.helmet.Secure)
+	standardMiddleware := alice.New(app.recoverPanic, handlers.ProxyHeaders, app.logRequest, app.helmet.Secure)
 
 	// routers
 	router := mux.NewRouter()
