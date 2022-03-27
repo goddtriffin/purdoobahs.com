@@ -2,6 +2,8 @@
 
 {{ define "main" }}
 <main>
+    {{ template "every-year-marched" . }}
+
     <div class="section-by-year-header">
         <h2 class="title">The Section of {{ if eq .Year -1 }}Unknown{{ else }}{{ .Year }}{{ end }}</h2>
 

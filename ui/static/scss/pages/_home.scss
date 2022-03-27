@@ -1,5 +1,12 @@
 @use "../abstracts/variables";
 
+.home-page {
+  > h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}
+
 .legend {
   text-align: center;
   grid-area: legend;

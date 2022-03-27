@@ -1,0 +1,25 @@
+@use "../abstracts/media-queries";
+
+.every-year-marched {
+  text-align: center;
+  margin: 0 auto 2rem auto;
+
+  @include media-queries.for_breakpoint(desktop tablet) {
+    width: 500px;
+  }
+  @include media-queries.for_breakpoint(mobile) {
+    width: 95%;
+  }
+
+  > .years {
+    margin: 0 auto;
+    text-align: center;
+
+    > p {
+      display: inline-block;
+      vertical-align: top;
+      margin: 5px;
+      font-size: larger;
+    }
+  }
+}

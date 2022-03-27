@@ -277,13 +277,21 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 		url = fmt.Sprintf("/section/%d", yearAsInt)
 	}
 
+	// get all years marched
+	allYearsMarched, err := app.purdoobahService.AllSectionYears()
+	if err != nil {
+		app.serveError(w, err)
+		return
+	}
+
 	app.render(w, r, "section-by-year.gohtml", &templateData{
 		Page: page{
 			DisplayName: displayName,
 			URL:         url,
 		},
-		Purdoobahs: sectionByYear,
-		Year:       yearAsInt,
+		Purdoobahs:      sectionByYear,
+		Year:            yearAsInt,
+		AllYearsMarched: allYearsMarched,
 		Metadata: metadata{
 			SocialImage: socialImage,
 			Description: "OOOOOOOOOOOOOOOOOOLLLLDDDDDD",

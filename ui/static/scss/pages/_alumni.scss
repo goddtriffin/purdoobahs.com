@@ -29,20 +29,3 @@
     }
   }
 }
-
-.every-year-marched {
-    text-align: center;
-    margin-bottom: 2rem;
-
-    > .years {
-        margin: 0 auto;
-        text-align: center;
-
-        > p {
-            display: inline-block;
-            vertical-align: top;
-            margin: 5px;
-            font-size: larger;
-        }
-    }
-}

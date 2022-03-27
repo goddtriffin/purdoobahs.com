@@ -1,0 +1,15 @@
+{{ define "every-year-marched" }}
+    <div class="every-year-marched">
+        <p>Choose a section to view by year!</p>
+
+        <div class="years">
+            {{ range $i, $y := .AllYearsMarched }}
+                {{- if eq $y -1 -}}
+                    <p><a href="/section/unknown">unknown</a></p>
+                {{- else -}}
+                    <p><a href="/section/{{$y}}">{{$y}}</a></p>
+                {{- end -}}
+            {{ end }}
+        </div>
+    </div>
+{{ end }}
