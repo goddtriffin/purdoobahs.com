@@ -5,7 +5,7 @@ if (inputSearch instanceof HTMLElement) {
 }
 
 // grab all purdoobah cards
-const purdoobahCards: HTMLCollectionOf<Element> = document.getElementsByClassName("purdoobah-card");
+const purdoobahCards: HTMLCollectionOf<Element> = document.getElementsByClassName("grid-card");
 
 // the archives-incomplete gif
 // set it to invisible initially and pause it
