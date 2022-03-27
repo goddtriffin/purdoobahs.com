@@ -7,8 +7,6 @@
             <div class="title">
                 <h1 class="title">{{- .Name }} {{ .Emoji -}}</h1>
                 <h2>a.k.a "{{- .BirthCertificateName.First }} {{ .BirthCertificateName.Last -}}"</h2>
-
-                {{ template "years-marched" .Marching.YearsMarched }}
             </div>
 
             <a href="/purdoobah/{{- .ID -}}">
@@ -19,7 +17,7 @@
 
             <div class="info">
                 {{ if .Personal.Socials }}
-                <div class="socials">
+                <div>
                     {{ with .Personal.Socials }}
                         <ul>
                             {{ if .Facebook }}
@@ -51,42 +49,64 @@
                 {{ end }}
 
                 {{ if .Hometown }}
-                {{ if and (ne .Hometown.City "unknown") (ne .Hometown.State "unknown")}}
-                <address>
-                    Hometown: {{.Hometown.City}}, {{.Hometown.State}}
-                </address>
-                {{ end }}
+                    {{ if and (ne .Hometown.City "unknown") (ne .Hometown.State "unknown")}}
+                        <div>
+                            <h3>Hometown</h3>
+                            <address>
+                                {{.Hometown.City}}, {{.Hometown.State}}
+                            </address>
+                        </div>
+                    {{ end }}
                 {{ end }}
 
-                {{ if .Education }}
-                    <div class="education">
-                        {{ with .Education }}
+                <div>
+                    <h3>Years Marched</h3>
+                    {{ template "years-marched" .Marching.YearsMarched }}
+                </div>
+
+                {{ if .Achievements.StudentLeader }}
+                    <div>
+                        <h3>Years as Student Leader</h3>
+
+                        <p>{{ template "years-marched" .Achievements.StudentLeader }}</p>
+                    </div>
+                {{ end }}
+
+                {{ with .Education }}
+                    {{ if ne .Major "unknown"}}
+                        <div>
+                            <h3>Education</h3>
+
                             {{ if .Year }}
                                 <p>Year: {{ .Year }}</p>
                             {{ end }}
 
-                            {{ if .Major }}
-                            {{ if ne .Major "unknown"}}
-                                <p>Major: {{ .Major }}</p>
-                            {{ end }}
-                            {{ end }}
+                            <p>Major: {{ .Major }}</p>
 
                             {{ if .Minor }}
                                 <p>Minor: {{ .Minor }}</p>
                             {{ end }}
-                        {{ end }}
-                    </div>
+                        </div>
+                    {{ end }}
                 {{ end }}
 
-                <div class="extra">
-                    {{ if .Achievements.StudentLeader }}
-                        <p>Years as a Student Leader: {{ prettyIntSlice .Achievements.StudentLeader }}</p>
-                    {{ end }}
+                {{ if .Personal.Hobbies }}
+                <div>
+                    <h3>Hobbies</h3>
 
-                    {{ if .Personal.Hobbies }}
-                    <p>Hobbies: {{ prettyStrSlice .Personal.Hobbies }}</p>
+                    {{ range $i, $h := .Personal.Hobbies }}
+                        <p>{{ $h }}</p>
                     {{ end }}
                 </div>
+                {{ end }}
+
+                {{ if .Achievements.SpoonsassinsVictories }}
+                    <div>
+                        <h3>Spoonsassins Victories</h3>
+
+                        <p>{{ template "years-marched" .Achievements.SpoonsassinsVictories }}</p>
+                    </div>
+                {{ end }}
             </div>
         {{ end }}
     </div>

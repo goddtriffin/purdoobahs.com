@@ -1,11 +1,15 @@
+@use "../abstracts/media-queries";
+
 .purdoobah-profile {
-  > .title {
-    > .years-marched {
+  > .info {
+    @include media-queries.for_breakpoint(desktop tablet) {
+    }
+    @include media-queries.for_breakpoint(mobile) {
       margin-top: 1rem;
     }
-  }
 
-  > .info {
-
+    > * {
+      margin-bottom: 1rem;
+    }
   }
 }
