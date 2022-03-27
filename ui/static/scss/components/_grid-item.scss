@@ -13,10 +13,7 @@
     transform: translateY(-110%);
 
     > h2 {
-      @include media-queries.for_breakpoint(desktop) {
-        font-size: 1.5rem;
-      }
-      @include media-queries.for_breakpoint(tablet) {
+      @include media-queries.for_breakpoint(desktop tablet) {
         font-size: 1.5rem;
       }
       @include media-queries.for_breakpoint(mobile) {

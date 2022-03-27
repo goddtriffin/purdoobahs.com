@@ -1,0 +1,17 @@
+@use "../abstracts/media-queries";
+
+.youtube-video {
+  border: none;
+  display: block;
+  margin: 1rem auto;
+
+  // 16:9 aspect ratio
+  @include media-queries.for_breakpoint(desktop tablet) {
+    width: 840px;
+    height: 473px;
+  }
+  @include media-queries.for_breakpoint(mobile) {
+    width: 369px;
+    height: 208px
+  }
+}

@@ -45,7 +45,7 @@ func createHelmet() *helmet.Helmet {
 
 		// these need to be not 'none'
 		helmet.DirectiveFrameAncestors:      {helmet.SourceSelf},
-		helmet.DirectiveFrameSrc:            {helmet.SourceSelf},
+		helmet.DirectiveFrameSrc:            {helmet.SourceSelf, "https://www.youtube.com/"},
 		helmet.DirectiveImgSrc:              {helmet.SourceSelf, helmet.SourceReportSample},
 		helmet.DirectiveNavigateTo:          {helmet.SourceSelf, helmet.SourceReportSample},
 		helmet.DirectiveObjectSrc:           {helmet.SourceSelf},
