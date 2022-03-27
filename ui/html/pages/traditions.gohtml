@@ -13,7 +13,7 @@
 
                 <a href="/tradition/{{- .ID -}}">
                     <picture>
-                        <img class="tradition" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy">
+                        <img class="tradition" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" {{if gt $i 11}}loading="lazy" decoding="async"{{end}}>
                     </picture>
                 </a>
             </div>

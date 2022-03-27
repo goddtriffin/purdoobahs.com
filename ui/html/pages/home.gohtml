@@ -45,7 +45,7 @@
                     {{- if (.IsYear "sophomore")}} sophomore{{- end -}}
                     {{- if (.IsYear "freshman")}} freshman{{- end -}}
                 {{- end -}}"
-                src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy"
+                src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" {{if or (.IsYear "sophomore") (.IsYear "freshman")}}loading="lazy" decoding="async"{{end}}
             >
         </picture>
     </a>

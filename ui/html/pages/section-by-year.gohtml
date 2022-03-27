@@ -21,7 +21,7 @@
 
                 <a href="/purdoobah/{{- .ID -}}">
                     <picture>
-                        <img class="member" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy">
+                        <img class="member" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" {{if gt $i 11}}loading="lazy" decoding="async"{{end}}>
                     </picture>
                 </a>
             </div>
@@ -34,7 +34,7 @@
 {{ if ne .Metadata.SocialImage "/static/image/socials/purdoobahs.webp" }}
 <a href="/section/{{- .Year -}}">
     <picture>
-        <img class="section-photo" src="{{- .Metadata.SocialImage -}}" alt="The Section of {{ .Year }}" loading="lazy">
+        <img class="section-photo" src="{{- .Metadata.SocialImage -}}" alt="The Section of {{ .Year }}">
     </picture>
 </a>
 {{ end }}

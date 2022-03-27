@@ -17,7 +17,7 @@
 
                 <a href="/purdoobah/{{- .ID -}}">
                     <picture>
-                        <img class="member" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy">
+                        <img class="member" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" {{if gt $i 11}}loading="lazy" decoding="async"{{end}}>
                     </picture>
                 </a>
             </div>
