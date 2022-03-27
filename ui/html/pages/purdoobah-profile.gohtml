@@ -16,20 +16,79 @@
                     <img class="profile-picture" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy">
                 </picture>
             </a>
+
+            <div class="info">
+                {{ if .Personal.Socials }}
+                <div class="socials">
+                    {{ with .Personal.Socials }}
+                        <ul>
+                            {{ if .Facebook }}
+                                <li class="social-media-icon">
+                                    <a href="{{.Facebook}}">
+                                        {{- fontawesome "fab" "facebook" -}}
+                                    </a>
+                                </li>
+                            {{ end }}
+
+                            {{ if .Instagram }}
+                                <li class="social-media-icon">
+                                    <a href="{{.Instagram}}">
+                                        {{- fontawesome "fab" "instagram" -}}
+                                    </a>
+                                </li>
+                            {{ end }}
+
+                            {{ if .LinkedIn }}
+                                <li class="social-media-icon">
+                                    <a href="{{.LinkedIn}}">
+                                        {{- fontawesome "fab" "linkedin" -}}
+                                    </a>
+                                </li>
+                            {{ end }}
+                        </ul>
+                    {{ end }}
+                </div>
+                {{ end }}
+
+                {{ if .Hometown }}
+                {{ if and (ne .Hometown.City "unknown") (ne .Hometown.State "unknown")}}
+                <address>
+                    Hometown: {{.Hometown.City}}, {{.Hometown.State}}
+                </address>
+                {{ end }}
+                {{ end }}
+
+                {{ if .Education }}
+                    <div class="education">
+                        {{ with .Education }}
+                            {{ if .Year }}
+                                <p>Year: {{ .Year }}</p>
+                            {{ end }}
+
+                            {{ if .Major }}
+                            {{ if ne .Major "unknown"}}
+                                <p>Major: {{ .Major }}</p>
+                            {{ end }}
+                            {{ end }}
+
+                            {{ if .Minor }}
+                                <p>Minor: {{ .Minor }}</p>
+                            {{ end }}
+                        {{ end }}
+                    </div>
+                {{ end }}
+
+                <div class="extra">
+                    {{ if .Achievements.StudentLeader }}
+                        <p>Years as a Student Leader: {{ prettyIntSlice .Achievements.StudentLeader }}</p>
+                    {{ end }}
+
+                    {{ if .Personal.Hobbies }}
+                    <p>Hobbies: {{ prettyStrSlice .Personal.Hobbies }}</p>
+                    {{ end }}
+                </div>
+            </div>
         {{ end }}
     </div>
 </main>
-{{ end }}
-
-{{ define "years-marched" }}
-<p class="years-marched">Years Marched:
-    {{ $length := (len .) -}}
-    {{- range $i, $y := . -}}
-    {{- if eq $y -1 -}}
-        <a href="/section/unknown">unknown</a>
-    {{- else -}}
-        <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
-    {{- end -}}
-    {{- end -}}
-</p>
 {{ end }}

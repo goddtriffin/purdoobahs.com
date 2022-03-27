@@ -2,16 +2,14 @@
 @use "../abstracts/media-queries";
 
 .tradition-profile {
-    > .title {
-        > p {
-            font-size: 1.5rem;
+    > p {
+        font-size: 1.5rem;
 
-            @include media-queries.for_breakpoint(desktop tablet) {
-                margin: 1rem 25%;
-            }
-            @include media-queries.for_breakpoint(mobile) {
-                margin: 1rem 5%;
-            }
+        @include media-queries.for_breakpoint(desktop tablet) {
+            margin: 1rem 25%;
+        }
+        @include media-queries.for_breakpoint(mobile) {
+            margin: 1rem 5%;
         }
     }
 }

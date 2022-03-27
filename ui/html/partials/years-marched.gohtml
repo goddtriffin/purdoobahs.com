@@ -1,0 +1,12 @@
+{{ define "years-marched" }}
+    <p class="years-marched">
+        {{ $length := (len .) -}}
+        {{- range $i, $y := . -}}
+            {{- if eq $y -1 -}}
+                <a href="/section/unknown">unknown</a>
+            {{- else -}}
+                <a href="/section/{{$y}}">{{$y}}</a>{{- if ne $i (subtract $length 1) -}}, {{end -}}
+            {{- end -}}
+        {{- end -}}
+    </p>
+{{ end }}

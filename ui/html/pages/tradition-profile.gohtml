@@ -4,17 +4,15 @@
     <main>
         <div class="profile tradition-profile">
             {{ with .TraditionByName }}
-                <div class="title">
-                    <h1 class="title">{{- .Name }}</h1>
-
-                    <p class="description">{{- .Description -}}</p>
-                </div>
+                <h1 class="title">{{- .Name }}</h1>
 
                 <a href="/tradition/{{- .ID -}}">
                     <picture>
                         <img class="profile-picture" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}" loading="lazy">
                     </picture>
                 </a>
+
+                <p class="description">{{- .Description -}}</p>
             {{ end }}
         </div>
     </main>

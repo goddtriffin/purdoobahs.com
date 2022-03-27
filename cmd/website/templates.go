@@ -136,6 +136,20 @@ func prettyIntSlice(s []int) string {
 	return builder
 }
 
+func prettyStrSlice(s []string) string {
+	var builder string
+
+	for i, str := range s {
+		builder += str
+
+		if i < len(s)-1 {
+			builder += ", "
+		}
+	}
+
+	return builder
+}
+
 func newTemplateCache() (map[string]*template.Template, error) {
 	fa, err := fontawesome.New("./assets/icons.json")
 	if err != nil {
@@ -152,6 +166,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
 		"subtract":       subtract,
 		"marshal":        marshal,
 		"prettyIntSlice": prettyIntSlice,
+		"prettyStrSlice": prettyStrSlice,
 	}
 
 	cache := map[string]*template.Template{}

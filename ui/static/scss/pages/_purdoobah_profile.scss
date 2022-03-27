@@ -1,9 +1,11 @@
-@use "../abstracts/variables";
-
 .purdoobah-profile {
-    > .title {
-        > .years-marched {
-            margin: 1rem 0;
-        }
+  > .title {
+    > .years-marched {
+      margin-top: 1rem;
     }
+  }
+
+  > .info {
+
+  }
 }
