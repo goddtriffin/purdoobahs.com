@@ -1,4 +1,5 @@
 @use "../abstracts/variables";
+@use "../abstracts/media-queries";
 
 .section-by-year-header {
     text-align: center;
@@ -12,9 +13,16 @@
             > .section-photo {
                 border-radius: variables.$border-radius;
                 object-fit: contain;
-                width: auto;
-                height: 500px;
-                margin-bottom: 2rem;
+
+                @include media-queries.for_breakpoint(desktop tablet) {
+                    width: auto;
+                    height: 500px;
+                    margin-bottom: 2rem;
+                }
+                @include media-queries.for_breakpoint(mobile) {
+                    width: 90%;
+                    height: auto;
+                }
             }
         }
     }
