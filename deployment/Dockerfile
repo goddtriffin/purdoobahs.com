@@ -79,4 +79,4 @@ COPY ui/static/video/ static/video/
 
 # run server
 EXPOSE 8080
-CMD ./website -env=production
+CMD ./website

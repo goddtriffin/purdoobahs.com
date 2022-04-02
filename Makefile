@@ -72,7 +72,7 @@ build: ## builds the binary locally
 
 .PHONY: dev
 dev: gen_js gen_css gen_static build ## runs the binary locally
-	cd bin && ./website -env=development
+	cd bin && ENV=development ./website
 
 .PHONY: build_docker
 build_docker: ## builds the binary and Docker container
@@ -84,6 +84,7 @@ run_docker: build_docker ## creates and runs a new Docker container
 	--name "purdoobahs-website" \
 	-d --restart unless-stopped \
 	-p 8080:8080 \
+	-e ENV="development" \
 	goddtriffin/purdoobahs-website:latest
 
 .PHONY: start_docker

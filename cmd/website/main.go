@@ -41,20 +41,43 @@ type application struct {
 }
 
 func main() {
-	// parse command line flags
-	addr := flag.String("addr", "", "HTTP network address")
-	env := flag.String("env", "", "dictates application environment")
-	flag.Parse()
-
-	// set default address if it isn't set
-	if *addr == "" {
-		*addr = ":8080"
-	}
-
 	// initialize the application
 	app := &application{
 		logger: logger.NewLogger(),
 		helmet: createHelmet(),
+	}
+
+	// parse environment variables
+	var addr string
+	var env string
+	for _, e := range os.Environ() {
+		pair := strings.SplitN(e, "=", 2)
+
+		switch strings.ToUpper(pair[0]) {
+		case "ADDR":
+			addr = pair[1]
+		case "ENV":
+			env = pair[1]
+		default:
+			app.logger.Error(fmt.Sprintf("unknown environment variables %s=%s", pair[0], pair[1]))
+		}
+	}
+
+	// set default address if it isn't set
+	if addr == "" {
+		addr = ":8080"
+	}
+
+	// set environment
+	switch strings.ToLower(env) {
+	case "dev", "develop", "development":
+		app.env = development
+	case "prod", "production":
+		app.env = production
+	default:
+		app.logger.Error("`env` environment variable needs to be one of: 'dev', 'develop', 'development', 'prod', or 'production'")
+		flag.Usage()
+		os.Exit(1)
 	}
 
 	// validate all Purdoobah JSON schema files
@@ -84,18 +107,6 @@ func main() {
 	}
 	app.traditionService = inmemorydatabase.NewTraditionService(allTraditions)
 
-	// set environment
-	switch strings.ToLower(*env) {
-	case "dev", "develop", "development":
-		app.env = development
-	case "prod", "production":
-		app.env = production
-	default:
-		app.logger.Error("-env flag needs to be one of: 'dev', 'develop', 'development', 'prod', or 'production'")
-		flag.Usage()
-		os.Exit(1)
-	}
-
 	// create HTML template cache
 	templateCache, err := newTemplateCache()
 	if err != nil {
@@ -122,7 +133,7 @@ func main() {
 
 	// create the server
 	srv := &http.Server{
-		Addr:     *addr,
+		Addr:     addr,
 		ErrorLog: app.logger.(*logger.Logger).ErrorLog,
 		Handler:  app.routes(),
 
@@ -132,7 +143,7 @@ func main() {
 	}
 
 	// start the server
-	app.logger.Info(fmt.Sprintf("Starting server on %s", *addr))
+	app.logger.Info(fmt.Sprintf("Starting server on %s in %s mode", srv.Addr, env))
 	err = srv.ListenAndServe()
 
 	// print error on exit
