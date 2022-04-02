@@ -1,11 +1,11 @@
-github.com/MagnusFrater/fontawesome v1.0.0 h1:xTuhy/lb0wJ5mLO2DuDhxC1K8V/xQrwNhAXEVKsbfJo=
-github.com/MagnusFrater/fontawesome v1.0.0/go.mod h1:bJLogExD2t6x0XItfB8tNECQfsILXg1lzeq85zmTITs=
-github.com/MagnusFrater/helmet v1.0.0 h1:xzKXDZIXg4ik05MCVHZN3mTOc+3Skzm552nujJ5PzYI=
-github.com/MagnusFrater/helmet v1.0.0/go.mod h1:giGWX/jKRWjf+jxEmKOXyBdtz7VmAK3SEbadVV2pdxA=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/felixge/httpsnoop v1.0.1 h1:lvB5Jl89CsZtGIWuTcDM1E/vkVs49/Ml7JJe07l8SPQ=
 github.com/felixge/httpsnoop v1.0.1/go.mod h1:m8KPJKqk1gH5J9DgRY2ASl2lWCfGKXixSwevea8zH2U=
+github.com/goddtriffin/fontawesome v1.0.1 h1:D4RK/9jKeW7MDvLUVTUmOBKWQWaPjOlMWZmy3IRPscI=
+github.com/goddtriffin/fontawesome v1.0.1/go.mod h1:CYEv44gUUywnlBBY99JWVm2IoK92NMAPcr7SN5H6Qnk=
+github.com/goddtriffin/helmet v1.0.1 h1:5OZvjm3hDqHixc7VEvbf96JV7DqPE5ncuLXB9amnAu8=
+github.com/goddtriffin/helmet v1.0.1/go.mod h1:UJAbeAOVaXjrOJPMgVLjoDM5ePko0PJX7C8IUDGsu+k=
 github.com/gorilla/handlers v1.5.1 h1:9lRY6j8DEeeBT10CvO9hGW0gmky0BprnvDI5vfhUHH4=
 github.com/gorilla/handlers v1.5.1/go.mod h1:t8XrUpc4KVXb7HGyJ4/cEnwQiaxrX/hz1Zv/4g96P1Q=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=

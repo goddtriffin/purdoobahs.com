@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/MagnusFrater/helmet"
+	"github.com/goddtriffin/helmet"
 )
 
 func (app *application) logRequest(next http.Handler) http.Handler {

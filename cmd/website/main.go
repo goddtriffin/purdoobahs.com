@@ -18,7 +18,7 @@ import (
 
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 
-	"github.com/MagnusFrater/helmet"
+	"github.com/goddtriffin/helmet"
 )
 
 type environment int

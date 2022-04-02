@@ -1,4 +1,4 @@
-FROM golang:1.17.7-alpine3.15 AS binary_builder
+FROM golang:1.18.0-alpine3.15 AS binary_builder
 
 # update alpine linux dependencies
 RUN apk update
@@ -17,7 +17,7 @@ COPY go.sum .
 # generate binary
 RUN make build
 
-FROM denoland/deno:alpine-1.19.2 as js_builder
+FROM denoland/deno:alpine-1.20.4 as js_builder
 
 # update alpine linux dependencies
 RUN apk update
@@ -33,7 +33,7 @@ COPY deno.jsonc .
 # generate Javascript
 RUN make gen_js
 
-FROM node:17.5.0-alpine3.15 as css_builder
+FROM node:17.8.0-alpine3.15 as css_builder
 
 # update alpine linux dependencies
 RUN apk update

@@ -14,7 +14,7 @@ import (
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 
-	"github.com/MagnusFrater/fontawesome"
+	"github.com/goddtriffin/fontawesome"
 )
 
 // top-level
