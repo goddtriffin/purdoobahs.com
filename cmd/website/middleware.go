@@ -55,9 +55,6 @@ func createHelmet() *helmet.Helmet {
 		helmet.DirectiveScriptSrc:           {helmet.SourceSelf, helmet.SourceReportSample},
 		helmet.DirectiveMediaSrc:            {helmet.SourceSelf},
 		helmet.DirectiveConnectSrc:          {helmet.SourceSelf},
-
-		// these are merely toggled and don't have options
-		helmet.DirectiveBlockAllMixedContent: {},
 	})
 
 	h.XContentTypeOptions = helmet.XContentTypeOptionsNoSniff

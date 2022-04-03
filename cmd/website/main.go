@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/purdoobahs/purdoobahs.com/internal/cachebuster"
 	"github.com/purdoobahs/purdoobahs.com/internal/logger"
 	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 
@@ -34,6 +35,8 @@ type application struct {
 	templateCache map[string]*template.Template
 	helmet        *helmet.Helmet
 
+	cacheBuster *cachebuster.CacheBuster
+
 	purdoobahService purdoobahs.IPurdoobahService
 	traditionService traditions.ITraditionService
 
@@ -58,8 +61,6 @@ func main() {
 			addr = pair[1]
 		case "ENV":
 			env = pair[1]
-		default:
-			app.logger.Error(fmt.Sprintf("unknown environment variables %s=%s", pair[0], pair[1]))
 		}
 	}
 
@@ -120,6 +121,14 @@ func main() {
 		app.logger.Error(err.Error())
 		os.Exit(1)
 	}
+
+	// generate CacheBuster
+	cacheBuster, err := cachebuster.NewCacheBuster()
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+	app.cacheBuster = cacheBuster
 
 	// create http Client for Analytics API
 	tr := http.DefaultTransport.(*http.Transport).Clone()
