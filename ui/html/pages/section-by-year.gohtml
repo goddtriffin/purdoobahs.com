@@ -5,7 +5,7 @@
     {{ template "every-year-marched" . }}
 
     <div class="section-by-year-header">
-        <h2 class="title">The Section of {{ if eq .Year -1 }}Unknown{{ else }}{{ .Year }}{{ end }}</h2>
+        <h1 class="title">The Section of {{ if eq .Year -1 }}Unknown{{ else }}{{ .Year }}{{ end }}</h1>
 
         {{ template "section-photo" . }}
     </div>
@@ -31,7 +31,7 @@
 {{ end }}
 
 {{ define "section-photo" }}
-{{ if ne .Metadata.SocialImage "/static/image/socials/purdoobahs.webp" }}
+{{ if ne .Metadata.SocialImage (cacheBuster "/static/image/socials/purdoobahs.webp") }}
 <a href="/section/{{- .Year -}}">
     <picture>
         <img class="section-photo" src="{{- .Metadata.SocialImage -}}" alt="The Section of {{ .Year }}">
