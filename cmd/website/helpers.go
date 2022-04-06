@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
@@ -52,10 +51,10 @@ func (app *application) loadPurdoobahs() (map[string]*purdoobahs.Purdoobah, erro
 		// generate image location
 		const baseImagePath = "/static/image/purdoobah"
 		if app.doesPurdoobahHaveProfilePicture(id) {
-			p.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
+			p.Metadata.Image.File = app.cacheBuster.Get(fmt.Sprintf("%s/%s.webp", baseImagePath, id))
 		} else {
 			id := "_unknown"
-			p.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
+			p.Metadata.Image.File = app.cacheBuster.Get(fmt.Sprintf("%s/%s.webp", baseImagePath, id))
 		}
 		p.Metadata.Image.Alt = fmt.Sprintf("%s's Profile Picture", p.Name)
 
@@ -105,10 +104,10 @@ func (app *application) loadTraditions() (map[string]*traditions.Tradition, erro
 		// generate image location
 		const baseImagePath = "/static/image/tradition"
 		if app.doesTraditionHavePicture(id) {
-			t.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
+			t.Metadata.Image.File = app.cacheBuster.Get(fmt.Sprintf("%s/%s.webp", baseImagePath, id))
 		} else {
 			id := "_unknown"
-			t.Metadata.Image.File = fmt.Sprintf("%s/%s.webp", baseImagePath, id)
+			t.Metadata.Image.File = app.cacheBuster.Get(fmt.Sprintf("%s/%s.webp", baseImagePath, id))
 		}
 		t.Metadata.Image.Alt = fmt.Sprintf("%s", t.Name)
 
@@ -142,68 +141,28 @@ func (app *application) walkMatch(root, pattern string) ([]string, error) {
 }
 
 func (app *application) doesTraditionHavePicture(targetID string) bool {
-	// read in the Tradition JSON Schema
-	filepaths, err := app.walkMatch("./static/image/tradition/", `*.webp`)
-	if err != nil {
-		app.logger.Error("failed to load Tradition image filepaths")
-		os.Exit(1)
-	}
-
-	// loop through each file
-	for _, path := range filepaths {
-		id := strings.ReplaceAll(filepath.Base(path), ".webp", "")
-		if id == targetID {
-			return true
-		}
-	}
-
-	app.logger.Error(fmt.Sprintf("failed to load Tradition image for %s", targetID))
-	return false
-}
-
-func (app *application) doesPurdoobahHaveProfilePicture(targetID string) bool {
-	// read in the Purdoobah JSON Schema
-	filepaths, err := app.walkMatch("./static/image/purdoobah/", `*.webp`)
-	if err != nil {
-		app.logger.Error("failed to load Purdoobah image filepaths")
-		os.Exit(1)
-	}
-
-	// loop through each file
-	for _, path := range filepaths {
-		id := strings.ReplaceAll(filepath.Base(path), ".webp", "")
-		if id == targetID {
-			return true
-		}
-	}
-
-	app.logger.Error(fmt.Sprintf("failed to load Purdoobah image for %s", targetID))
-	return false
-}
-
-func (app *application) doesSectionHaveSocialImage(targetYear int) bool {
-	// read in the section social images
-	filepaths, err := app.walkMatch("./static/image/section/", `*.webp`)
-	if err != nil {
-		app.logger.Error("failed to load section image filepaths")
+	if app.cacheBuster.Get(fmt.Sprintf("/static/image/tradition/%s.webp", targetID)) == "" {
+		app.logger.Error(fmt.Sprintf("tradition doesn't have an image: `%s`", targetID))
 		return false
 	}
 
-	// loop through each file
-	for _, path := range filepaths {
-		yearAsStr := strings.ReplaceAll(filepath.Base(path), ".webp", "")
+	return true
+}
 
-		yearAsInt, err := strconv.Atoi(yearAsStr)
-		if err != nil {
-			app.logger.Error("failed to parse Section image name from string to integer")
-			return false
-		}
-
-		if yearAsInt == targetYear {
-			return true
-		}
+func (app *application) doesPurdoobahHaveProfilePicture(targetID string) bool {
+	if app.cacheBuster.Get(fmt.Sprintf("/static/image/purdoobah/%s.webp", targetID)) == "" {
+		app.logger.Error(fmt.Sprintf("purdoobah doesn't have an image: `%s`", targetID))
+		return false
 	}
 
-	app.logger.Error(fmt.Sprintf("failed to load section social image for year %v", targetYear))
-	return false
+	return true
+}
+
+func (app *application) doesSectionHaveSocialImage(targetYear int) bool {
+	if app.cacheBuster.Get(fmt.Sprintf("/static/image/section/%d.webp", targetYear)) == "" {
+		app.logger.Error(fmt.Sprintf("section doesn't have an image: `%d`", targetYear))
+		return false
+	}
+
+	return true
 }

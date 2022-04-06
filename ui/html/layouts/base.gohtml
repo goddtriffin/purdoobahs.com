@@ -6,7 +6,7 @@
         {{ template "favicon" . }}
 
 		{{ range .Page.StyleSheets }}
-		<link rel="stylesheet" type="text/css" href="/static/stylesheet/{{- . -}}" />
+		<link rel="stylesheet" type="text/css" href="{{- . -}}" />
 		{{ end }}
 	</head>
 
@@ -16,7 +16,7 @@
   	    {{ template "footer" . }}
 
 		{{ range .Page.Scripts }}
-		<script type="module" src="/static/script/{{- . -}}" defer></script>
+		<script type="module" src="{{- . -}}" defer></script>
 		{{ end }}
 	</body>
 </html>

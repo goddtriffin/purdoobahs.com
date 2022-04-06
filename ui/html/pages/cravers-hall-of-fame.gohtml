@@ -14,11 +14,11 @@
 
     <object
             class="pdf"
-            data="/static/file/Craver-Hall-of-Fame-Application.pdf"
+            data="{{- cacheBuster "/static/file/Craver-Hall-of-Fame-Application.pdf" -}}"
             type="application/pdf"
     >
         <div>
-            Your browser cannot render the Cravers Hall of Fame application PDF. You can download it <a href="/static/file/Craver-Hall-of-Fame-Application.pdf" download>HERE</a>
+            Your browser cannot render the Cravers Hall of Fame application PDF. You can download it <a href="{{- cacheBuster "/static/file/Craver-Hall-of-Fame-Application.pdf" -}}" download>HERE</a>
         </div>
     </object>
 </main>

@@ -14,3 +14,7 @@ The official Purdoobahs website.
 ### Usage
 
 Run `make`.
+
+## Credits
+
+Made with 🤬 and 🥲 by [Todd Everett Griffin](https://www.toddgriffin.me/)

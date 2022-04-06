@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/purdoobahs/purdoobahs.com/internal/cachebuster"
 	"github.com/purdoobahs/purdoobahs.com/internal/logger"
 	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 
@@ -34,6 +35,8 @@ type application struct {
 	templateCache map[string]*template.Template
 	helmet        *helmet.Helmet
 
+	cacheBuster *cachebuster.CacheBuster
+
 	purdoobahService purdoobahs.IPurdoobahService
 	traditionService traditions.ITraditionService
 
@@ -58,8 +61,6 @@ func main() {
 			addr = pair[1]
 		case "ENV":
 			env = pair[1]
-		default:
-			app.logger.Error(fmt.Sprintf("unknown environment variables %s=%s", pair[0], pair[1]))
 		}
 	}
 
@@ -79,6 +80,29 @@ func main() {
 		flag.Usage()
 		os.Exit(1)
 	}
+
+	// generate CacheBuster
+	cacheBuster, err := cachebuster.NewCacheBuster(
+		"static",
+		[]string{
+			"/file",
+			"/image/bot",
+			"/image/favicon",
+			"/image/logo",
+			"/image/purdoobah",
+			"/image/section",
+			"/image/socials",
+			"/image/tradition",
+			"/script",
+			"/stylesheet",
+			"/video",
+		},
+	)
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+	app.cacheBuster = cacheBuster
 
 	// validate all Purdoobah JSON schema files
 	invalidFiles, err := jsonschema.ValidateJsonSchema(app.logger)
@@ -108,7 +132,7 @@ func main() {
 	app.traditionService = inmemorydatabase.NewTraditionService(allTraditions)
 
 	// create HTML template cache
-	templateCache, err := newTemplateCache()
+	templateCache, err := app.newTemplateCache()
 	if err != nil {
 		app.logger.Error(err.Error())
 	}
@@ -120,6 +144,14 @@ func main() {
 		app.logger.Error(err.Error())
 		os.Exit(1)
 	}
+
+	// print out CacheBuster cache to help catch unplanned hash-readjustments
+	err = app.cacheBuster.PrintToFile("../cache-buster.txt")
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+	app.cacheBuster.Debug = true
 
 	// create http Client for Analytics API
 	tr := http.DefaultTransport.(*http.Transport).Clone()

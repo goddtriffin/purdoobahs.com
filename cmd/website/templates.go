@@ -150,7 +150,7 @@ func prettyStrSlice(s []string) string {
 	return builder
 }
 
-func newTemplateCache() (map[string]*template.Template, error) {
+func (app *application) newTemplateCache() (map[string]*template.Template, error) {
 	fa, err := fontawesome.New("./assets/icons.json")
 	if err != nil {
 		return nil, err
@@ -167,6 +167,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
 		"marshal":        marshal,
 		"prettyIntSlice": prettyIntSlice,
 		"prettyStrSlice": prettyStrSlice,
+		"cacheBuster":    app.cacheBuster.Get,
 	}
 
 	cache := map[string]*template.Template{}
@@ -273,7 +274,7 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 	}
 
 	if td.Metadata.SocialImage == "" {
-		td.Metadata.SocialImage = "/static/image/socials/purdoobahs.webp"
+		td.Metadata.SocialImage = app.cacheBuster.Get("/static/image/socials/purdoobahs.webp")
 	}
 
 	td.Header = header{
@@ -329,8 +330,8 @@ func (app *application) addDefaultData(td *templateData) *templateData {
 		},
 	}
 
-	td.Page.Scripts = append([]string{"scitylana.js"}, td.Page.Scripts...)
-	td.Page.StyleSheets = append([]string{"main.css"}, td.Page.StyleSheets...)
+	td.Page.Scripts = append([]string{app.cacheBuster.Get("/static/script/scitylana.js")}, td.Page.Scripts...)
+	td.Page.StyleSheets = append([]string{app.cacheBuster.Get("/static/stylesheet/main.css")}, td.Page.StyleSheets...)
 
 	return td
 }

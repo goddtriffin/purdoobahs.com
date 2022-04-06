@@ -111,7 +111,7 @@ func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Req
 			URL:         "/cravers-hall-of-fame",
 		},
 		Metadata: metadata{
-			SocialImage: "/static/image/socials/cravers-hall-of-fame.webp",
+			SocialImage: app.cacheBuster.Get("/static/image/socials/cravers-hall-of-fame.webp"),
 			Description: "Inductees of the 2019 White Castle Cravers Hall of Fame!",
 		},
 	})
@@ -132,7 +132,7 @@ func (app *application) pageTraditions(w http.ResponseWriter, r *http.Request) {
 		},
 		Traditions: allTraditions,
 		Metadata: metadata{
-			SocialImage: "/static/image/socials/traditions.webp",
+			SocialImage: app.cacheBuster.Get("/static/image/socials/traditions.webp"),
 			Description: "It's surprising what you get when you put a bunch of toobahs together in the same room.",
 		},
 	})
@@ -212,12 +212,12 @@ func (app *application) pageAlumni(w http.ResponseWriter, r *http.Request) {
 		Page: page{
 			DisplayName: "Alumni",
 			URL:         "/alumni",
-			Scripts:     []string{"alumni.js"},
+			Scripts:     []string{app.cacheBuster.Get("/static/script/alumni.js")},
 		},
 		Purdoobahs:      allPurdoobahs,
 		AllYearsMarched: allYearsMarched,
 		Metadata: metadata{
-			SocialImage: "/static/image/section/2019.webp",
+			SocialImage: app.cacheBuster.Get("/static/image/section/2019.webp"),
 			Description: "OOOOOOOOOOOOOOOOOOLLLLDDDDDD",
 		},
 	})
@@ -255,9 +255,9 @@ func (app *application) pageSectionByYear(w http.ResponseWriter, r *http.Request
 	// get social image
 	var socialImage string
 	if yearAsInt == -1 {
-		socialImage = "/static/image/section/unknown.webp"
+		socialImage = app.cacheBuster.Get("/static/image/section/unknown.webp")
 	} else {
-		socialImage = fmt.Sprintf("/static/image/section/%v.webp", yearAsInt)
+		socialImage = app.cacheBuster.Get(fmt.Sprintf("/static/image/section/%v.webp", yearAsInt))
 	}
 	if !app.doesSectionHaveSocialImage(yearAsInt) {
 		socialImage = ""
@@ -307,47 +307,47 @@ func (app *application) pageNotFound(w http.ResponseWriter, r *http.Request) {
 			URL:         r.URL.Path,
 		},
 		Metadata: metadata{
-			SocialImage: "/static/image/socials/404.webp",
+			SocialImage: app.cacheBuster.Get("/static/image/socials/404.webp"),
 		},
 	})
 }
 
 func (app *application) fileFavicon(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "image/x-icon")
-	http.ServeFile(w, r, "./static/image/favicon/favicon.ico")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/image/favicon/favicon.ico")))
 }
 
 func (app *application) fileIndexSitemapXml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/xml")
-	http.ServeFile(w, r, "./static/file/sitemap-index.xml")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-index.xml")))
 }
 
 func (app *application) fileRootSitemapXml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/xml")
-	http.ServeFile(w, r, "./static/file/sitemap-root.xml")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-root.xml")))
 }
 
 func (app *application) fileProfilesSitemapXml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/xml")
-	http.ServeFile(w, r, "./static/file/sitemap-profiles.xml")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-profiles.xml")))
 }
 
 func (app *application) fileSectionsSitemapXml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/xml")
-	http.ServeFile(w, r, "./static/file/sitemap-sections.xml")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-sections.xml")))
 }
 
 func (app *application) fileTraditionsSitemapXml(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/xml")
-	http.ServeFile(w, r, "./static/file/sitemap-traditions.xml")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-traditions.xml")))
 }
 
 func (app *application) fileRobotsTxt(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./static/file/robots.txt")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/robots.txt")))
 }
 
 func (app *application) fileHumansTxt(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./static/file/humans.txt")
+	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/humans.txt")))
 }
 
 func (app *application) apiHealthCheck(w http.ResponseWriter, r *http.Request) {

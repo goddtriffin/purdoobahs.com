@@ -78,7 +78,16 @@ func (app *application) generateIndexSitemap() error {
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/section/sitemap.xml"), lastModified),
 		sitemap.NewSitemapEntry(fmt.Sprintf("%s%s", homeUrl, "/tradition/sitemap.xml"), lastModified),
 	})
-	err := indexSitemap.WriteToFile("./static/file/sitemap-index.xml")
+
+	// write index sitemap to disk
+	indexSitemapFilepath := "/static/file/sitemap-index.xml"
+	err := indexSitemap.WriteToFile(fmt.Sprintf(".%s", indexSitemapFilepath))
+	if err != nil {
+		return err
+	}
+
+	// add to CacheBuster
+	err = app.cacheBuster.Add(indexSitemapFilepath)
 	if err != nil {
 		return err
 	}
@@ -112,8 +121,15 @@ func (app *application) generateRootSitemap() error {
 		rootSitemap.AddUrl(urlEntry)
 	}
 
-	// generate root sitemap (GET /sitemap-root.xml)
-	err := rootSitemap.WriteToFile("./static/file/sitemap-root.xml")
+	// write root sitemap to disk
+	rootSitemapFilepath := "/static/file/sitemap-root.xml"
+	err := rootSitemap.WriteToFile(fmt.Sprintf(".%s", rootSitemapFilepath))
+	if err != nil {
+		return err
+	}
+
+	// add to CacheBuster
+	err = app.cacheBuster.Add(rootSitemapFilepath)
 	if err != nil {
 		return err
 	}
@@ -164,8 +180,15 @@ func (app *application) generateProfilesSitemap(allPurdoobahs []*purdoobahs.Purd
 		profilesSitemap.AddUrl(urlEntry)
 	}
 
-	// generate profiles sitemap (GET /purdoobah/sitemap.xml)
-	err := profilesSitemap.WriteToFile("./static/file/sitemap-profiles.xml")
+	// write profiles sitemap to disk
+	profilesSitemapFilepath := "/static/file/sitemap-profiles.xml"
+	err := profilesSitemap.WriteToFile(fmt.Sprintf(".%s", profilesSitemapFilepath))
+	if err != nil {
+		return err
+	}
+
+	// add to CacheBuster
+	err = app.cacheBuster.Add(profilesSitemapFilepath)
 	if err != nil {
 		return err
 	}
@@ -181,7 +204,7 @@ func (app *application) generateSectionsSitemap(allSectionYears []int, imageEntr
 	lastModified := time.Now().Format(time.RFC3339)
 
 	// init profiles sitemap
-	profilesSitemap := sitemap.NewFile([]sitemap.UrlEntry{})
+	sectionsSitemap := sitemap.NewFile([]sitemap.UrlEntry{})
 
 	// add new UrlEntry for every unique section year
 	for _, uniqueYear := range allSectionYears {
@@ -198,7 +221,7 @@ func (app *application) generateSectionsSitemap(allSectionYears []int, imageEntr
 			if err != nil {
 				return err
 			}
-			profilesSitemap.AddUrl(urlEntry)
+			sectionsSitemap.AddUrl(urlEntry)
 			continue
 		}
 
@@ -240,11 +263,18 @@ func (app *application) generateSectionsSitemap(allSectionYears []int, imageEntr
 		if err != nil {
 			return err
 		}
-		profilesSitemap.AddUrl(urlEntry)
+		sectionsSitemap.AddUrl(urlEntry)
 	}
 
-	// generate profiles sitemap (GET /purdoobah/sitemap.xml)
-	err := profilesSitemap.WriteToFile("./static/file/sitemap-sections.xml")
+	// write sections sitemap to disk
+	sectionsSitemapFilepath := "/static/file/sitemap-sections.xml"
+	err := sectionsSitemap.WriteToFile(fmt.Sprintf(".%s", sectionsSitemapFilepath))
+	if err != nil {
+		return err
+	}
+
+	// add to CacheBuster
+	err = app.cacheBuster.Add(sectionsSitemapFilepath)
 	if err != nil {
 		return err
 	}
@@ -295,8 +325,15 @@ func (app *application) generateTraditionsSitemap(allTraditions []*traditions.Tr
 		traditionsSitemap.AddUrl(urlEntry)
 	}
 
-	// generate traditions sitemap (GET /tradition/sitemap.xml)
-	err := traditionsSitemap.WriteToFile("./static/file/sitemap-traditions.xml")
+	// write traditions sitemap to disk
+	traditionsSitemapFilepath := "/static/file/sitemap-traditions.xml"
+	err := traditionsSitemap.WriteToFile(fmt.Sprintf(".%s", traditionsSitemapFilepath))
+	if err != nil {
+		return err
+	}
+
+	// add to CacheBuster
+	err = app.cacheBuster.Add(traditionsSitemapFilepath)
 	if err != nil {
 		return err
 	}
