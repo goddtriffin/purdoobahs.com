@@ -23,7 +23,9 @@
     "job": "Founder of Orville Redenbacher's Gourmet Popping Corn"
   },
   "personal": {
-    "hobbies": [],
+    "hobbies": [
+      "coming up with new strains of popcorn"
+    ],
     "socials": {
       "facebook": "https://www.facebook.com/orvilleredenbachers/",
       "instagram": "https://www.instagram.com/orvillepopcorn/"

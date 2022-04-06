@@ -1,7 +1,7 @@
 {{define "archives-incomplete"}}
 <div class="video-mask">
     <video autoplay muted loop preload="none" class="archives-incomplete">
-        <source src="/static/video/perhaps-the-archives-are-incomplete.mp4" type="video/mp4" >
+        <source src="{{- cacheBuster "/static/video/perhaps-the-archives-are-incomplete.mp4" -}}" type="video/mp4" >
         Your browser does not support the video tag.
     </video>
 </div>

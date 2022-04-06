@@ -81,6 +81,29 @@ func main() {
 		os.Exit(1)
 	}
 
+	// generate CacheBuster
+	cacheBuster, err := cachebuster.NewCacheBuster(
+		"static",
+		[]string{
+			"/file",
+			"/image/bot",
+			"/image/favicon",
+			"/image/logo",
+			"/image/purdoobah",
+			"/image/section",
+			"/image/socials",
+			"/image/tradition",
+			"/script",
+			"/stylesheet",
+			"/video",
+		},
+	)
+	if err != nil {
+		app.logger.Error(err.Error())
+		os.Exit(1)
+	}
+	app.cacheBuster = cacheBuster
+
 	// validate all Purdoobah JSON schema files
 	invalidFiles, err := jsonschema.ValidateJsonSchema(app.logger)
 	if err != nil {
@@ -109,7 +132,7 @@ func main() {
 	app.traditionService = inmemorydatabase.NewTraditionService(allTraditions)
 
 	// create HTML template cache
-	templateCache, err := newTemplateCache()
+	templateCache, err := app.newTemplateCache()
 	if err != nil {
 		app.logger.Error(err.Error())
 	}
@@ -122,13 +145,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	// generate CacheBuster
-	cacheBuster, err := cachebuster.NewCacheBuster()
+	// print out CacheBuster cache to help catch unplanned hash-readjustments
+	err = app.cacheBuster.PrintToFile("../cache-buster.txt")
 	if err != nil {
 		app.logger.Error(err.Error())
 		os.Exit(1)
 	}
-	app.cacheBuster = cacheBuster
+	app.cacheBuster.Debug = true
 
 	// create http Client for Analytics API
 	tr := http.DefaultTransport.(*http.Transport).Clone()

@@ -7,128 +7,131 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 )
 
 type CacheBuster struct {
 	// cache is a mapping of original static asset file name to one with an added unique, deterministic hash
-	cache map[string]string
+	cache     map[string]string
+	cacheKeys []string
 
-	// uiStaticDirectoryPath is the path to the ui directory where the static assets are originally from
-	uiStaticDirectoryPath string
+	// staticAssetsRootDirectoryPath is the path to the bin directory where the static assets are copied to
+	staticAssetsRootDirectoryPath string
 
-	// binStaticDirectoryPath is the path to the bin directory where the static assets are copied to
-	binStaticDirectoryPath string
+	// staticAssetsSubdirectoryPaths is a list of subdirectories to loop through when generating hashed static assets
+	staticAssetsSubdirectoryPaths []string
 
-	// allowedFileExtensions are file extensions that are automatically known to need a hash value for cache busting
-	allowedFileExtensions []string
+	Debug bool
 }
 
-func NewCacheBuster() (*CacheBuster, error) {
+func NewCacheBuster(staticAssetsRootDirectoryPath string, staticAssetsSubdirectoryPaths []string) (*CacheBuster, error) {
 	cb := &CacheBuster{
-		cache:                  make(map[string]string),
-		binStaticDirectoryPath: "static",
-		allowedFileExtensions: []string{
-			".pdf",
-			".webp",
-			".ico",
-			".svg",
-			".js",
-			".css",
-			".mp4",
-		},
+		cache:                         make(map[string]string),
+		cacheKeys:                     []string{},
+		staticAssetsRootDirectoryPath: staticAssetsRootDirectoryPath,
+		staticAssetsSubdirectoryPaths: staticAssetsSubdirectoryPaths,
+		Debug:                         false,
 	}
 
-	count, err := cb.hashStaticAssets()
+	err := cb.hashStaticAssets()
 	if err != nil {
 		return &CacheBuster{}, err
 	}
 
-	err = cb.printCache()
-	if err != nil {
-		return &CacheBuster{}, err
+	if cb.Debug {
+		fmt.Printf("Total files hashed for Cache-Busting: %d\n", len(cb.cache))
 	}
-	fmt.Printf("Total files hashed for Cache-Busting: %d\n", count)
-
 	return cb, nil
 }
 
-func (cb *CacheBuster) hashStaticAssets() (int, error) {
-	totalCount := 0
-
-	count, err := cb.walk("/file")
-	if err != nil {
-		return totalCount, err
+// Get takes a path from root domain to a static asset (as it would be called from a browser, so with a leading slash)
+// and returns the version of the filepath that contains a unique hash.
+//
+// e.g. "/static/image/favicon/favicon.ico" -> "/static/image/favicon/favicon.66189abc248d80832e458ee37e93c9e8.ico"
+func (cb *CacheBuster) Get(path string) string {
+	if val, ok := cb.cache[path]; ok {
+		return val
 	}
-	totalCount += count
 
-	count, err = cb.walk("/image/bot")
-	if err != nil {
-		return totalCount, err
+	if cb.Debug {
+		fmt.Printf("file not found in CacheBuster: `%s`\n", path)
 	}
-	totalCount += count
-
-	count, err = cb.walk("/image/favicon")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/image/logo")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/image/purdoobah")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/image/section")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/image/socials")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/image/tradition")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/script")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/stylesheet")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	count, err = cb.walk("/video")
-	if err != nil {
-		return totalCount, err
-	}
-	totalCount += count
-
-	return totalCount, nil
+	return ""
 }
 
-func (cb *CacheBuster) walk(dirPath string) (int, error) {
-	count := 0
+// Add takes a path from root domain to a static asset (as it would be called from a browser, so with a leading slash),
+// generates a unique hash for that file, renames it on disk, and stores the uniquely-hashed filepaths in a cache for
+// lookup later.
+//
+// e.g. "/static/image/favicon/favicon.ico" -> "/static/image/favicon/favicon.66189abc248d80832e458ee37e93c9e8.ico"
+func (cb *CacheBuster) Add(nonHashedFilepath string) error {
+	// generate unique hash of the file
+	hash, err := cb.generateHash(nonHashedFilepath)
+	if err != nil {
+		return err
+	}
 
-	binFullDirPath := fmt.Sprintf("%s%s", cb.binStaticDirectoryPath, dirPath)
+	// generate new name with the unique hash
+	hashedFilepath := fmt.Sprintf(
+		"%s.%s%s",
+		strings.TrimSuffix(nonHashedFilepath, filepath.Ext(nonHashedFilepath)),
+		hash,
+		filepath.Ext(nonHashedFilepath),
+	)
+
+	// store the hashed name in the cache
+	cb.cacheKeys = append(cb.cacheKeys, nonHashedFilepath)
+	cb.cache[nonHashedFilepath] = hashedFilepath
+
+	// rename the file to the new name
+	// the files can't be prepended by slashes, as that would point to the root directory of the computer as opposed to
+	// finding the file from the current directory
+	err = os.Rename(strings.TrimPrefix(nonHashedFilepath, "/"), strings.TrimPrefix(hashedFilepath, "/"))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// PrintToFile prints the hashed filepaths in the cache to a file.
+//
+// This is useful in the case that you want to check in a file to help diff what static asset hashes are modified
+// in-between commits.
+func (cb *CacheBuster) PrintToFile(outputFilepath string) error {
+	// make sure to sort cacheKeys to ensure same-order read-out every access
+	sort.Strings(cb.cacheKeys)
+
+	builder := ""
+	for _, key := range cb.cacheKeys {
+		builder += fmt.Sprintf("%s\n", cb.cache[key])
+	}
+
+	err := ioutil.WriteFile(outputFilepath, []byte(builder), 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// hashStaticAssets loops over every subdirectory of the static assets directory in order to generate unique hashes for
+// all the files contained within.
+func (cb *CacheBuster) hashStaticAssets() error {
+	for _, subdirectory := range cb.staticAssetsSubdirectoryPaths {
+		err := cb.walk(subdirectory)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// walk the given directory, renames each file(path) by adding a unique hash, and saving the results for lookup
+// later.
+func (cb *CacheBuster) walk(dirPath string) error {
+	binFullDirPath := fmt.Sprintf("%s%s", cb.staticAssetsRootDirectoryPath, dirPath)
 	err := filepath.Walk(binFullDirPath, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -139,52 +142,26 @@ func (cb *CacheBuster) walk(dirPath string) (int, error) {
 			return nil
 		}
 
-		// only hash files we pre-select to want to hash
-		if !cb.isFileHashable(path) {
-			fmt.Printf("File not hashable: %s\n", path)
-			fmt.Println()
-			cb.cache[path] = path
-			return nil
-		}
-
-		// generate unique hash of the file
-		hash, err := cb.generateHash(path)
+		nonHashedFilepath := fmt.Sprintf("/%s", path)
+		err = cb.Add(nonHashedFilepath)
 		if err != nil {
 			return err
 		}
 
-		// generate new name
-		cb.cache[path] = fmt.Sprintf(
-			"/%s.%s%s",
-			strings.TrimSuffix(path, filepath.Ext(path)),
-			hash,
-			filepath.Ext(path),
-		)
-		count += 1
-
 		return nil
 	})
 	if err != nil {
-		return count, err
+		return err
 	}
 
-	return count, nil
+	return nil
 }
 
-func (cb *CacheBuster) isFileHashable(filename string) bool {
-	// check if filename has immediate allow-listed file extension
-	// for _, extension := range cb.allowedFileExtensions {
-	// 	if filepath.Ext(filename) == extension {
-	// 		return true
-	// 	}
-	// }
-
-	// return false
-	return true
-}
-
+// generateHash generates a unique hash for the given file(path).
+//
+// This implementation generates a hash of the file by creating an MD5 hash of the file contents.
 func (cb *CacheBuster) generateHash(filepath string) (string, error) {
-	file, err := os.Open(filepath)
+	file, err := os.Open(strings.TrimPrefix(filepath, "/"))
 	if err != nil {
 		return "", err
 	}
@@ -197,17 +174,4 @@ func (cb *CacheBuster) generateHash(filepath string) (string, error) {
 	}
 
 	return fmt.Sprintf("%x", hash.Sum(nil)), nil
-}
-
-func (cb *CacheBuster) printCache() error {
-	builder := ""
-	for _, value := range cb.cache {
-		builder += fmt.Sprintf("%s\n", value)
-	}
-
-	err := ioutil.WriteFile("../cache-buster.txt", []byte(builder), 0644)
-	if err != nil {
-		return err
-	}
-	return nil
 }
