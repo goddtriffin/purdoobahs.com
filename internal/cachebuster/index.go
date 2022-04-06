@@ -1,7 +1,9 @@
 package cachebuster
 
 import (
+	"crypto/md5"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -25,7 +27,6 @@ type CacheBuster struct {
 func NewCacheBuster() (*CacheBuster, error) {
 	cb := &CacheBuster{
 		cache:                  make(map[string]string),
-		uiStaticDirectoryPath:  "../ui/static",
 		binStaticDirectoryPath: "static",
 		allowedFileExtensions: []string{
 			".pdf",
@@ -127,13 +128,8 @@ func (cb *CacheBuster) hashStaticAssets() (int, error) {
 func (cb *CacheBuster) walk(dirPath string) (int, error) {
 	count := 0
 
-	uiFullDirPath := fmt.Sprintf("%s%s", cb.uiStaticDirectoryPath, dirPath)
 	binFullDirPath := fmt.Sprintf("%s%s", cb.binStaticDirectoryPath, dirPath)
-
 	err := filepath.Walk(binFullDirPath, func(path string, info os.FileInfo, err error) error {
-		uiFullFilePath := fmt.Sprintf("%s/%s", uiFullDirPath, path)
-		binFullFilePath := fmt.Sprintf("%s/%s", binFullDirPath, path)
-
 		if err != nil {
 			return err
 		}
@@ -143,24 +139,23 @@ func (cb *CacheBuster) walk(dirPath string) (int, error) {
 			return nil
 		}
 
+		// only hash files we pre-select to want to hash
 		if !cb.isFileHashable(path) {
 			fmt.Printf("File not hashable: %s\n", path)
 			fmt.Println()
-			cb.cache[path] = binFullFilePath
+			cb.cache[path] = path
 			return nil
 		}
 
-		originalInfo, err := os.Stat(fmt.Sprintf("%s/%s", cb.uiStaticDirectoryPath, path))
+		// generate unique hash of the file
+		hash, err := cb.generateHash(path)
+		if err != nil {
+			return err
+		}
 
-		fmt.Printf("Name: %s\n", info.Name())
-		fmt.Printf("ModTime: %s\n", info.ModTime())
-		fmt.Printf("Size: %d bytes\n", info.Size())
-		fmt.Println()
-
-		hash := cb.generateHash(info.Size())
+		// generate new name
 		cb.cache[path] = fmt.Sprintf(
-			"/%s/%s.%s%s",
-			rootDirectory,
+			"/%s.%s%s",
 			strings.TrimSuffix(path, filepath.Ext(path)),
 			hash,
 			filepath.Ext(path),
@@ -173,7 +168,6 @@ func (cb *CacheBuster) walk(dirPath string) (int, error) {
 		return count, err
 	}
 
-	fmt.Printf("Total files: %d\n", count)
 	return count, nil
 }
 
@@ -189,17 +183,29 @@ func (cb *CacheBuster) isFileHashable(filename string) bool {
 	return true
 }
 
-func (cb *CacheBuster) generateHash(sizeBytes int64) string {
-	return fmt.Sprintf("%d", sizeBytes)
+func (cb *CacheBuster) generateHash(filepath string) (string, error) {
+	file, err := os.Open(filepath)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	hash := md5.New()
+	_, err = io.Copy(hash, file)
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("%x", hash.Sum(nil)), nil
 }
 
 func (cb *CacheBuster) printCache() error {
 	builder := ""
-	for key, value := range cb.cache {
-		builder += fmt.Sprintf("%s\t=>\t%s\n", key, value)
+	for _, value := range cb.cache {
+		builder += fmt.Sprintf("%s\n", value)
 	}
 
-	err := ioutil.WriteFile("./cache-buster.txt", []byte(builder), 0644)
+	err := ioutil.WriteFile("../cache-buster.txt", []byte(builder), 0644)
 	if err != nil {
 		return err
 	}
