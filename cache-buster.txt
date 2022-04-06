@@ -2,11 +2,11 @@
 /static/file/humans.44a33522dda5867be688aa82f9435f34.txt
 /static/file/robots.76f3009d2119518ea920930c81e40e09.txt
 /static/file/seat-check-rules.1b1c10f936ee13cdbebf754242a5f92f.pdf
-/static/file/sitemap-index.7957aebacdb5d83e1c585e06a2c89e39.xml
-/static/file/sitemap-profiles.7c2316192523a29f6f961583076615d7.xml
-/static/file/sitemap-root.a45d8c01a76b299161ae8cdf91f31830.xml
-/static/file/sitemap-sections.d716edb95d3b59f7ac65b7340b608bef.xml
-/static/file/sitemap-traditions.f8bbe39fe062a87cf2a7c2324cf85107.xml
+/static/file/sitemap-index.6ad299901273671e720e3bc8aa77d310.xml
+/static/file/sitemap-profiles.5863accb62554c36a86cf43f90a792e4.xml
+/static/file/sitemap-root.980d26e6d6472665663a4e9c540a621b.xml
+/static/file/sitemap-sections.ed20f685ecb0a8025fda0a1d3820eb5d.xml
+/static/file/sitemap-traditions.81bd82ed93d4273dec16cb3b781ff442.xml
 /static/file/toobahsassins-rules.2760222e078f6064b1cf3de539b517a4.pdf
 /static/image/bot/dr-sweet.6ecbfa907acde1e6bbccf410be4a8539.webp
 /static/image/favicon/favicon.66189abc248d80832e458ee37e93c9e8.ico
@@ -67,7 +67,7 @@
 /static/image/tradition/toobah-thanksgiving.e7620871d284e660231ff57795ff0b81.webp
 /static/script/alumni.7c263f84fd195be7d450b319825cda3c.js
 /static/script/scitylana.3363d24bfcd06050dbba430fc049c028.js
-/static/stylesheet/main.85b440e6926b80fe3dd6d2283408324c.css
+/static/stylesheet/main.2bb43bc25c3372cbb15d9cfa1c7dd2b7.css
 /static/video/lettuce-club.ed6fe705b9a4be60edbafbdf36f29edf.mp4
 /static/video/perhaps-the-archives-are-incomplete.c703d3a044c16c0df1c077a16da6a174.mp4
 /static/video/zaht.cae6de786d0ba7a951a268737d93fa1c.mp4

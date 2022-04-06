@@ -1,19 +1,19 @@
 {{ template "base" . }}
 
 {{ define "main" }}
-    <main>
-        <div class="profile tradition-profile">
-            {{ with .TraditionByName }}
-                <h1 class="title">{{- .Name }}</h1>
+<main>
+    <div class="profile tradition-profile">
+        {{ with .TraditionByName }}
+            <h1 class="title">{{- .Name }}</h1>
 
-                <a href="/tradition/{{- .ID -}}">
-                    <picture>
-                        <img class="profile-picture" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
-                    </picture>
-                </a>
+            <a href="/tradition/{{- .ID -}}">
+                <picture>
+                    <img class="profile-picture" src="{{- .Metadata.Image.File -}}" alt="{{- .Metadata.Image.Alt -}}">
+                </picture>
+            </a>
 
-                <p class="description">{{- .Description -}}</p>
-            {{ end }}
-        </div>
-    </main>
+            <p class="description">{{- .Description -}}</p>
+        {{ end }}
+    </div>
+</main>
 {{ end }}

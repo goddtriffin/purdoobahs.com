@@ -37,7 +37,7 @@ func (app *application) routes() http.Handler {
 
 	// pages
 	router.HandleFunc("/cravers-hall-of-fame", app.pageCraversHallOfFame).Methods("GET")
-	router.HandleFunc("/tradition", app.pageTraditions).Methods("GET")
+	router.HandleFunc("/tradition", app.pageTradition).Methods("GET")
 	router.HandleFunc("/tradition/{name}", app.pageTraditionProfile).Methods("GET")
 	router.HandleFunc("/alumni", app.pageAlumni).Methods("GET")
 	router.HandleFunc("/section/{year}", app.pageSectionByYear).Methods("GET")
@@ -117,7 +117,7 @@ func (app *application) pageCraversHallOfFame(w http.ResponseWriter, r *http.Req
 	})
 }
 
-func (app *application) pageTraditions(w http.ResponseWriter, r *http.Request) {
+func (app *application) pageTradition(w http.ResponseWriter, r *http.Request) {
 	// get all traditions
 	allTraditions, err := app.traditionService.All()
 	if err != nil {
@@ -125,7 +125,7 @@ func (app *application) pageTraditions(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.render(w, r, "traditions.gohtml", &templateData{
+	app.render(w, r, "tradition.gohtml", &templateData{
 		Page: page{
 			DisplayName: "Traditions",
 			URL:         "/tradition",
