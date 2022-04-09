@@ -40,7 +40,6 @@ func createCacheControl() *cachecontrol.CacheControl {
 		"/static/",
 	}
 
-	cc.Debug = true
 	return cc
 }
 
