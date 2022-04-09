@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/purdoobahs/purdoobahs.com/internal/httpheader"
+	"github.com/purdoobahs/purdoobahs.com/internal/mimetype"
 	"github.com/purdoobahs/purdoobahs.com/internal/purdoobahs"
 	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 
@@ -202,6 +204,8 @@ func (app *application) newTemplateCache() (map[string]*template.Template, error
 }
 
 func (app *application) render(w http.ResponseWriter, r *http.Request, name string, td *templateData) {
+	w.Header().Add(httpheader.ContentType.String(), mimetype.Html.String())
+
 	ts, ok := app.templateCache[name]
 	if !ok {
 		app.serveError(w, fmt.Errorf("the template %s does not exist", name))

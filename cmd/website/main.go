@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/purdoobahs/purdoobahs.com/internal/cachebuster"
+	"github.com/purdoobahs/purdoobahs.com/internal/cachecontrol"
 	"github.com/purdoobahs/purdoobahs.com/internal/logger"
 	"github.com/purdoobahs/purdoobahs.com/internal/traditions"
 
@@ -33,9 +34,10 @@ type application struct {
 	env           environment
 	logger        logger.ILogger
 	templateCache map[string]*template.Template
-	helmet        *helmet.Helmet
 
-	cacheBuster *cachebuster.CacheBuster
+	helmet       *helmet.Helmet
+	cacheBuster  *cachebuster.CacheBuster
+	cacheControl *cachecontrol.CacheControl
 
 	purdoobahService purdoobahs.IPurdoobahService
 	traditionService traditions.ITraditionService
@@ -46,8 +48,9 @@ type application struct {
 func main() {
 	// initialize the application
 	app := &application{
-		logger: logger.NewLogger(),
-		helmet: createHelmet(),
+		logger:       logger.NewLogger(),
+		helmet:       createHelmet(),
+		cacheControl: createCacheControl(),
 	}
 
 	// parse environment variables

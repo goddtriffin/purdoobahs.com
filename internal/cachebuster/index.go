@@ -95,7 +95,7 @@ func (cb *CacheBuster) Add(nonHashedFilepath string) error {
 	return nil
 }
 
-// PrintToFile prints the hashed filepaths in the cache to a file.
+// PrintToFile prints the hashed file paths in the cache to a file.
 //
 // This is useful in the case that you want to check in a file to help diff what static asset hashes are modified
 // in-between commits.

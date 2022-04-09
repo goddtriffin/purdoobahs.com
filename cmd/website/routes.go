@@ -9,7 +9,9 @@ import (
 	"runtime/debug"
 	"strconv"
 
+	"github.com/purdoobahs/purdoobahs.com/internal/httpheader"
 	"github.com/purdoobahs/purdoobahs.com/internal/logger"
+	"github.com/purdoobahs/purdoobahs.com/internal/mimetype"
 	"github.com/purdoobahs/purdoobahs.com/internal/plausibleanalytics"
 
 	"github.com/gorilla/handlers"
@@ -18,10 +20,17 @@ import (
 )
 
 func (app *application) routes() http.Handler {
-	standardMiddleware := alice.New(app.recoverPanic, handlers.ProxyHeaders, app.logRequest, app.helmet.Secure)
+	standardMiddleware := alice.New(
+		app.recoverPanic,
+		handlers.ProxyHeaders,
+		app.logRequest,
+		app.helmet.Secure,
+		app.cacheControl.ForeverCache,
+	)
 
 	// routers
 	router := mux.NewRouter()
+	staticFilesSubrouter := router.PathPrefix("/static").Subrouter()
 	apiSubrouter := router.PathPrefix("/api").Subrouter()
 	apiV1Subrouter := apiSubrouter.PathPrefix("/v1").Subrouter()
 
@@ -44,11 +53,9 @@ func (app *application) routes() http.Handler {
 	router.HandleFunc("/purdoobah/{name}", app.pagePurdoobahProfile).Methods("GET")
 
 	// static files
-	router.PathPrefix("/static/").
-		Handler(http.StripPrefix(
-			"/static/",
-			http.FileServer(http.Dir("./static")),
-		))
+	staticFilesSubrouter.PathPrefix("/").Handler(
+		http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))),
+	)
 
 	// catch all
 	// has to occur last because it is the most generic route "/"
@@ -313,45 +320,51 @@ func (app *application) pageNotFound(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) fileFavicon(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content-Type", "image/x-icon")
+	w.Header().Add(httpheader.ContentType.String(), mimetype.XIcon.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/image/favicon/favicon.ico")))
 }
 
 func (app *application) fileIndexSitemapXml(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content-Type", "application/xml")
+	w.Header().Add(httpheader.ContentType.String(), mimetype.XmlApplication.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-index.xml")))
 }
 
 func (app *application) fileRootSitemapXml(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content-Type", "application/xml")
+	w.Header().Add(httpheader.ContentType.String(), mimetype.XmlApplication.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-root.xml")))
 }
 
 func (app *application) fileProfilesSitemapXml(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content-Type", "application/xml")
+	w.Header().Add(httpheader.ContentType.String(), mimetype.XmlApplication.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-profiles.xml")))
 }
 
 func (app *application) fileSectionsSitemapXml(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content-Type", "application/xml")
+	w.Header().Add(httpheader.ContentType.String(), mimetype.XmlApplication.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-sections.xml")))
 }
 
 func (app *application) fileTraditionsSitemapXml(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Content-Type", "application/xml")
+	w.Header().Add(httpheader.ContentType.String(), mimetype.XmlApplication.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/sitemap-traditions.xml")))
 }
 
 func (app *application) fileRobotsTxt(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add(httpheader.ContentType.String(), mimetype.Plain.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/robots.txt")))
 }
 
 func (app *application) fileHumansTxt(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add(httpheader.ContentType.String(), mimetype.Plain.String())
 	http.ServeFile(w, r, fmt.Sprintf(".%s", app.cacheBuster.Get("/static/file/humans.txt")))
 }
 
 func (app *application) apiHealthCheck(w http.ResponseWriter, r *http.Request) {
-	_, err := w.Write([]byte("OK"))
+	w.Header().Add(
+		httpheader.ContentType.String(),
+		fmt.Sprintf("%s; charset=utf-8", mimetype.Json.String()),
+	)
+	_, err := w.Write([]byte("{ \"status\": \"success\"}"))
 	if err != nil {
 		app.serveError(w, err)
 		return
@@ -365,7 +378,13 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 		app.serveError(w, err)
 		return
 	}
-	body := plausibleanalytics.NewPlausibleAnalyticsBody(r.FormValue("url"), r.FormValue("referrer"), screenWidth)
+	body := plausibleanalytics.NewPlausibleAnalyticsBody(
+		"purdoobahs.com",
+		"pageview",
+		r.FormValue("url"),
+		r.FormValue("referrer"),
+		screenWidth,
+	)
 	bodyBytes, err := json.Marshal(body)
 	if err != nil {
 		app.serveError(w, err)
@@ -373,16 +392,21 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// create request
-	req, err := http.NewRequestWithContext(r.Context(), "POST", "https://plausible.io/api/event", bytes.NewBuffer(bodyBytes))
+	req, err := http.NewRequestWithContext(
+		r.Context(),
+		http.MethodPost,
+		"https://plausible.io/api/event",
+		bytes.NewBuffer(bodyBytes),
+	)
 	if err != nil {
 		app.serveError(w, err)
 		return
 	}
 
 	// headers
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", r.FormValue("user_agent"))
-	req.Header.Set("X-Forwarded-For", r.RemoteAddr)
+	req.Header.Set(httpheader.ContentType.String(), mimetype.Json.String())
+	req.Header.Set(httpheader.UserAgent.String(), r.FormValue("user_agent"))
+	req.Header.Set(httpheader.NonstandardXForwardedFor.String(), r.RemoteAddr)
 
 	// print headers
 	if reqHeadersBytes, err := json.Marshal(req.Header); err == nil {
@@ -414,7 +438,11 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 		app.logger.Info("Not sending Plausible analytics request due to being in development environment.")
 	}
 
-	_, err = w.Write([]byte("OK"))
+	w.Header().Add(
+		httpheader.ContentType.String(),
+		fmt.Sprintf("%s; charset=utf-8", mimetype.Json.String()),
+	)
+	_, err = w.Write([]byte("{ \"status\": \"success\"}"))
 	if err != nil {
 		app.serveError(w, err)
 		return
@@ -437,6 +465,10 @@ func (app *application) apiAllPurdoobahs(w http.ResponseWriter, r *http.Request)
 	}
 
 	// send it out
+	w.Header().Add(
+		httpheader.ContentType.String(),
+		fmt.Sprintf("%s; charset=utf-8", mimetype.Json.String()),
+	)
 	_, err = w.Write(b)
 	if err != nil {
 		app.serveError(w, err)
@@ -464,6 +496,10 @@ func (app *application) apiPurdoobahByName(w http.ResponseWriter, r *http.Reques
 	}
 
 	// send it out
+	w.Header().Add(
+		httpheader.ContentType.String(),
+		fmt.Sprintf("%s; charset=utf-8", mimetype.Json.String()),
+	)
 	_, err = w.Write(b)
 	if err != nil {
 		app.serveError(w, err)
@@ -487,6 +523,10 @@ func (app *application) apiCurrentSection(w http.ResponseWriter, r *http.Request
 	}
 
 	// send it out
+	w.Header().Add(
+		httpheader.ContentType.String(),
+		fmt.Sprintf("%s; charset=utf-8", mimetype.Json.String()),
+	)
 	_, err = w.Write(b)
 	if err != nil {
 		app.serveError(w, err)
@@ -521,6 +561,10 @@ func (app *application) apiSectionByYear(w http.ResponseWriter, r *http.Request)
 	}
 
 	// send it out
+	w.Header().Add(
+		httpheader.ContentType.String(),
+		fmt.Sprintf("%s; charset=utf-8", mimetype.Json.String()),
+	)
 	_, err = w.Write(b)
 	if err != nil {
 		app.serveError(w, err)
@@ -544,6 +588,10 @@ func (app *application) apiAllTraditions(w http.ResponseWriter, r *http.Request)
 	}
 
 	// send it out
+	w.Header().Add(
+		httpheader.ContentType.String(),
+		fmt.Sprintf("%s; charset=utf-8", mimetype.Json.String()),
+	)
 	_, err = w.Write(b)
 	if err != nil {
 		app.serveError(w, err)

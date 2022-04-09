@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/goddtriffin/helmet"
+	"github.com/purdoobahs/purdoobahs.com/internal/cachecontrol"
 )
 
 func (app *application) logRequest(next http.Handler) http.Handler {
@@ -29,6 +30,18 @@ func (app *application) recoverPanic(next http.Handler) http.Handler {
 
 		next.ServeHTTP(w, r)
 	})
+}
+
+func createCacheControl() *cachecontrol.CacheControl {
+	cc := cachecontrol.NewCacheControl()
+
+	// set which route prefixes to enable ForeverCache (1 year)
+	cc.ForeverCacheRoutePrefixes = []string{
+		"/static/",
+	}
+
+	cc.Debug = true
+	return cc
 }
 
 func createHelmet() *helmet.Helmet {

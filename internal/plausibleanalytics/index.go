@@ -8,10 +8,10 @@ type Body struct {
 	ScreenWidth int    `json:"screen_width"`
 }
 
-func NewPlausibleAnalyticsBody(url, referrer string, screenWidth int) *Body {
+func NewPlausibleAnalyticsBody(domain, name, url, referrer string, screenWidth int) *Body {
 	return &Body{
-		Domain:      "purdoobahs.com",
-		Name:        "pageview",
+		Domain:      domain,
+		Name:        name,
 		Url:         url,
 		Referrer:    referrer,
 		ScreenWidth: screenWidth,
