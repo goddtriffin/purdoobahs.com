@@ -372,6 +372,14 @@ func (app *application) apiHealthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
+	// set domain depending on if we're in the dev or prod environment
+	domain := ""
+	if app.env == production {
+		domain = "purdoobahs.com"
+	} else {
+		domain = "test.toddgriffin.me"
+	}
+
 	// body
 	screenWidth, err := strconv.Atoi(r.FormValue("screen_width"))
 	if err != nil {
@@ -379,7 +387,7 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	body := plausibleanalytics.NewPlausibleAnalyticsBody(
-		"purdoobahs.com",
+		domain,
 		"pageview",
 		r.FormValue("url"),
 		r.FormValue("referrer"),
@@ -416,27 +424,23 @@ func (app *application) apiAnalytics(w http.ResponseWriter, r *http.Request) {
 	// print body
 	app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(bodyBytes)))
 
-	if app.env == production {
-		// POST analytics event
-		resp, err := app.httpClient.Do(req)
-		if err != nil {
-			app.serveError(w, err)
-			return
-		}
-		defer func() {
-			err := resp.Body.Close()
-			if err != nil {
-				app.logger.Error(err.Error())
-			}
-		}()
-		body, _ := ioutil.ReadAll(resp.Body)
-
-		// print response
-		app.logger.Info(fmt.Sprintf("Plausible Analytics status: %v %v", resp.Status, resp.Header))
-		app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(body)))
-	} else {
-		app.logger.Info("Not sending Plausible analytics request due to being in development environment.")
+	// POST analytics event
+	resp, err := app.httpClient.Do(req)
+	if err != nil {
+		app.serveError(w, err)
+		return
 	}
+	defer func() {
+		err := resp.Body.Close()
+		if err != nil {
+			app.logger.Error(err.Error())
+		}
+	}()
+	resp_body, _ := ioutil.ReadAll(resp.Body)
+
+	// print response
+	app.logger.Info(fmt.Sprintf("Plausible Analytics status: %v %v", resp.Status, resp.Header))
+	app.logger.Info(fmt.Sprintf("Plausible Analytics body: %v", string(resp_body)))
 
 	w.Header().Add(
 		httpheader.ContentType.String(),

@@ -2,11 +2,11 @@
 /static/file/humans.44a33522dda5867be688aa82f9435f34.txt
 /static/file/robots.76f3009d2119518ea920930c81e40e09.txt
 /static/file/seat-check-rules.1b1c10f936ee13cdbebf754242a5f92f.pdf
-/static/file/sitemap-index.704b397f9a451194a8b3b2c91b515392.xml
-/static/file/sitemap-profiles.c40f402b96da3f06698235e413dfa6e3.xml
-/static/file/sitemap-root.b3ed7ee070d16cb0d3f8edf722873cd5.xml
-/static/file/sitemap-sections.995c2041752e688c27881fc8f5de7544.xml
-/static/file/sitemap-traditions.eae2562bab742779175a037d1430804b.xml
+/static/file/sitemap-index.70bf1c5c4307ff6821f90c0388cf09b7.xml
+/static/file/sitemap-profiles.0044c460cb367baa018c14314196369f.xml
+/static/file/sitemap-root.c4729a46c81c1d1a5b504f7eee2bf91a.xml
+/static/file/sitemap-sections.a4e2d0ce9857f1889f993813d1e713bd.xml
+/static/file/sitemap-traditions.20a618e633dd7630b6ca4ea97b52acf2.xml
 /static/file/toobahsassins-rules.2760222e078f6064b1cf3de539b517a4.pdf
 /static/image/bot/dr-sweet.6ecbfa907acde1e6bbccf410be4a8539.webp
 /static/image/favicon/favicon.66189abc248d80832e458ee37e93c9e8.ico
